@@ -23,6 +23,7 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'dotenv-rails'
 gem 'devise'
+gem 'discard'
 
 group :development, :test do
   gem 'pry-byebug'
