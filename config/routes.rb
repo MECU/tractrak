@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, path: 'auth',
+             path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'sign_up' }
+
   root to: 'home#index'
   get '/', to: 'home#index', as: :home
 
@@ -7,7 +9,7 @@ Rails.application.routes.draw do
   get 'current-meets', to: 'meet#current_meets', as: :current_meets
   #
   # TODO: Is this used?
-  # Route::get('api-view/meet-event/{meetId}/{eventId?}/{roundId?}/{heatId?}', 'MeetController@viewEvent')
+  # get 'api-view/meet-event/{meetId}/{eventId?}/{roundId?}/{heatId?}', 'MeetController#viewEvent
   #
   get 'meet-event/:meet_id', to: 'meet#meet'
   get 'meet-event/:meet_id/:event_id(/:round_id)(/:heat_id)', to: 'meet#event', constraints: {
@@ -28,40 +30,33 @@ Rails.application.routes.draw do
   get 'stadium/:id', to: 'stadium#view', as: :stadium_view, constraints: { id: /\d/ }
   get 'athlete/:id(/:name)', to: 'athlete#view', as: :athlete_view, constraints: { id: /\d/ }
 
+  # Dashboard, requires login
+  get 'dashboard', to: 'dashboard#index', as: :dashboard
+  get 'meet/create/new', to: 'dashboard#create', as: :meet_create
+  post 'meet/create/action', to: 'dashboard#actuallyCreate', as: :meet_actually_create
 
-  # Route::group(['middleware' => 'auth'], function ()
-  # {
-  #   Route::get('dashboard', 'DashboardController@index')->name('frontend.dashboard')
+  get 'meet/modify/:id', to: 'dashboard#edit', as: :meet_modify
+  post 'meet/modify/:id/edit', to: 'dashboard#actuallyEdit', as: :meet_actually_edit
+  post 'meet/points/:id', to: 'dashboard#savePoints', as: :meet_save_points
+
+  get 'meet/run/:id', to: 'dashboard#run', as: :meet_run
+  get 'meet/key/:id', to: 'dashboard#downloadKey', as: :meet_key
+  post 'meet/preLoad/:id', to: 'dashboard#preLoad', as: :meet_preload
+
+  # Admin, requires login and permission
+  #   Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+  #   get 'dashboard', to: 'dashboard#index', as: :backend.dashboard
   #
-  # Route::get('meet/create/new', 'MeetController@create')->name('frontend.meet.create')
-  # Route::post('meet/create/action', 'MeetController@actuallyCreate')->name('frontend.meet.actuallyCreate')
+  #   get 'edit/team', 'AdminController#selectTeamToEdit', as: :admin.edit.team.select
+  #   get 'edit/team/:id', 'AdminController#editTeam', as: :admin.edit.team
+  #   post 'edit/team/:id', 'AdminController#saveEditTeam', as: :admin.edit.saveTeam
   #
-  # Route::get('meet/modify/{id}', 'MeetController@edit')->name('frontend.meet.modify')
-  # Route::post('meet/modify/{id}/edit', 'MeetController@actuallyEdit')->name('frontend.meet.actuallyEdit')
-  # Route::post('meet/points/{id}', 'MeetController@savePoints')->name('frontend.meet.savePoints')
+  #   get 'edit/athlete', 'AdminController#selectAthleteToEdit', as: :admin.edit.athlete.select
+  #   get 'create/athlete', 'AdminController#createAthlete', as: :admin.create.athlete
+  #   get 'edit/athlete/:id', 'AdminController#editAthlete', as: :admin.edit.athlete
+  #   post 'edit/athlete/:id', 'AdminController#saveEditAthlete', as: :admin.edit.saveAthlete
   #
-  # Route::get('meet/run/{id}', 'MeetController@run')->name('frontend.meet.run')
-  # Route::get('meet/key/{id}', 'MeetController@downloadKey')->name('frontend.meet.key')
-  # Route::post('meet/preLoad/{id}', 'MeetController@preLoad')->name('frontend.meet.preLoad')
-  #
-  # Route::get('logout', 'Frontend\Auth\AuthController@getLogout')
-  # })
-  #
-  #
-  # Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-  #   Route::get('dashboard', 'DashboardController@index')->name('backend.dashboard')
-  #
-  #   Route::get('edit/team', 'AdminController@selectTeamToEdit')->name('admin.edit.team.select')
-  #   Route::get('edit/team/{id}', 'AdminController@editTeam')->name('admin.edit.team')
-  #   Route::post('edit/team/{id}', 'AdminController@saveEditTeam')->name('admin.edit.saveTeam')
-  #
-  #   Route::get('edit/athlete', 'AdminController@selectAthleteToEdit')->name('admin.edit.athlete.select')
-  #   Route::get('create/athlete', 'AdminController@createAthlete')->name('admin.create.athlete')
-  #   Route::get('edit/athlete/{id}', 'AdminController@editAthlete')->name('admin.edit.athlete')
-  #   Route::post('edit/athlete/{id}', 'AdminController@saveEditAthlete')->name('admin.edit.saveAthlete')
-  #
-  #   Route::get('edit/stadium', 'AdminController@selectStadiumToEdit')->name('admin.edit.stadium.select')
-  #   Route::get('edit/stadium/{id}', 'AdminController@editStadium')->name('admin.edit.stadium')
-  #   Route::post('edit/stadium/{id}', 'AdminController@saveEditStadium')->name('admin.edit.saveStadium')
-  # })
+  #   get 'edit/stadium', 'AdminController#selectStadiumToEdit', as: :admin.edit.stadium.select
+  #   get 'edit/stadium/:id', 'AdminController#editStadium', as: :admin.edit.stadium
+  #   post 'edit/stadium/:id', 'AdminController#saveEditStadium', as: :admin.edit.saveStadium
 end

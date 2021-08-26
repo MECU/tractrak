@@ -7,7 +7,7 @@ class CreateMeets < ActiveRecord::Migration[6.0]
       t.datetime :meet_date
       t.integer :season_id
       t.integer :stadium_id, null: true
-      t.text :points, null: true
+      t.jsonb :points, null: true
       t.string :sponsor, null: true
       t.boolean :ppl, default: 0
       t.boolean :evt, default: 0

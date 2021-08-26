@@ -29,6 +29,8 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'rspec-rails', '~> 4.0.0'
   gem 'rails-controller-testing'
+  gem 'faker'
+  gem 'factory_bot_rails'
 end
 
 group :development do

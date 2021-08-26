@@ -2,10 +2,10 @@ class Stadium < ApplicationRecord
   include Discard::Model
 
   has_many :meets
-  has_one :state
-  has_one :country
+  belongs_to :state
+  belongs_to :country
 
   def name_with_city_state
-    "#{name} (#{city}, #{state.abbr}"
+    "#{name} (#{city}, #{state.abbr})"
   end
 end
