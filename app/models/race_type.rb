@@ -1,24 +1,12 @@
 class RaceType < ApplicationRecord
+  has_many :races
 
-    /*
-     * The race type (800m, Gender, Relay, etc)
-     */
-    public function type()
-    {
-      return $this->hasMany('App\Models\Race', 'id', 'race_type')
-  }
+  # TODO check if this still works this way
+  def athlete_race?
+    athlete_team === 0
+  end
 
-  public function isAthleteRace()
-  {
-    if ($this->athlete_team === 0) return true
-    return false
-    }
-
-    public function isTeamRace()
-    {
-      if ($this->athlete_team === 1) return true
-      return false
-      }
-      }
-
-      end
+  def team_race?
+    athlete_team === 1
+  end
+end

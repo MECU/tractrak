@@ -1,59 +1,19 @@
 class Race < ApplicationRecord
+  belongs_to :meet
+  belongs_to :race_type
+  has_many :athletes # competitor
 
-    /*
-     * The meet this Race belongs to
-     */
-    public function meet()
-    {
-      return $this->belongsTo('App\Models\Meet')
-  }
+  def athlete_race?
+    race_type.athlete_race?
+  end
 
-  /*
-     * The race type (800m, Gender, Relay, etc)
-     */
-  public function type()
-  {
-    return $this->belongsTo('App\Models\RaceType', 'race_type', 'id')
-  }
+  def team_race?
+    race_type.team_race?
+  end
 
-  /**
-     * Is this an individual race?
-     * @return bool
-     */
-  public function isAthleteRace()
-  {
-    return $this->type()->first()->isAthleteRace()
-  }
+  def first_place
+    competitors = athlete_race? ? athletes : teams
 
-  /**
-     * Is this a Team race?
-     * @return bool
-     */
-  public function isTeamRace()
-  {
-    return $this->type()->first()->isTeamRace()
-  }
-
-  public function athletes()
-  {
-    return $this->morphedByMany('App\Models\Athlete', 'competitor')->withPivot('id', 'lane', 'result', 'place')
-  }
-
-  public function teams()
-  {
-    return $this->morphedByMany('App\Models\Team', 'competitor')->withPivot('id', 'lane', 'result', 'place')
-  }
-
-  public function firstPlace()
-  {
-    if ($this->isAthleteRace()) {
-      $competitors = $this->athletes()
-    } else {
-      $competitors = $this->teams()
-    }
-
-    return $competitors->where('place', '1')->first()
-    }
-    }
-
-    end
+    competitors.where('place', 1).first
+  end
+end

@@ -1,0 +1,2 @@
+class StadiumController < ApplicationController
+end
