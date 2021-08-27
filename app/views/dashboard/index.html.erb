@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="card mt-2">
+      <div class="card-header">Meet Management</div>
+
+      <div class="card-body">
+        <%= link_to 'Create Meet', meet_create_path, class: 'btn btn-primary btn-sm' %>
+      </div>
+    </div>
+    <% if current_user.meets.present? %>
+    <div class="card">
+      <div class="card-header">Your Meets</div>
+      <div class="card-body">
+        <ul>
+          <% current_user.meets.each do |meet| %>>
+          <li><%= meet.name %>,
+            <% if meet.location.present? %>
+            at <%= meet.location %>
+            <% end %>
+            on <%= meet.meet_date %>
+            <%= link_to 'Modify Meet', meet_modify_path(meet.id), class: 'btn btn-primary btn-sm' %>
+            <%= link_to 'Run Meet', meet_run_path(meet.id), class: 'btn btn-success btn-sm' %>
+            <%= link_to 'View Meet', live_meet_path(meet.id), class: 'btn btn-success btn-sm' %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <% else %>
+      <div class="card">
+        <div class="card-body">You have not created any meets. They will show here after you
+          <%= link_to 'create', meet_create_path %> them.</div>
+      </div>
+
+    <% end %>
+
+<!--    <div class="panel panel-default">-->
+<!--      <div class="panel-heading">Meet Credits</div>-->
+
+<!--      <div class="panel-body">-->
+<!--        The site is currently free. No credits needed.-->
+        <%#= You have X credits. %>
+<!--      </div>-->
+<!--    </div>-->
+  </div>
+</div>
+    
