@@ -7,7 +7,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarCollapse">
+  <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <%= link_to 'About', about_path, class: 'nav-link' %>
@@ -19,20 +19,20 @@
         <%= link_to 'Contact', contact_path, class: 'nav-link' %>
       </li>
       <% unless user_signed_in? %>
-      <li class="nav-item">
-        <%= link_to 'Log In', new_user_session_path, class: 'nav-link' %>
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Register', new_user_registration_path, class: 'nav-link' %>
-      </li>
+        <li class="nav-item">
+          <%= link_to 'Log In', new_user_session_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Register', new_user_registration_path, class: 'nav-link' %>
+        </li>
       <% else %>
         <li class="nav-text"><%= current_user.name %></li>
-      <li class="nav-item">
-          <%= link_to 'Dashboard', dashboard_path, class: 'dropdown-item' %>
-      </li>
-      <li class="nav-item">
-        <%= link_to 'Log out', destroy_user_session_path, class: 'dropdown-item' %>
-      </li>
+        <li class="nav-item">
+            <%= link_to 'Dashboard', dashboard_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Log out', destroy_user_session_path, class: 'nav-link', method: :delete %>
+        </li>
       <% end %>
     </ul>
   </div>
