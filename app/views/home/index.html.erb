@@ -1,0 +1,59 @@
+<div class="jumbotron" style="background-color:#565656; color:white">
+  <div class="container-fluid">
+    <h1>Welcome to <span class="tt-green" style="color:#39ff14">TracTrak</span></h1>
+    <p>Live results from track meets. Tell your coaches and meet directors you want to see results faster using TracTrak.</p>
+  </div>
+</div>
+<%#--<div class="col-md-10 col-md-offset-1">--%>
+  <%#--<div class="panel panel-default">--%>
+  <%#--<div class="panel-header"><i class="fa fa-search"></i> Find a meet</div>--%>
+  <%#--<div class="panel-body">--%>
+  <%#--<input type="text" id="findEvent" autofocus style="width:100%" title="Find a Meet">--%>
+  <%#--</div>--%>
+  <%#--</div>--%>
+  <%#--</div>--%>
+<div class="card mt-2" id="current">
+  <div class="card-header"><i class="far fa-clock"></i> Current meets</div>
+  <div class="card-body">
+    <% if @current_meets.present? %>
+      <ul class="list-group list-group-flush">
+        <% @current_meets.each do |meet| %>
+          <%= render partial: 'meet', locals: { meet: meet } %>
+        <% end %>
+      </ul>
+    <% else %>
+    <em>Nothing happening right now ...</em>
+    <% end %>
+  </div>
+</div>
+<div class="card mt-2" id="upcoming">
+  <div class="card-header"><i class="far fa-calendar-alt"></i> Upcoming meets</div>
+  <div class="card-body">
+    <% if @upcoming_meets.present? %>
+    <ul class="list-group list-group-flush">
+      <% @upcoming_meets.each do |meet| %>
+      <%= render partial: 'meet', locals: { meet: meet } %>
+      <% end %>
+    </ul>
+    <% else %>
+    <em>Nothing planned right now ... maybe you'd like to use TracTrak at your meet?</em>
+    <% end %>
+  </div>
+</div>
+
+<div class="card mt-2" id="past">
+  <div class="card-header"><i class="far fa-calendar-check"></i> Past meets</div>
+  <div class="card-body">
+    <ul class="list-group list-group-flush">
+      <% if @recent_meets.present? %>
+        <ul class="list-group list-group-flush">
+          <% @recent_meets.each do |meet| %>
+            <%= render partial: 'meet', locals: { meet: meet } %>
+          <% end %>
+        </ul>
+      <% else %>
+        <em>We haven't done anything ... maybe you'd like to use TracTrak at your meet?</em>
+      <% end %>
+    </ul>
+  </div>
+</div>

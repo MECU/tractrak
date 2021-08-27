@@ -4,9 +4,6 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
   get '/', to: 'home#index', as: :home
-
-  get 'upcoming-meets', to: 'meet#upcoming_meets', as: :upcoming_meets
-  get 'current-meets', to: 'meet#current_meets', as: :current_meets
   #
   # TODO: Is this used?
   # get 'api-view/meet-event/{meetId}/{eventId?}/{roundId?}/{heatId?}', 'MeetController#viewEvent
