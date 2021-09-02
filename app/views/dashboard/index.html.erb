@@ -12,16 +12,8 @@
       <div class="card-header">Your Meets</div>
       <div class="card-body">
         <ul>
-          <% current_user.meets.each do |meet| %>>
-          <li><%= meet.name %>,
-            <% if meet.location.present? %>
-            at <%= meet.location %>
-            <% end %>
-            on <%= meet.meet_date %>
-            <%= link_to 'Modify Meet', meet_modify_path(meet.id), class: 'btn btn-primary btn-sm' %>
-            <%= link_to 'Run Meet', meet_run_path(meet.id), class: 'btn btn-success btn-sm' %>
-            <%= link_to 'View Meet', live_meet_path(meet.id), class: 'btn btn-success btn-sm' %>
-          </li>
+          <% current_user.meets.each do |meet| %>
+            <%= render :partial => 'meet', locals: { meet: meet } %>
           <% end %>
         </ul>
       </div>

@@ -9,23 +9,23 @@ Rails.application.routes.draw do
   # get 'api-view/meet-event/{meetId}/{eventId?}/{roundId?}/{heatId?}', 'MeetController#viewEvent
   #
   get 'meet-event/:meet_id', to: 'meet#meet'
-  get 'meet-event/:meet_id/:event_id(/:round_id)(/:heat_id)', to: 'meet#event', constraints: {
-    meet_id: /\d/,
-    event_id: /\d/,
-    round_id: /\d/,
-    heat_id: /\d/
-  }
+  get 'meet-event/:meet_id/:event_id(/:round_id)(/:heat_id)', to: 'meet#event' #, constraints: {
+  #   meet_id: /\d/,
+  #   event_id: /\d/,
+  #   round_id: /\d/,
+  #   heat_id: /\d/
+  # }
 
   get 'about', to: 'home#about', as: :about
   get 'requirements', to: 'home#requirements', as: :requirements
   get 'contact', to: 'home#contact', as: :contact
 
-  get 'meet/:id', to: 'meet#live', as: :live_meet, constraints: { id: /\d/ }
-  get 'meet/team-standings/:id', to: 'meet#team_standings', as: :team_standings, constraints: { id: /\d/ }
-  get 'meet/pdf/:id', to: 'meet#pdf', as: :meet_pdf, constraints: { id: /\d/ }
+  get 'meet/:id', to: 'meet#live', as: :live_meet # , constraints: { id: /\d/ }
+  get 'meet/team-standings/:id', to: 'meet#team_standings', as: :team_standings # , constraints: { id: /\d/ }
+  get 'meet/pdf/:id', to: 'meet#pdf', as: :meet_pdf # , constraints: { id: /\d/ }
 
-  get 'stadium/:id', to: 'stadium#view', as: :stadium_view, constraints: { id: /\d/ }
-  get 'athlete/:id(/:name)', to: 'athlete#view', as: :athlete_view, constraints: { id: /\d/ }
+  get 'stadium/:id', to: 'stadium#view', as: :stadium_view # , constraints: { id: /\d/ }
+  get 'athlete/:id(/:name)', to: 'athlete#view', as: :athlete_view # , constraints: { id: /\d/ }
 
   # Dashboard, requires login
   get 'dashboard', to: 'dashboard#index', as: :dashboard

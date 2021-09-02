@@ -6,18 +6,9 @@ class Meet < ApplicationRecord
   belongs_to :stadium
   has_many :races
 
-  def set_stadium(id)
-    stadium = Stadium.find!(id)
-    stadium_id = id
-  end
-
-  def set_owner(id)
-    owner_id = id
-  end
-
   def paid?
     return true
-    paid === 1 # enable when paying is required
+    # paid === 1 # enable when paying is required
   end
 
   def ready?
@@ -49,13 +40,5 @@ class Meet < ApplicationRecord
     # ])
     #
     # return $pdf->download('TracTrak-meet-flyer.pdf')
-  end
-
-  def serialized
-    [
-      'link' => URL::route('frontend.meet.live', ['id' => id]),
-      'name' => name,
-      'datetime' => meet_date.format('Y-m-d g:ia')
-    ]
   end
 end
