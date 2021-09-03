@@ -13,3 +13,17 @@
  *= require_tree .
  *= require_self
  */
+body {
+    padding-top: 4.3rem;
+}
+.tt-green {
+    color:#39ff14
+}
+
+.tt-background {
+    background-color: #565656;
+}
+
+.highlight {
+    background-color: yellow;
+}
