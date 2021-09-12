@@ -1,9 +1,9 @@
-<li><%= meet.name %>,
+<li class="list-group-item">
+  <%= link_to meet.name, live_meet_path(meet.id) %>,
   <% if meet.stadium.present? %>
     at <%= meet.stadium %>
   <% end %>
   on <%= meet.meet_date %>
   <%= link_to 'Modify Meet', meet_modify_path(meet.id), class: 'btn btn-primary btn-sm' %>
-  <%= link_to 'Run Meet', meet_run_path(meet.id), class: 'btn btn-success btn-sm' %>
-  <%= link_to 'View Meet', live_meet_path(meet.id), class: 'btn btn-success btn-sm' %>
+  <%= link_to 'Run Meet', meet_run_path(meet.id), class: 'btn btn-sm' %>
 </li>
