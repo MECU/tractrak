@@ -7,7 +7,7 @@
     "@popperjs/core": "^2.9",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
-    "@rails/webpacker": "4.3.0",
+    "@rails/webpacker": "5.4.2",
     "bootstrap": "^5.1",
     "jquery": "^3.6",
     "stimulus": "^2.0.0",
@@ -16,6 +16,6 @@
   "version": "0.1.0",
   "devDependencies": {
     "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.0.0"
+    "webpack-dev-server": "^4.2.0"
   }
 }
