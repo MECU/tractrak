@@ -29,8 +29,7 @@ Rails.application.routes.draw do
 
   # Dashboard, requires login
   get 'dashboard', to: 'dashboard#index', as: :dashboard
-  get 'meet/create/new', to: 'dashboard#create', as: :meet_create
-  post 'meet/create/action', to: 'dashboard#actuallyCreate', as: :meet_actually_create
+  post 'dashboard/meet/create', to: 'dashboard#create_meet', as: :create_meet
 
   get 'meet/modify/:id', to: 'dashboard#edit', as: :meet_modify
   post 'meet/modify/:id/edit', to: 'dashboard#actuallyEdit', as: :meet_actually_edit

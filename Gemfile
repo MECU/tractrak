@@ -24,6 +24,8 @@ gem 'devise'
 gem 'discard'
 gem 'dotenv-rails'
 
+gem 'local_time'
+
 group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'

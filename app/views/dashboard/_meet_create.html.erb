@@ -1,0 +1,7 @@
+<%= form_for Meet.new, url: create_meet_path, html: {class: 'form-inline'} do |f| %>
+  Name: <%= f.text_field :name %>
+  Sponsor : <%= f.text_field :sponsor %>
+  Date : <%= f.datetime_select :meet_date, ampm: true, :default => { :hour => 9, :minute => 0 } %>
+  Timezone : <%= time_zone_select(:meet, :time_zone, nil, default: Time.now) %>
+  <%= f.submit 'Create' %>
+<% end %>

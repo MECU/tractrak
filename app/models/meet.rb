@@ -2,12 +2,12 @@ class Meet < ApplicationRecord
   include Discard::Model
 
   belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
-  belongs_to :season
-  belongs_to :stadium
+  belongs_to :season, optional: true
+  belongs_to :stadium, optional: true
   has_many :races
 
   def paid?
-    return true
+    true
     # paid === 1 # enable when paying is required
   end
 
