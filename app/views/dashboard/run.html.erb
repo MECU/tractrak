@@ -1,0 +1,116 @@
+<div class="row">
+  <div class="col-md-10 col-md-offset-1">
+    <div class="card panel-default">
+      <div class="card-heading">Meet Readiness</div>
+      <div class="card-body">
+        <ol class="list-group list-group-flush">
+          <li class="list-group-item list-group-item-action">
+            <a href="https://github.com/MECU/lif-copier/raw/v2.0/tractrak.exe"
+               class='btn btn-primary btn-sm'>
+              Download the .LIF notifier
+            </a>
+          </li>
+          <li class="list-group-item list-group-item-action">
+            <%= link_to 'Download Key file', meet_key_path(@meet.id), class: 'btn btn-primary btn-sm' %>
+            <strong>this is different for each meet</strong>
+          </li>
+          <li class="list-group-item">Place both files where your .LIF files are created.
+            Run the file.
+            Leaving it running the entire meet.</li>
+          <!--          <% if @meet.paid? %> -->
+          <!--              <li class="list-group-item-success list-group-item">Paid! Thank you.</li>-->
+          <!--
+          <!-- <% else %>-->
+          <!--              <li class="list-group-item">During <em>Beta</em>, payment is not required. But you-->
+          <!--                  must {!! link_to_route('contact', 'contact us') !!} to get your meet activated.-->
+          <!--              </li>-->
+          <!--
+          <!-- <% end %>-->
+          <% if @meet.ppl %>
+            <li class="list-group-item-success list-group-item">Athletes loaded</li>
+          <% else %>
+            <li class="list-group-item-danger list-group-item">Pre-load athletes: <strong>lynx.ppl</strong> in form below</li>
+          <% end %>
+          <% if @meet.evt %>
+            <li class="list-group-item-success list-group-item">Events loaded</li>
+          <% else %>
+            <li class="list-group-item-danger list-group-item">Pre-load events: <strong>lynx.evt</strong> in form below (This takes a few seconds...)</li>
+          <% end %>
+          <% if @meet.sch %>
+            <li class="list-group-item-success list-group-item">Schedule loaded</li>
+          <% else %>
+            <li class="list-group-item-danger list-group-item">Pre-load schedule: <strong>lynx.sch</strong> in form below</li>
+          <% end %>
+          <% unless @meet.points.nil? %>
+            <li class="list-group-item-success list-group-item">Points setup</li>
+          <% else %>
+            <li class="list-group-item-warning list-group-item">Setup points (optional)</li>
+          <% end %>
+          <li class="list-group-item">
+            Print QR codes! Unless you're going to tell people. Over, and over and over and over and
+            over. Which you should have the stadium announcer do, but also make it easy and print this,
+            and post it around the stadium and especially near your results board.
+          </li>
+          <li class="list-group-item list-group-item-action">
+            <%= link_to 'Bang! Run!', live_meet_path(@meet.id), class: 'btn btn-success btn-sm' %>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Preload or Reload Data</div>
+      <div class="panel-body">
+        <%= form_for 'meet_files', url: meet_preload_path(@meet.id), html: {class: 'form-inline'} do |f| %>
+          <%= f.file_field :file, required: true %>
+          <%= f.submit 'Upload', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+      <div class="panel-footer">
+        Re-uploading a file will just update the information, <strong>including all past results</strong>. Use with
+        caution.
+      </div>
+    </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">QR Code</div>
+      <div class="panel-body">
+<!--        <img alt="QR code" src="{!! $@meet.qr.writeDataUri() !!}"/>-->
+        <%= link_to 'Download PDF', meet_pdf_path(@meet.id), class: 'btn btn-primary btn-sm' %>
+        <p>
+          Logo files to use to generate your own flyer:
+          <img src="/tractrak-logo-48x48.png" height="48px" width="48px"/>
+          <%= link_to 'Download 48 x 48', '/tractrak-logo-48x48.png', download: "tractrak-logo-48x48.png" %>
+          <%= link_to 'Download 256 x 256', '/tractrak-logo-256x256.png', download: "tractrak-logo-256x256.png" %>
+          <%= link_to 'Download 512 x 512', '/tractrak-logo-512x512.png', download: "tractrak-logo-512x512.png" %>
+          <%= link_to 'Download 1024 x 1024', '/tractrak-logo-1024x1024.png', download: "tractrak-logo-1024x1024.png" %>
+          <%= link_to 'Download 2048 x 2048', '/tractrak-logo-2048x2048.png', download: "tractrak-logo-2048x2048.png" %>
+          <%= link_to 'Download SVG', '/tractrak.svg', download: "tractrak.svg" %>
+        </p>
+      </div>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">Points</div>
+      <div class="panel-body">
+        TODO
+<!--        @include('frontend.@meet.pointsForm')-->
+      </div>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">Run Meet</div>
+      <div class="panel-body">Run.</div>
+    </div>
+<!--    <div class="panel panel-default">-->
+<!--      <div class="panel-heading">Meet Statistics</div>-->
+<!--      <div class="panel-body">Someday ...-->
+<!--        <ul>-->
+<!--          <li>Number of athletes: {{ $meet->numberOfAthletes() }}</li>-->
+<!--          <li>Number of teams: {{ $meet->numberOfTeams() }}</li>-->
+<!--          <li>Number of events: {{ $meet->numberOfEvents() }}</li>-->
+<!--        </ul>-->
+<!--      </div>-->
+<!--    </div>-->
+  </div>
+</div>
