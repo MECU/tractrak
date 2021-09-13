@@ -22,6 +22,8 @@
 <%= render partial: 'navigation' %>
 
 <div class="container-fluid">
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
   <%#= render 'messages', local_variables { errors: errors } %>
   <%= yield %>
 </div>

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, path: 'auth',
-             path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'sign_up' }
+                     path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'sign_up' }
 
   root to: 'home#index'
   get '/', to: 'home#index', as: :home
@@ -36,8 +36,8 @@ Rails.application.routes.draw do
   post 'meet/points/:id', to: 'dashboard#savePoints', as: :meet_save_points
 
   get 'meet/run/:id', to: 'dashboard#run', as: :meet_run
-  get 'meet/key/:id', to: 'dashboard#downloadKey', as: :meet_key
-  post 'meet/preLoad/:id', to: 'dashboard#preLoad', as: :meet_preload
+  get 'meet/key/:id', to: 'dashboard#download_key', as: :meet_key
+  post 'meet/preload/:id', to: 'dashboard#preload', as: :meet_preload
 
   # Admin, requires login and permission
   #   Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {

@@ -3,10 +3,10 @@ class RaceType < ApplicationRecord
 
   # TODO check if this still works this way
   def athlete_race?
-    athlete_team === 0
+    athlete_team.zero?
   end
 
   def team_race?
-    athlete_team === 1
+    athlete_team == 1
   end
 end

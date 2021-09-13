@@ -3,7 +3,10 @@ class Team < ApplicationRecord
 
   validates :name, presence: true
 
-  belongs_to :athlete # current?
-  belongs_to :race
+  has_many :careers
+  has_many :athletes, through: :careers
+  has_many :competitors
+  has_many :races, through: :competitors
+
   has_one :state
 end
