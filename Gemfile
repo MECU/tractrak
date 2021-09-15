@@ -25,6 +25,8 @@ gem 'discard'
 gem 'dotenv-rails'
 
 gem 'local_time'
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
 
 group :development, :test do
   gem 'factory_bot_rails'
