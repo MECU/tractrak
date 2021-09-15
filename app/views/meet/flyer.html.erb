@@ -1,17 +1,8 @@
-<!doctype html>
-<head>
-
-</head>
-<body>
-
 <h2 align="center" style="font-size:60px">
   <img src="https://tractrak.com/tractrak-logo-512x512.png" height="512" width="512"/>
   <br>TracTrak.com
 </h1>
 <h2 align="center" style="font-size:40px">Free, Fast, Live Meet Results</h2>
-<!--<p align="center"><img alt="QR code" src="<%#= # TODO QR CODE dataURI %>"/></p>-->
+<p align="center"><img alt="QR code" src="https://tractrak.com/<%= meet.qr(live_meet_path(meet.id)) %>"/></p>
 <h1 align="center"><%= meet.name %></h2>
 <h3 align="center"><%= meet.meet_date.strftime('%B %e, %Y %l:%M%P %Z') %></h3>
-
-</body>
-</html>

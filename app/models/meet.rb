@@ -17,20 +17,14 @@ class Meet < ApplicationRecord
     sch && evt && ppl && paid?
   end
 
-  def qr
-    # TODO
-    #
-    # $qrCode = new QrCode()
-    # $qrCode.setWriterByName('png')
-    # $qrCode.setText(URL.route('frontend.meet.live', ['id: $this.id]))
-    # $qrCode.setSize(300)
-    # $qrCode.setMargin(10)
-    # $qrCode.setErrorCorrectionLevel(new ErrorCorrectionLevel(ErrorCorrectionLevel.HIGH))
-    # $qrCode.setForegroundColor(['r: 0, 'g: 0, 'b: 0, 'a: 0])
-    # $qrCode.setBackgroundColor(['r: 255, 'g: 255, 'b: 255, 'a: 0])
-    # $qrCode.setLabel('TracTrak.com', 24)
-    #
-    # return $qrCode
+  def qr(text)
+    require 'barby'
+    require 'barby/barcode'
+    require 'barby/barcode/qr_code'
+    require 'barby/outputter/png_outputter'
+    barcode = Barby::QrCode.new(text, level: :q, size: 9)
+    base64_output = Base64.encode64(barcode.to_png({ xdim: 5 }))
+    "data:image/png;base64,#{Rack::Utils.escape(base64_output)}"
   end
 
   def generate_pdf

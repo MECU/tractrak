@@ -9,7 +9,7 @@
 # https://github.com/mileszs/wicked_pdf/blob/master/README.md
 
 WickedPdf.config = {
-  exe_path: '/usr/local/bin/wkhtmltopdf',
+  # exe_path: '/usr/local/bin/wkhtmltopdf',
   enable_local_file_access: true
 
                     # Path to the wkhtmltopdf executable: This usually isn't needed if using
