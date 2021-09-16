@@ -1,12 +1,11 @@
 class RaceType < ApplicationRecord
   has_many :races
 
-  # TODO check if this still works this way
   def athlete_race?
-    athlete_team.zero?
+    athlete_team == false
   end
 
   def team_race?
-    athlete_team == 1
+    athlete_team
   end
 end

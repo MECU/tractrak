@@ -10,7 +10,7 @@ class DashboardController < ApplicationController
                                                  params['meet']['meet_date(5i)'].to_i,
                                                  0,
                                                  Time.zone.utc_offset / 1.hour.to_i)
-    meet = Meet.create(params.require(:meet).permit(:name, :meet_date, :sponsor))
+    meet = Meet.create(params.require(:meet).permit(:name, :meet_date, :sponsor, :time_zone))
     meet.owner = current_user
     meet.save!
 

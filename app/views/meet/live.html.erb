@@ -1,0 +1,42 @@
+<% content_for :title do %>
+  TracTrak | <%= @meet.name %>
+  <% if @meet.sponsor.present? %>
+    | <%= @meet.sponsor %>
+  <% end %>
+  <% if @meet.stadium.present? %>
+    | <%= @meet.stadium.name %>, <%= @meet.stadium.city %>, <%= @meet.stadium.state.abbr %>
+  <% end %>
+<% end %>
+
+<div class="row">
+  <div class="col">
+    <div class="text-center">
+      <h1><%= @meet.name %></h1>
+      <% if @meet.sponsor.present? %>
+        <h2><%= @meet.sponsor %></h2>
+      <% end %>
+      <!--      <h3>{!! link_to_route('frontend.stadium.view', @meet.stadium.name, @meet.stadium.id) !!}, <%#= @meet.stadium.city %>, <%#= @meet.stadium.state.name %></h3>-->
+      <h3><%= local_time(@meet.meet_date, '%B %e, %Y %l:%M%P %Z') %></h3>
+      <% if @meet.points.present? %>
+        <!--      <h4>{!! link_to_route('frontend.@meet.teamStandings', 'Team Standings', @meet.id, ['class' => 'btn btn-primary btn-block']) !!}</h4>-->
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if @meet.ready? %>
+  <turbo-frame id="meet-<%= @meet.id %>" src="<%= meet_data_path(@meet.id) %>">
+    <div class="row">
+      <div class="col">
+        <div class="text-center">
+          <i class="fas fa-cog fa-spin fa-10x"></i>
+        </div>
+      </div>
+    </div>
+  </turbo-frame>
+<% else %>
+  <div class="alert alert-info" role="alert"><i class="fas fa-hand-rock"></i>
+    We're glad you're pumped for the meet. It's not quite ready yet.
+    Please check back closer to the start time listed above.
+  </div>
+<% end %>

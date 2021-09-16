@@ -1,0 +1,46 @@
+<% case lane.place %>
+<% when 1 %>
+  <tr class="table-success">
+<% when 'DQ', 'FS' %>
+  <tr class="table-success">
+<% when 'SCR', 'DNS' %>
+  <tr class="table-success">
+<% when 'DNF' %>
+  <tr class="table-success">
+<% else %>
+  <tr>
+<% end %>
+<td><%= lane.lane %></td>
+<% if lane.race.team_race? %>
+  <% if lane.team.abbr.present? %>
+    <td>
+      <%= lane.team.name %> (<%= lane.team.abbr %>)
+    </td>
+    <!--<td v-else-if="lane.teamName" class="visible-lg"><%= lane.teamName %></td>-->
+  <% else %>
+    <td><%= lane.team.name %></td>
+  <% end %>
+  <td><%= lane.place %></td>
+  <% if lane.result != '999999999' %>
+    <td><%= lane.result %></td>
+  <% else %>
+    <td>&nbsp;</td>
+  <% end %>
+  </tr>
+<% else %>
+  <%# if lane.athlete.present? %>
+<!--    <td>-->
+<!--      <a href="/athlete/<%#= lane.athlete.id %>/<%#= lane.athlete.url %>"><%#= lane.athlete.name %></a>-->
+<!--    </td>-->
+  <%# else %>
+    <td><%= lane.athlete.name %></td>
+  <%# end %>
+  <td><%= lane.team.name %></td>
+  <td><%= lane.place %></td>
+  <% if lane.result != '999999999' %>
+    <td><%= lane.result %></td>
+  <% else %>
+    <td>&nbsp;</td>
+  <% end %>
+  </tr>
+<% end %>

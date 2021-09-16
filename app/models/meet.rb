@@ -27,17 +27,6 @@ class Meet < ApplicationRecord
     "data:image/png;base64,#{Rack::Utils.escape(base64_output)}"
   end
 
-  def generate_pdf
-    # TODO
-    #
-    # $pdf = PDF.loadView('flyer', [
-    #   'meet: $this,
-    #   'qr: $this.qr(),
-    # ])
-    #
-    # return $pdf.download('TracTrak-meet-flyer.pdf')
-  end
-
   def ppl_process(file)
     CSV.foreach(file.path, headers: false) do |row|
       next if row[1].nil?
@@ -54,7 +43,7 @@ class Meet < ApplicationRecord
       #  )
 
       gender = row[5] == 'M' ? 0 : 1
-      athlete = athlete_search("#{row[3]} #{row[4]}", gender)
+      athlete = athlete_search("#{row[2]} #{row[1]}", gender)
 
       team = team_search(row[3])
 
@@ -140,16 +129,16 @@ class Meet < ApplicationRecord
   def team_racer(row)
     team = team_search(row[3])
 
-    Competitor.create!(team: team, race: @race, lane: row[2])
+    Competitor.create!(team: team, race: @race, lane: row[2].to_i)
   end
 
   def athlete_racer(row)
-    athlete = athlete_search("#{row[3]} #{row[4]}", @race.race_type.gender)
+    athlete = athlete_search("#{row[4]} #{row[3]}", @race.race_type.gender)
 
     team = team_search(row[5])
     athlete.set_current_team(team)
 
-    Competitor.create!(athlete: athlete, race: @race, lane: row[2])
+    Competitor.create!(athlete: athlete, race: @race, team: team, lane: row[2].to_i)
   end
 
   def athlete_search(name, gender)

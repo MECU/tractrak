@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2021_09_12_024847) do
     t.integer "race_id"
     t.integer "athlete_id"
     t.integer "team_id"
-    t.boolean "lane"
+    t.integer "lane"
     t.string "result"
     t.string "seed"
     t.string "place"
@@ -80,6 +80,7 @@ ActiveRecord::Schema.define(version: 2021_09_12_024847) do
     t.integer "stadium_id"
     t.text "points"
     t.string "sponsor"
+    t.string "time_zone"
     t.boolean "ppl", default: false
     t.boolean "evt", default: false
     t.boolean "sch", default: false

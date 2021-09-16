@@ -8,7 +8,11 @@ class MeetController < ApplicationController
   end
 
   def live
+    @meet = Meet.find(params[:id])
+  end
 
+  def data
+    @meet = Meet.find(params[:id])
   end
 
   def team_standings

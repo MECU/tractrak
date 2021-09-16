@@ -1,0 +1,38 @@
+<turbo-frame id="meet-<%= @meet.id %>">
+  <div class="d-flex align-items-start">
+    <div class="nav flex-column nav-pills me-3" id="events-tab" role="tablist" aria-orientation="vertical">
+      <% @meet.races.group_by(&:race_type).each do |key, races| %>
+        <button class="nav-link" id="pills-nav-<%= key.id %>" data-bs-toggle="pill" data-bs-target="#pills-event-<%= key.id %>" role="tab">
+          <%= key.name %>
+          <!--  <span v-show="updated">HI!!!</span>-->
+        </button>
+      <% end %>
+    </div>
+    <div class="tab-content" id="events-tabContent">
+      <% @meet.races.group_by(&:race_type).each do |key, races| %>
+        <div class="tab-pane fade" id="pills-event-<%= key.id %>" role="tabpanel" aria-labelledby="pills-profile-tab">
+          <% races.each do |race| %>
+            <%= render partial: 'race', locals: { race: race } %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</turbo-frame>
+
+<style scoped>
+    .xs-collapse {
+        display: none;
+    }
+
+    @media (min-width: 769px) {
+        .xs-toggle {
+            display: none;
+            visibility: hidden;
+        }
+
+        .xs-collapse {
+            display: block;
+        }
+    }
+</style>

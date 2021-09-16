@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   # TODO: Is this used?
   # get 'api-view/meet-event/{meetId}/{eventId?}/{roundId?}/{heatId?}', 'MeetController#viewEvent
   #
-  get 'meet-event/:meet_id', to: 'meet#meet'
+  get 'meet/:id/data', to: 'meet#data', as: :meet_data
   get 'meet-event/:meet_id/:event_id(/:round_id)(/:heat_id)', to: 'meet#event' #, constraints: {
   #   meet_id: /\d/,
   #   event_id: /\d/,
