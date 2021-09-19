@@ -8,12 +8,7 @@ Rails.application.routes.draw do
   post 'api/meet-file', to: 'meet#api' # Route hardcoded in lif uploader
 
   get 'meet/:id/data', to: 'meet#data', as: :meet_data
-  # get 'meet-event/:meet_id/:event_id(/:round_id)(/:heat_id)', to: 'meet#event' #, constraints: {
-  #   meet_id: /\d/,
-  #   event_id: /\d/,
-  #   round_id: /\d/,
-  #   heat_id: /\d/
-  # }
+  get 'meet/:meet/race/:race', to: 'meet#race'
 
   get 'about', to: 'home#about', as: :about
   get 'requirements', to: 'home#requirements', as: :requirements

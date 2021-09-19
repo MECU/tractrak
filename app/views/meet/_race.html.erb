@@ -1,31 +1,32 @@
-<h4>
-  Heat <%= race.heat %>
-  <% if race.start.present? %>
-    <span class="badge badge-secondary"><%= local_time(race.start, '%l:%M%P') %></span>
-  <% end %>
-  <% if race.wind.present? %>
-    <span class="badge badge-info">Wind <%= race.wind %></span>
-  <% end %>
-</h4>
-<div class="table-responsive">
-  <table id="<%= "event-table-#{race.event}-#{race.round}-#{race.heat}" %>"
-         class="table table-striped table-hover table-condensed">
-    <thead class="thead-light">
-    <tr>
-      <th>Lane</th>
-      <% if race.race_type.athlete_race? %>
-        <th>Name</th>
-      <% end %>
-      <th>Team</th>
-      <th>Position</th>
-      <th>Time</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% race.competitors.each do |lane| %>
-      <%= render partial: 'meet/lane', locals: { lane: lane } %>
+<turbo-frame id="meet-<%= race.meet_id %>-race-<%= race.id %>">
+  <h4>
+    Heat <%= race.heat %>
+    <% if race.start.present? %>
+      <span class="badge badge-secondary"><%= local_time(race.start, '%l:%M%P') %></span>
     <% end %>
-    </tbody>
-  </table>
-</div>
+    <% if race.wind.present? %>
+      <span class="badge badge-info">Wind <%= race.wind %></span>
+    <% end %>
+  </h4>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover table-condensed">
+      <thead class="thead-light">
+      <tr>
+        <th>Lane</th>
+        <% if race.race_type.athlete_race? %>
+          <th>Name</th>
+        <% end %>
+        <th>Team</th>
+        <th>Position</th>
+        <th>Time</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% race.competitors.sort_by(&:place).each do |lane| %>
+        <%= render partial: 'meet/lane', locals: { lane: lane } %>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</turbo-frame>
 <!-- # TODO: Combined results -->

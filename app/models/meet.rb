@@ -45,7 +45,7 @@ class Meet < ApplicationRecord
       gender = row[5] == 'M' ? 0 : 1
       athlete = Athlete.finder(name: "#{row[2]} #{row[1]}", gender: gender, create: true)
 
-      team = team_search(row[3])
+      team = Team::finder(name: row[3], create: true)
 
       athlete.careers.where(team: team).first_or_create!(current: true)
 
@@ -127,7 +127,7 @@ class Meet < ApplicationRecord
   end
 
   def team_racer(row)
-    team = team_search(row[3])
+    team = Team::finder(name: row[3], create: true)
 
     Competitor.create!(team: team, race: @race, lane: row[2].to_i)
   end
@@ -135,21 +135,9 @@ class Meet < ApplicationRecord
   def athlete_racer(row)
     athlete = Athlete.finder(name: "#{row[4]} #{row[3]}", gender: @race.race_type.gender, create: true)
 
-    team = team_search(row[5])
+    team = Team::finder(name: row[5], create: true)
     athlete.set_current_team(team)
 
     Competitor.create!(athlete: athlete, race: @race, team: team, lane: row[2].to_i)
-  end
-
-  def team_search(name)
-    # TODO: Need to find teams better, filtering by state at least
-    team = Team.find_or_create_by!(name: name)
-    raise RuntimeException("Team id is zero: #{team.name}") if team.id.zero?
-
-    return team unless team.new_record?
-
-    team.abbr = name[0, 4]
-    team.save!
-    team
   end
 end

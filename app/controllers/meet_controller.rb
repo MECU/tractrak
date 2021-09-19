@@ -25,9 +25,9 @@ class MeetController < ApplicationController
     # Process the file
     file_extension = file.original_filename.split('.').last
     if file_extension == 'lif'
-      event_round_heat = lif_file(file, @meet.id)
+      @race = lif_file(file, @meet.id)
     end
-    if event_round_heat.nil?
+    if @race.nil?
       return response(
         [
           'status': 'fail',
@@ -36,9 +36,12 @@ class MeetController < ApplicationController
       )
     end
 
-    @meet.broadcast_replace_later_to "meet-#{@meet.id}", partial: 'meet/meet', target: "meet-#{@meet.id}", locals: { meet: @meet }
+    @race.broadcast_replace_later_to "meet-#{@meet.id}",
+                                     partial: 'meet/race',
+                                     target: "meet-#{@meet.id}-race-#{@race.id}",
+                                     locals: { race: @race }
 
-    {status: 'success'}.to_json
+    render json: {status: 'success'}
   end
 
   def live
@@ -49,6 +52,12 @@ class MeetController < ApplicationController
     @meet = Meet.find(params[:id])
 
     render partial:'meet/meet', locals: { meet: @meet }
+  end
+
+  def race
+    @race = Race.find(params[:race])
+
+    render partial: 'meet/race', locals: { race: @race }
   end
 
   def team_standings
@@ -90,12 +99,9 @@ class MeetController < ApplicationController
   end
 
   def lif_file(file, meet_id)
-    puts 'hi'
     ActiveRecord::Base.transaction do
       CSV.foreach(file.path, headers: false).with_index(1) do |row, row_counter|
-        puts 'csv start'
         if row_counter === 1
-          puts 'row 1'
           # row will be an array containing the comma-separated elements of the line:
           # array(
           #   0: @event_id,
@@ -130,7 +136,6 @@ class MeetController < ApplicationController
 
           Rails.logger.debug("Row 1 processed for #{row[3]}: #{@event_id}|#{@round_id}|#{@heat_id}")
         else
-          puts 'row other'
           if row[1].nil?
             # Team event
             # row will be an array containing the comma-separated elements of the line:
@@ -154,28 +159,24 @@ class MeetController < ApplicationController
             #   16: delta time from previous position?
             # )
 
-            team = Team.find(name: row[3])
+            team = Team::finder(name: row[3])
 
-            lane = @race.teams.where(lane: row[2]).find(team.id)
+            lane = @race.competitors.find_by(team: team)
 
             if lane.id.nil?
               # Something has gone wrong, so abort
               @heat_id = null
               break
             end
-            # Rails.logger.debug(row[2])
-            # Rails.logger.debug(team)
-            # Rails.logger.debug(lane)
-            # Rails.logger.debug(lane.pivot)
 
-            updated = Competitor.where(id: lane.id).update_all(
-              {
-                result: row[6],
-                place: row[0],
-              }
-            )
+            if row[0].present?
+              lane.place = row[0]
+            end
+            if row[6].present?
+              lane.result = row[6]
+            end
 
-            if updated == 1
+            if lane.save!
               Rails.logger.debug("Row successfully processed for team, lane {row[2]}, {row[3]}: {row[0]}: {row[6]}")
             else
               Rails.logger.error("Row NOT processed for team, lane {row[2]}, {row[3]}: {row[0]}: {row[6]}")
@@ -225,7 +226,6 @@ class MeetController < ApplicationController
               lane.result = row[6]
             end
 
-
             if lane.save!
               Rails.logger.debug("updated row successfully processed for athlete, lane #{row[2]}, #{row[4]} #{row[3]}: #{row[0]}: #{row[6]}")
             else
@@ -247,6 +247,6 @@ class MeetController < ApplicationController
 
     Rails.logger.debug("Successfully processed event|round|heat: #{@event_id}|#{@round_id}|#{@heat_id}")
 
-    ['event': @event_id, 'round': @round_id, 'heat': @heat_id]
+    @race
   end
 end
