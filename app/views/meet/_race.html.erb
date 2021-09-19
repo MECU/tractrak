@@ -1,8 +1,7 @@
-<h3>Round <%= race.round %></h3>
 <h4>
   Heat <%= race.heat %>
   <% if race.start.present? %>
-    <span class="badge badge-secondary"><%= race.start %></span>
+    <span class="badge badge-secondary"><%= local_time(race.start, '%l:%M%P') %></span>
   <% end %>
   <% if race.wind.present? %>
     <span class="badge badge-info">Wind <%= race.wind %></span>
@@ -24,7 +23,7 @@
     </thead>
     <tbody>
     <% race.competitors.each do |lane| %>
-      <%= render partial: 'lane', locals: { lane: lane } %>
+      <%= render partial: 'meet/lane', locals: { lane: lane } %>
     <% end %>
     </tbody>
   </table>

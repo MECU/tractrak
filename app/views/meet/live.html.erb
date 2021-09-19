@@ -24,6 +24,8 @@
   </div>
 </div>
 
+<%= turbo_stream_from "meet-#{@meet.id}" %>
+
 <% if @meet.ready? %>
   <turbo-frame id="meet-<%= @meet.id %>" src="<%= meet_data_path(@meet.id) %>">
     <div class="row">
@@ -40,3 +42,24 @@
     Please check back closer to the start time listed above.
   </div>
 <% end %>
+
+<style>
+    .xs-collapse {
+        display: none;
+    }
+
+    @media (min-width: 769px) {
+        .xs-toggle {
+            display: none;
+            visibility: hidden;
+        }
+
+        .xs-collapse {
+            display: block;
+        }
+    }
+
+    .nav-pills {
+        min-width: 205px;
+    }
+</style>

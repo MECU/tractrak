@@ -43,7 +43,7 @@ class Meet < ApplicationRecord
       #  )
 
       gender = row[5] == 'M' ? 0 : 1
-      athlete = athlete_search("#{row[2]} #{row[1]}", gender)
+      athlete = Athlete.finder(name: "#{row[2]} #{row[1]}", gender: gender, create: true)
 
       team = team_search(row[3])
 
@@ -133,17 +133,12 @@ class Meet < ApplicationRecord
   end
 
   def athlete_racer(row)
-    athlete = athlete_search("#{row[4]} #{row[3]}", @race.race_type.gender)
+    athlete = Athlete.finder(name: "#{row[4]} #{row[3]}", gender: @race.race_type.gender, create: true)
 
     team = team_search(row[5])
     athlete.set_current_team(team)
 
     Competitor.create!(athlete: athlete, race: @race, team: team, lane: row[2].to_i)
-  end
-
-  def athlete_search(name, gender)
-    # TODO: Add more search capability
-    Athlete.find_or_create_by!(name: name, gender: gender)
   end
 
   def team_search(name)

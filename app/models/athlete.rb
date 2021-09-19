@@ -26,4 +26,15 @@ class Athlete < ApplicationRecord
     careers.update_all(current: false)
     careers.where(team: team).first_or_create!(current: true)
   end
+
+  def self.finder(name:, gender: nil, create: false)
+    # TODO: Add more search capability
+    athlete = Athlete.where(name: name)
+    athlete.where(gender: gender) unless gender.nil?
+    return athlete.first! if athlete.exists?
+
+    raise ActiveRecord::RecordNotFound unless create
+
+    athlete.create!
+  end
 end
