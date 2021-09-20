@@ -117,6 +117,7 @@
     <orderEntry type="library" scope="PROVIDED" name="wicked_pdf (v2.1.0, Remote: ruby-2.7.1-p83) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="wkhtmltopdf-binary (v0.12.6.5, Remote: ruby-2.7.1-p83) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="zeitwerk (v2.4.2, Remote: ruby-2.7.1-p83) [gem]" level="application" />
+    <orderEntry type="library" name="@fortawesome/fontawesome-free" level="application" />
   </component>
   <component name="RModuleSettingsStorage">
     <LOAD_PATH number="0" />

@@ -2,7 +2,6 @@
   "name": "tractrak",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15",
     "@hotwired/turbo-rails": "^7.0.0-rc.3",
     "@popperjs/core": "^2.9",
     "@rails/actioncable": "^6.0.0",
