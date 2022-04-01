@@ -21,6 +21,7 @@ RUN bundle install --jobs 5 --retry 5
 RUN yarn install
 
 RUN mkdir /app
+RUN mkdir -p tmp/pids
 WORKDIR /app
 COPY . /app
 ENV RAILS_ENV production
