@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   get 'meet/key/:id', to: 'dashboard#download_key', as: :meet_key
   post 'meet/preload/:id', to: 'dashboard#preload', as: :meet_preload
 
+  get '/check', to: proc { [200, {}, ['ready']] }
+
   # Admin, requires login and permission
   #   Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
   #   get 'dashboard', to: 'dashboard#index', as: :backend.dashboard
