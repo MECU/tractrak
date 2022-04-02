@@ -2,7 +2,7 @@
   "name": "tractrak",
   "scripts": {
     "dokku": {
-      "predeploy": "bundle exec rake assets:precompile",
+      "predeploy": "bundle exec rake assets:precompile && yarn build",
       "postdeploy": "bundle exec rake db:migrate"
     }
   }
