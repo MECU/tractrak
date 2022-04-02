@@ -7,6 +7,7 @@ gem 'pg'
 gem 'rails', '>= 6.1.0'
 gem 'puma', '~> 4.1'
 
+gem 'sprockets-rails'
 gem 'turbo-rails'
 gem 'jsbundling-rails'
 gem "tailwindcss-rails", "~> 2.0"
@@ -24,6 +25,7 @@ gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem 'barby'
 gem 'rqrcode'
+gem 'rollbar'
 
 group :development, :test do
   gem 'factory_bot_rails'
