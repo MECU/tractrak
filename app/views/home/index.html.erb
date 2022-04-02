@@ -10,8 +10,12 @@
   <%#--</div>--%>
   <%#--</div>--%>
   <%#--</div>--%>
-<div class="card mt-2" id="current">
-  <div class="card-header"><i class="far fa-clock"></i> Current meets</div>
+<div class="card mb-4 rounded-3 shadow-sm" id="current">
+  <div class="card-header py-3">
+    <h4 class="my-0 fw-normal">
+      <i class="far fa-clock"></i> Current meets
+    </h4>
+  </div>
   <div class="card-body">
     <% if @current_meets.present? %>
       <ul class="list-group list-group-flush">
@@ -24,8 +28,12 @@
     <% end %>
   </div>
 </div>
-<div class="card mt-2" id="upcoming">
-  <div class="card-header"><i class="far fa-calendar-alt"></i> Upcoming meets</div>
+<div class="card mb-4 rounded-3 shadow-sm" id="upcoming">
+  <div class="card-header py-3">
+    <h4 class="my-0 fw-normal">
+      <i class="far fa-calendar-alt"></i> Upcoming meets
+    </h4>
+  </div>
   <div class="card-body">
     <% if @upcoming_meets.present? %>
     <ul class="list-group list-group-flush">
@@ -39,8 +47,12 @@
   </div>
 </div>
 
-<div class="card mt-2" id="past">
-  <div class="card-header"><i class="far fa-calendar-check"></i> Past meets</div>
+<div class="card mb-4 rounded-3 shadow-sm" id="past">
+  <div class="card-header py-3">
+    <h4 class="my-0 fw-normal">
+      <i class="far fa-calendar-check"></i> Past meets
+    </h4>
+  </div>
   <div class="card-body">
     <ul class="list-group list-group-flush">
       <% if @recent_meets.present? %>
