@@ -24,6 +24,7 @@ RUN mkdir /app
 WORKDIR /app
 RUN mkdir -p tmp/pids
 COPY . /app
+RUN yarn build
 ENV RAILS_ENV production
 ENV RACK_ENV production
 
