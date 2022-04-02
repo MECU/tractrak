@@ -18,13 +18,14 @@ WORKDIR /tmp
 RUN gem install bundler -v 2.2.32
 RUN bundle config set --local without 'development test'
 RUN bundle install --jobs 5 --retry 5
-RUN yarn install
 
 RUN mkdir /app
 WORKDIR /app
 RUN mkdir -p tmp/pids
-COPY . /app
+RUN yarn install
 RUN yarn build
+COPY . /app
+
 ENV RAILS_ENV production
 ENV RACK_ENV production
 
