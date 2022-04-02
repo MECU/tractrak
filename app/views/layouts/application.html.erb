@@ -10,6 +10,7 @@
   <title><%= content_for?(:title) ? yield(:title) :'TracTrak' %></title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= yield :meta %>

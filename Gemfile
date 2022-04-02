@@ -7,10 +7,9 @@ gem 'pg'
 gem 'rails', '>= 6.1.0'
 gem 'puma', '~> 4.1'
 
-gem 'sass-rails', '>= 6'
-
 gem 'turbo-rails'
 gem 'jsbundling-rails'
+gem "tailwindcss-rails", "~> 2.0"
 
 gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
