@@ -104,9 +104,6 @@ GEM
       concurrent-ruby (~> 1.0)
     jsbundling-rails (1.0.2)
       railties (>= 6.0.0)
-    listen (3.7.1)
-      rb-fsevent (~> 0.10, >= 0.10.3)
-      rb-inotify (~> 0.9, >= 0.9.10)
     local_time (2.1.0)
     loofah (2.16.0)
       crass (~> 1.0.2)
@@ -183,9 +180,6 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.0.6)
-    rb-fsevent (0.11.1)
-    rb-inotify (0.10.1)
-      ffi (~> 1.0)
     redis (4.6.0)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -266,7 +260,6 @@ DEPENDENCIES
   factory_bot_rails
   faker
   jsbundling-rails
-  listen
   local_time
   pg
   pry-byebug
