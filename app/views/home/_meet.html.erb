@@ -3,5 +3,5 @@
   <% if meet.stadium %>
     at <%= link_to meet.stadium.name, stadium_view_path(meet.stadium) %>
   <% end %>
-  on <%= local_time(meet.meet_date, '%B %e, %Y %l:%M%P %Z') %></li>
+  on <%= local_time(meet.meet_date, '%B %e, %Y %l:%M%P %Z') %>
 </li>
