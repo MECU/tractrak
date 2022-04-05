@@ -4,7 +4,6 @@
 // that code so it'll be compiled.
 
 require("@rails/activestorage").start()
-require("channels")
 require("jquery")
 require("@popperjs/core")
 require("bootstrap")
@@ -16,6 +15,7 @@ require("bootstrap")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+import "channels"
 import "controllers"
 import "@hotwired/turbo-rails"
 
