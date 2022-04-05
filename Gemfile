@@ -20,7 +20,6 @@ gem 'devise'
 gem 'discard'
 gem 'dotenv-rails'
 
-gem 'local_time'
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 gem 'barby'

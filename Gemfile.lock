@@ -103,7 +103,6 @@ GEM
       concurrent-ruby (~> 1.0)
     jsbundling-rails (1.0.2)
       railties (>= 6.0.0)
-    local_time (2.1.0)
     loofah (2.16.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -253,7 +252,6 @@ DEPENDENCIES
   factory_bot_rails
   faker
   jsbundling-rails
-  local_time
   pg
   pry-byebug
   puma (~> 4.1)
