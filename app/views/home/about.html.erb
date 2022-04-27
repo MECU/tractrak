@@ -1,12 +1,9 @@
 <% content_for :title do %>
-About | TracTrak
+  About | TracTrak
 <% end %>
-
-<div class="jumbotron" style="background-color:#565656; color:white">
-  <div class="container-fluid">
-    <h1>About <span class="tt-green" style="color:#39ff14">TracTrak</span></h1>
-    <p>A scoreboard for your meet.</p>
-  </div>
+<div class="bg-dark text-secondary px-4 py-5 text-center">
+  <h1 class="display-5 fw-bold text-white">About <span class="tt-green">TracTrak</span></h1>
+  <p class="fs-5 mb-4">A scoreboard for your meet.</p>
 </div>
 
 <div class="card">
@@ -17,18 +14,21 @@ About | TracTrak
       everyone faster. Typically, results must be completely gathered by the meet management software, then
       printed, then posted, then athletes or coaches must search through printed pages for times. We want to
       get results to interested parties as soon as they are available. Scoreboard and other display systems
-      are expensive (in the thousands of dollars!) and only show the information for a short term.</p>
+      are expensive, in the thousands of dollars for small display, and partial millions of dollars for large
+      scoreboard displays, and only show the information for a short term.</p>
     <p>Therefore, as soon as the times are saved, we grab that file and process the information and push the
       information out to anyone who has the the meet page loaded. <em>You don't even need to refresh your
       browser to get the results!</em></p>
     <p>While the exact availability of the results is impossible to predict, since it depends upon the timer
-      operator, once the file is saved, it takes approximately 1 second before you have the results in your
-      browser on your phone or tablet or computer.</p>
+      operator, once the file is saved, it takes less than 1 second before you have the results in your
+      browser on your phone or tablet or computer. Results are pushed automaticalls. No refreshing the browser
+      page needed &mdash; that will actually be slower.</p>
     <p>HEY! WHAT ABOUT FIELD EVENTS?!?! When I developed the site, I only had access to FinishLynx .LIF files.
       If you have FieldLynx .LIF files to share so I can develop this, I would love to do so.
       Please {!! link_to('/contact', 'contact') !!} me.</p>
     <p>HEY! WHAT ABOUT NON LYNX!? I plan to expand to cover all systems. If you have access to the datafiles
-      that a timing system (or field system) outputs, please <%= link_to 'contact', contact_path, class: 'nav-link' %> me.</p>
+      that a timing system (or field system) outputs, please <%= link_to 'contact', contact_path, class: 'link' %>
+      me.</p>
   </div>
 </div>
 

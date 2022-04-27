@@ -27,9 +27,9 @@ class Athlete < ApplicationRecord
     careers.where(team: team).first_or_create!(current: true)
   end
 
-  def self.finder(name:, gender: nil, create: false)
+  def self.finder(first_name:, last_name:, gender: nil, create: false)
     # TODO: Add more search capability
-    athlete = Athlete.where(name: name)
+    athlete = Athlete.where(first_name: first_name, last_name: last_name)
     athlete.where(gender: gender) unless gender.nil?
     return athlete.first! if athlete.exists?
 

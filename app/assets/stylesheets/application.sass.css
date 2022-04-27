@@ -6,19 +6,3 @@
  * vendor/assets/stylesheets directory can be referenced here using a relative path.
  *
  */
-
-body {
-  padding-top: 1.4rem;
-}
-
-.tt-green {
-  color: #39ff14
-}
-
-.tt-background {
-  background-color: #565656;
-}
-
-.highlight {
-  background-color: yellow;
-}

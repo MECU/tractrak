@@ -33,7 +33,7 @@
 <!--      <a href="/athlete/<%#= lane.athlete.id %>/<%#= lane.athlete.url %>"><%#= lane.athlete.name %></a>-->
 <!--    </td>-->
   <%# else %>
-    <td><%= lane.athlete.name %></td>
+    <td><%= lane.athlete.last_name %>, <%= lane.athlete.first_name %></td>
   <%# end %>
   <td><%= lane.team.name %></td>
   <td><%= lane.place %></td>

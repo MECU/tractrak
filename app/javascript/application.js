@@ -5,3 +5,4 @@ import "./channels"
 import "./add_jquery"
 import '@fortawesome/fontawesome-free/js/all.js'
 import "./add_luxon"
+import * as bootstrap from "bootstrap"

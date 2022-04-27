@@ -30,13 +30,13 @@ class DashboardController < ApplicationController
     @meet = Meet.find(params[:id])
 
     # See if the user is the owner
-    abort(401, 'You are not authorized to edit this meet.') if @meet.owner != current_user
+    render text: 'You are not authorized to edit this meet.', status: 401 if @meet.owner != current_user
   end
 
   def download_key
     @meet = Meet.find(params[:id])
 
-    abort(['error' => 'Only the meet owner may download the key.'], 400) if current_user != @meet.owner
+    render text: 'Only the meet owner may download the key.', status: 400 if current_user != @meet.owner
 
     # Generate 32-bit random string (or grab from Meet, if exists)
     if @meet.meet_key.nil?
@@ -52,8 +52,8 @@ class DashboardController < ApplicationController
     file = params[:meet_files][:file]
     file_extension = file.original_filename.split('.').last
 
-    unless %w[ppl evt sch].include?(file_extension)
-      raise Error(400, 'That is not a valid file extension. Please be sure to upload lynx.ppl or lynx.evt or lynx.sch files.')
+    unless %w[ppl evt sch lif].include?(file_extension)
+      render text: 'That is not a valid file extension. Please be sure to upload lynx.ppl or lynx.evt or lynx.sch files.', status: 400
     end
 
     @meet = Meet.find(params[:id])
@@ -65,6 +65,13 @@ class DashboardController < ApplicationController
       @meet.evt_process(file)
     when 'sch'
       @meet.sch_process(file)
+    when 'lif'
+      @race = @meet.lif_file(file)
+
+      @race.broadcast_replace_to "meet-#{@meet.id}",
+                                 partial: 'meet/race',
+                                 target: "meet-#{@meet.id}-race-#{@race.id}",
+                                 locals: { race: @race }
     end
 
     @meet.reload

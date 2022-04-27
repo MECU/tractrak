@@ -1,21 +1,39 @@
-<nav class="flex items-center justify-between flex-wrap bg-gray-700 p-6">
-  <div class="flex items-center flex-shrink-0 text-white mr-6">
-    <a class="navbar-brand" href="/">
-      <img src="/images/tractrak-logo-48x48.png" alt="TracTrak logo" height="48" width="48"/>
-      <span class="font-semibold text-xl tracking-tight">TracTrak</span>
-    </a>
-  </div>
-  <div>
-    <%= link_to 'About', about_path, class: 'block md:inline-block text-sm px-4 py-2 leading-none rounded text-white border-white hover:border-transparent hover:text-green-500 hover:bg-white mt-4 md:mt-0' %>
-    <%= link_to 'Requirements', requirements_path, class: 'block md:inline-block text-sm px-4 py-2 leading-none rounded text-white border-white hover:border-transparent hover:text-green-500 hover:bg-white mt-4 md:mt-0' %>
-    <%= link_to 'Contact', contact_path, class: 'block md:inline-block text-sm px-4 py-2 leading-none rounded text-white border-white hover:border-transparent hover:text-green-500 hover:bg-white mt-4 md:mt-0' %>
-    <% unless user_signed_in? %>
-      <%= link_to 'Log In', new_user_session_path, class: 'block md:inline-block text-sm px-4 py-2 leading-none rounded text-white border-white hover:border-transparent hover:text-green-500 hover:bg-white mt-4 md:mt-0', data: { turbo: false } %>
-      <%= link_to 'Register', new_user_registration_path, class: 'block md:inline-block text-sm px-4 py-2 leading-none rounded text-white border-white hover:border-transparent hover:text-green-500 hover:bg-white mt-4 md:mt-0', data: { turbo: false } %>
-    <% else %>
-      <span><%= current_user.name %></span>
-      <%= link_to 'Dashboard', dashboard_path, class: 'block md:inline-block text-sm px-4 py-2 leading-none rounded text-white border-white hover:border-transparent hover:text-green-500 hover:bg-white mt-4 md:mt-0' %>
-      <%= link_to 'Log out', destroy_user_session_path, class: 'block md:inline-block text-sm px-4 py-2 leading-none rounded text-white border-white hover:border-transparent hover:text-green-500 hover:bg-white mt-4 md:mt-0', data: { turbo: false }, method: :delete %>
-    <% end %>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+  <a class="navbar-brand" href="/">
+    <img src="/images/tractrak-logo-48x48.png" alt="TracTrak logo" height="48" width="48"/>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+          aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <%= link_to 'About', about_path, class: 'nav-link' %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Requirements', requirements_path, class: 'nav-link' %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'Contact', contact_path, class: 'nav-link' %>
+      </li>
+      <% unless user_signed_in? %>
+        <li class="nav-item">
+          <%= link_to 'Log In', new_user_session_path, class: 'nav-link', data: {turbo: false} %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Register', new_user_registration_path, class: 'nav-link', data: {turbo: false} %>
+        </li>
+      <% else %>
+        <li class="nav-text"><%= current_user.name %></li>
+        <li class="nav-item">
+          <%= link_to 'Dashboard', dashboard_path, class: 'nav-link' %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Log out', destroy_user_session_path, class: 'nav-link', data: {turbo: false}, method: :delete %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </nav>

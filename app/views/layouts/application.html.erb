@@ -11,7 +11,6 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
-  <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
   <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
@@ -25,6 +24,6 @@
   <%#= render 'messages', local_variables { errors: errors } %>
   <%= yield %>
 </div>
-
+<%= render partial: 'cloudflare' %>
 </body>
 </html>

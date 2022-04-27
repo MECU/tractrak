@@ -2,7 +2,7 @@
   <h4>
     Heat <%= race.heat %>
     <% if race.start.present? %>
-      <span class="badge badge-secondary"><%= local_time(race.start, '%l:%M%P') %></span>
+      <span class="badge badge-secondary"><time><%= race.start.iso8601 %></time></span>
     <% end %>
     <% if race.wind.present? %>
       <span class="badge badge-info">Wind <%= race.wind %></span>
