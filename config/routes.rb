@@ -36,6 +36,9 @@ Rails.application.routes.draw do
   get 'meet/key/:id', to: 'dashboard#download_key', as: :meet_key
   post 'meet/preload/:id', to: 'dashboard#preload', as: :meet_preload
 
+  get '/admin', to: 'admin#index'
+  post '/admin/scrape', to: 'admin#scrape'
+
   get '/check', to: proc { [200, {}, ['ready']] }
 
   # Admin, requires login and permission

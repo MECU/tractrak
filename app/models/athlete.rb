@@ -31,6 +31,7 @@ class Athlete < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  # gender 0=men, 1=women
   def self.finder(first_name:, last_name:, gender: nil, create: false)
     # TODO: Add more search capability
     athlete = Athlete.where(first_name: first_name, last_name: last_name)
