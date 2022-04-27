@@ -4,7 +4,7 @@ default: &default
   timeout: 5000
 
 development:
-  <<: *default
+  adapter: sqlite
   database: <%= ENV.fetch('DATABASE_URL') %>
 
 test:

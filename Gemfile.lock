@@ -75,6 +75,8 @@ GEM
     coderay (1.1.3)
     concurrent-ruby (1.1.10)
     crass (1.0.6)
+    cssbundling-rails (1.1.0)
+      railties (>= 6.0.0)
     devise (4.8.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -141,7 +143,7 @@ GEM
     pry-byebug (3.9.0)
       byebug (~> 11.0)
       pry (~> 0.13.0)
-    puma (4.3.12)
+    puma (5.6.4)
       nio4r (~> 2.0)
     racc (1.6.0)
     rack (2.2.3)
@@ -212,11 +214,9 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
+    stimulus-rails (1.0.4)
+      railties (>= 6.0.0)
     strscan (3.0.1)
-    tailwindcss-rails (2.0.8)
-      railties (>= 6.0.0)
-    tailwindcss-rails (2.0.8-x86_64-linux)
-      railties (>= 6.0.0)
     thor (1.2.1)
     timeout (0.2.0)
     turbo-rails (1.0.1)
@@ -246,6 +246,7 @@ PLATFORMS
 DEPENDENCIES
   barby
   bcrypt (~> 3.1.7)
+  cssbundling-rails
   devise
   discard
   dotenv-rails
@@ -254,8 +255,8 @@ DEPENDENCIES
   jsbundling-rails
   pg
   pry-byebug
-  puma (~> 4.1)
-  rails (>= 6.1.0)
+  puma (~> 5.0)
+  rails (~> 7.0)
   rails-controller-testing
   redis (~> 4.0)
   rollbar
@@ -263,7 +264,7 @@ DEPENDENCIES
   rspec-rails (~> 4.0.0)
   sprockets-rails
   sqlite3
-  tailwindcss-rails (~> 2.0)
+  stimulus-rails
   turbo-rails
   web-console (>= 3.3.0)
   wicked_pdf

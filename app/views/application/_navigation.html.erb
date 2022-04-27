@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
   <a class="navbar-brand" href="/">
-    <img src="/images/tractrak-logo-48x48.png" alt="TracTrak logo" height="48px" width="48px"/>
+    <img src="/images/tractrak-logo-48x48.png" alt="TracTrak logo" height="48" width="48"/>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
           aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
       <% else %>
         <li class="nav-text"><%= current_user.name %></li>
         <li class="nav-item">
-            <%= link_to 'Dashboard', dashboard_path, class: 'nav-link' %>
+          <%= link_to 'Dashboard', dashboard_path, class: 'nav-link' %>
         </li>
         <li class="nav-item">
           <%= link_to 'Log out', destroy_user_session_path, class: 'nav-link', data: {turbo: false}, method: :delete %>

@@ -4,13 +4,14 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.3'
 
 gem 'pg'
-gem 'rails', '>= 6.1.0'
-gem 'puma', '~> 4.1'
+gem 'rails', '~> 7.0'
+gem 'puma', '~> 5.0'
 
 gem 'sprockets-rails'
 gem 'turbo-rails'
 gem 'jsbundling-rails'
-gem "tailwindcss-rails", "~> 2.0"
+gem "stimulus-rails"
+gem "cssbundling-rails"
 
 gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -38,8 +39,4 @@ group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'sqlite3'
-end
-
-group :test do
-
 end

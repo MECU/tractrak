@@ -1,15 +1,15 @@
 <div class="bg-dark text-secondary px-4 py-5 text-center">
-    <h1 class="display-5 fw-bold text-white">Welcome to <span class="tt-green">TracTrak</span></h1>
-    <p class="fs-5 mb-4">Live results from track meets. Tell your coaches and meet directors you want to see results faster using TracTrak.</p>
+  <h1 class="display-5 fw-bold text-white">Welcome to <span class="tt-green">TracTrak</span></h1>
+  <p class="fs-5 mb-4">Live results from track meets. Tell your coaches and meet directors you want to see results faster using TracTrak.</p>
 </div>
 <%#--<div class="col-md-10 col-md-offset-1">--%>
-  <%#--<div class="panel panel-default">--%>
-  <%#--<div class="panel-header"><i class="fa fa-search"></i> Find a meet</div>--%>
-  <%#--<div class="panel-body">--%>
-  <%#--<input type="text" id="findEvent" autofocus style="width:100%" title="Find a Meet">--%>
-  <%#--</div>--%>
-  <%#--</div>--%>
-  <%#--</div>--%>
+<%#--<div class="panel panel-default">--%>
+<%#--<div class="panel-header"><i class="fa fa-search"></i> Find a meet</div>--%>
+<%#--<div class="panel-body">--%>
+<%#--<input type="text" id="findEvent" autofocus style="width:100%" title="Find a Meet">--%>
+<%#--</div>--%>
+<%#--</div>--%>
+<%#--</div>--%>
 <div class="card mb-4 rounded-3 shadow-sm" id="current">
   <div class="card-header py-3">
     <h4 class="my-0 fw-normal">
@@ -24,7 +24,7 @@
         <% end %>
       </ul>
     <% else %>
-    <em>Nothing happening right now ...</em>
+      <em>Nothing happening right now ...</em>
     <% end %>
   </div>
 </div>
@@ -36,13 +36,13 @@
   </div>
   <div class="card-body">
     <% if @upcoming_meets.present? %>
-    <ul class="list-group list-group-flush">
-      <% @upcoming_meets.each do |meet| %>
-      <%= render partial: 'meet', locals: { meet: meet } %>
-      <% end %>
-    </ul>
+      <ul class="list-group list-group-flush">
+        <% @upcoming_meets.each do |meet| %>
+          <%= render partial: 'meet', locals: { meet: meet } %>
+        <% end %>
+      </ul>
     <% else %>
-    <em>Nothing planned right now ... maybe you'd like to use TracTrak at your meet?</em>
+      <em>Nothing planned right now ... maybe you'd like to use TracTrak at your meet?</em>
     <% end %>
   </div>
 </div>
@@ -66,4 +66,7 @@
       <% end %>
     </ul>
   </div>
+</div>
+<div>
+  <%= render partial: 'footer' %>
 </div>

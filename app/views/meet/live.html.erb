@@ -16,7 +16,7 @@
         <h2><%= @meet.sponsor %></h2>
       <% end %>
       <!--      <h3>{!! link_to_route('frontend.stadium.view', @meet.stadium.name, @meet.stadium.id) !!}, <%#= @meet.stadium.city %>, <%#= @meet.stadium.state.name %></h3>-->
-      <h3><%= local_time(@meet.meet_date, '%B %e, %Y %l:%M%P %Z') %></h3>
+      <h3><time><%= @meet.meet_date.iso8601 %></time></h3>
       <% if @meet.points.present? %>
         <!--      <h4>{!! link_to_route('frontend.@meet.teamStandings', 'Team Standings', @meet.id, ['class' => 'btn btn-primary btn-block']) !!}</h4>-->
       <% end %>
