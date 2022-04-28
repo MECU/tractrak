@@ -7,6 +7,7 @@ class Meet < ApplicationRecord
   belongs_to :season, optional: true
   belongs_to :stadium, optional: true
   has_many :races
+  has_many :competitors, through: :races
 
   def paid?
     true
@@ -268,6 +269,18 @@ class Meet < ApplicationRecord
         .includes(:competitors)
         .where.not('competitors.result' => nil)
         .where.not('competitors.place' => %w[DNS FS DNF DQ SCR])
+  end
+
+  def number_of_athletes
+    self.competitors.group_by(&:athlete_id).count
+  end
+
+  def number_of_teams
+    self.competitors.group_by(&:team_id).count
+  end
+
+  def number_of_events
+    self.races.group_by(&:event).count
   end
 
   private
