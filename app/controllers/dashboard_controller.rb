@@ -78,7 +78,7 @@ class DashboardController < ApplicationController
                                  locals: { race: @race }
 
       @races = @meet.completed_races_by_event(@race.event)
-      if @races > 1
+      if @races.count > 1
         @race.broadcast_replace_to "meet-#{@meet.id}",
                                    partial: 'meet/event',
                                    target: "meet-#{@meet.id}-event-#{@race.event}-combined",
