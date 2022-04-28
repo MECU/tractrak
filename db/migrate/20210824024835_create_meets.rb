@@ -14,8 +14,8 @@ class CreateMeets < ActiveRecord::Migration[6.0]
       t.boolean :evt, default: 0
       t.boolean :sch, default: 0
       t.string :meet_key, null: true, index: { unique: true }, length: 32
-      t.timestamps
       t.datetime :discard, index: true
+      t.timestamps
     end
   end
 end

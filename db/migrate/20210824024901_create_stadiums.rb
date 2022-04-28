@@ -10,8 +10,8 @@ class CreateStadiums < ActiveRecord::Migration[6.0]
       t.integer :country_id
       t.decimal :lat, null: true, :precision => 11, :scale => 7
       t.decimal :lng, null: true, :precision => 11, :scale => 7
-      t.timestamps
       t.datetime :discard, index: true
+      t.timestamps
     end
   end
 end

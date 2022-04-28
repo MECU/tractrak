@@ -3,8 +3,8 @@ class CreateLevels < ActiveRecord::Migration[6.0]
     create_table :levels do |t|
       t.string :name
       t.string :abbr
-      t.timestamps
       t.datetime :discard, index: true
+      t.timestamps
     end
   end
 end

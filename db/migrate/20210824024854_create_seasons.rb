@@ -6,8 +6,8 @@ class CreateSeasons < ActiveRecord::Migration[6.0]
       t.integer :country_id
       t.integer :classification_id
       t.integer :level_id
-      t.timestamps
       t.datetime :discard, index: true
+      t.timestamps
     end
   end
 end

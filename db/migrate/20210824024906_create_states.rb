@@ -7,8 +7,8 @@ class CreateStates < ActiveRecord::Migration[6.0]
       t.integer :country_id
       t.decimal :lat, :precision => 11, :scale => 7
       t.decimal :lng, :precision => 11, :scale => 7
-      t.timestamps
       t.datetime :discard, index: true
+      t.timestamps
     end
   end
 end

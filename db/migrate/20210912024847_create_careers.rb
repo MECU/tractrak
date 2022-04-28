@@ -4,8 +4,8 @@ class CreateCareers < ActiveRecord::Migration[6.0]
       t.integer :athlete_id, index: true
       t.integer :team_id, index: true
       t.boolean :current
-      t.timestamps
       t.datetime :discard, index: true
+      t.timestamps
     end
   end
 end

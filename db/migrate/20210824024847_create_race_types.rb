@@ -4,8 +4,8 @@ class CreateRaceTypes < ActiveRecord::Migration[6.0]
       t.string :name, index: { unique: true }
       t.boolean :gender, default: 0 # 0=male, 1=female
       t.boolean :athlete_team, default: 0 # 0=athlete, 1=team
-      t.timestamps
       t.datetime :discard, index: true
+      t.timestamps
     end
   end
 end

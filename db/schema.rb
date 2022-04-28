@@ -15,25 +15,28 @@ ActiveRecord::Schema[7.0].define(version: 2021_09_12_024847) do
   enable_extension "plpgsql"
 
   create_table "athletes", force: :cascade do |t|
-    t.string "name"
+    t.string "first_name"
+    t.string "last_name"
     t.integer "height"
     t.boolean "gender"
     t.integer "weight"
     t.integer "userid"
+    t.datetime "discard", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "discard", precision: nil
     t.index ["discard"], name: "index_athletes_on_discard"
+    t.index ["first_name"], name: "index_athletes_on_first_name"
     t.index ["gender"], name: "index_athletes_on_gender"
+    t.index ["last_name"], name: "index_athletes_on_last_name"
   end
 
   create_table "careers", force: :cascade do |t|
     t.integer "athlete_id"
     t.integer "team_id"
     t.boolean "current"
+    t.datetime "discard", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "discard", precision: nil
     t.index ["athlete_id"], name: "index_careers_on_athlete_id"
     t.index ["discard"], name: "index_careers_on_discard"
     t.index ["team_id"], name: "index_careers_on_team_id"
@@ -64,9 +67,9 @@ ActiveRecord::Schema[7.0].define(version: 2021_09_12_024847) do
   create_table "levels", force: :cascade do |t|
     t.string "name"
     t.string "abbr"
+    t.datetime "discard", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "discard", precision: nil
     t.index ["discard"], name: "index_levels_on_discard"
   end
 
@@ -77,16 +80,16 @@ ActiveRecord::Schema[7.0].define(version: 2021_09_12_024847) do
     t.datetime "meet_date", precision: nil
     t.integer "season_id"
     t.integer "stadium_id"
-    t.text "points"
+    t.jsonb "points"
     t.string "sponsor"
+    t.string "time_zone"
     t.boolean "ppl", default: false
     t.boolean "evt", default: false
     t.boolean "sch", default: false
     t.string "meet_key"
+    t.datetime "discard", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "discard", precision: nil
-    t.string "time_zone", null: false
     t.index ["discard"], name: "index_meets_on_discard"
     t.index ["meet_key"], name: "index_meets_on_meet_key", unique: true
     t.index ["owner_id"], name: "index_meets_on_owner_id"
@@ -96,9 +99,9 @@ ActiveRecord::Schema[7.0].define(version: 2021_09_12_024847) do
     t.string "name"
     t.boolean "gender", default: false
     t.boolean "athlete_team", default: false
+    t.datetime "discard", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "discard", precision: nil
     t.index ["discard"], name: "index_race_types_on_discard"
     t.index ["name"], name: "index_race_types_on_name", unique: true
   end
@@ -111,25 +114,25 @@ ActiveRecord::Schema[7.0].define(version: 2021_09_12_024847) do
     t.integer "round"
     t.integer "heat"
     t.time "start"
-    t.decimal "wind", precision: 4, scale: 1
+    t.decimal "wind", precision: 4, scale: 2
+    t.datetime "discard", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "discard", precision: nil
     t.index ["discard"], name: "index_races_on_discard"
     t.index ["meet_id", "event", "round", "heat"], name: "meet_event_round_heat", unique: true
     t.index ["meet_id"], name: "index_races_on_meet_id"
-    t.index ["race_type_id"], name: "index_races_on_race_type"
+    t.index ["race_type_id"], name: "index_races_on_race_type_id"
   end
 
   create_table "seasons", force: :cascade do |t|
     t.date "season"
-    t.boolean "state_id"
+    t.integer "state_id"
     t.integer "country_id"
     t.integer "classification_id"
-    t.boolean "level_id"
+    t.integer "level_id"
+    t.datetime "discard", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "discard", precision: nil
     t.index ["discard"], name: "index_seasons_on_discard"
   end
 
@@ -143,9 +146,9 @@ ActiveRecord::Schema[7.0].define(version: 2021_09_12_024847) do
     t.integer "country_id"
     t.decimal "lat", precision: 11, scale: 7
     t.decimal "lng", precision: 11, scale: 7
+    t.datetime "discard", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "discard", precision: nil
     t.index ["discard"], name: "index_stadiums_on_discard"
   end
 
@@ -156,9 +159,9 @@ ActiveRecord::Schema[7.0].define(version: 2021_09_12_024847) do
     t.integer "country_id"
     t.decimal "lat", precision: 11, scale: 7
     t.decimal "lng", precision: 11, scale: 7
+    t.datetime "discard", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "discard", precision: nil
     t.index ["discard"], name: "index_states_on_discard"
   end
 
@@ -167,10 +170,11 @@ ActiveRecord::Schema[7.0].define(version: 2021_09_12_024847) do
     t.string "abbr"
     t.boolean "state_id"
     t.integer "country_id"
+    t.datetime "discard", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "discard", precision: nil
     t.index ["discard"], name: "index_teams_on_discard"
+    t.index ["name"], name: "index_teams_on_name"
   end
 
   create_table "users", force: :cascade do |t|
