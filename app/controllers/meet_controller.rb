@@ -16,22 +16,20 @@ class MeetController < ApplicationController
     @meet = Meet.find_by!(meet_key: key)
 
     # Save the file
-    file = params.require(:filename)
-    Rails.logger.debug "[Process File Request] [file: #{file}]"
+    filename = params.require(:filename)
+    file = params.require(:file)
 
     # Process the file
-    file_extension = file.original_filename.split('.').last
-    if file_extension.downcase == 'lif'
-      @race = @meet.lif_file(file)
+    file_extension = filename.split('.').last.downcase
+    if file_extension != 'lif'
+      return text: 'Only .LIF files are allowed.', status: 422
     end
 
+    Rails.logger.debug "[Process File Request] [file: #{file}]"
+    @race = @meet.lif_file(file)
+
     if @race.nil?
-      return response(
-        [
-          'status': 'fail',
-          'message': 'The .LIF file was not processed correctly'
-        ]
-      )
+      return text: 'The .LIF file was not processed correctly. Race not found', status: 422
     end
 
     @race.broadcast_replace_to "meet-#{@meet.id}",
