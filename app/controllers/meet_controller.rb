@@ -16,16 +16,15 @@ class MeetController < ApplicationController
     @meet = Meet.find_by!(meet_key: key)
 
     # Save the file
-    file = params.require('file')
+    file = params.require(:filename)
     Rails.logger.debug "[Process File Request] [file: #{file}]"
-
-    # filename = write_meet_file(meet, filename, file_contents)
 
     # Process the file
     file_extension = file.original_filename.split('.').last
-    if file_extension == 'lif'
+    if file_extension.downcase == 'lif'
       @race = @meet.lif_file(file)
     end
+
     if @race.nil?
       return response(
         [

@@ -48,7 +48,6 @@ class DashboardController < ApplicationController
   end
 
   def preload
-    puts params[:meet_files][:file]
     file = params[:meet_files][:file]
     file_extension = file.original_filename.split('.').last
 
