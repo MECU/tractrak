@@ -22,14 +22,14 @@ class MeetController < ApplicationController
     # Process the file
     file_extension = filename.split('.').last.downcase
     if file_extension != 'lif'
-      return text: 'Only .LIF files are allowed.', status: 422
+      return render text: 'Only .LIF files are allowed.', status: 422
     end
 
     Rails.logger.debug "[Process File Request] [file: #{file}]"
     @race = @meet.lif_file(file)
 
     if @race.nil?
-      return text: 'The .LIF file was not processed correctly. Race not found', status: 422
+      return render text: 'The .LIF file was not processed correctly. Race not found', status: 422
     end
 
     @race.broadcast_replace_to "meet-#{@meet.id}",
@@ -43,7 +43,7 @@ class MeetController < ApplicationController
                                target: "meet-#{@meet.id}-event-#{@race.event}-combined",
                                locals: { meet: @meet, races: @races, event: @race.event }
 
-    render json: { status: 'success' }
+    render json: { status: 'success' }, status: :ok
   end
 
   def live
