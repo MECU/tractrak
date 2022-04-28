@@ -53,7 +53,7 @@ class DashboardController < ApplicationController
     file_extension = file.original_filename.split('.').last
 
     unless %w[ppl evt sch lif].include?(file_extension)
-      render text: 'That is not a valid file extension. Please be sure to upload lynx.ppl or lynx.evt or lynx.sch files.', status: 400
+      return render partial: 'upload', locals: { meet: @meet, error: 'That is not a valid file extension. Please be sure to upload lynx.ppl or lynx.evt or lynx.sch files.', status: 422 }
     end
 
     @meet = Meet.find(params[:id])
@@ -62,8 +62,13 @@ class DashboardController < ApplicationController
     when 'ppl'
       @meet.ppl_process(file)
     when 'evt'
+      return render partial: 'upload', locals: { meet: @meet, error: 'Please load the .ppl file first.', status: 422} unless @meet.ppl
+
       @meet.evt_process(file)
     when 'sch'
+      return render partial: 'upload', locals: { meet: @meet, error: 'Please load the .ppl file first.', status: 422} unless @meet.ppl
+      return render partial: 'upload', locals: { meet: @meet, error: 'Please load the .evt file first.', status: 422} unless @meet.evt
+
       @meet.sch_process(file)
     when 'lif'
       @race = @meet.lif_file(file)
@@ -82,6 +87,10 @@ class DashboardController < ApplicationController
 
     @meet.reload
 
+    @meet.broadcast_replace_to "meet-#{@meet.id}",
+                               partial: 'dashboard/readiness',
+                               target: "meet-#{@meet.id}-readiness",
+                               locals: { meet: @meet }
     render :run
   end
 end

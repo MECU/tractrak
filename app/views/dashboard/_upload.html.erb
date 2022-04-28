@@ -1,0 +1,17 @@
+<turbo-frame id="post">
+  <%= render partial: 'messages', locals: { error: defined?(error) ? error : nil } %>
+
+  <%= form_for 'meet_files', url: meet_preload_path(@meet.id), html: { class: 'form-inline' } do |f| %>
+    <%= f.file_field :file, required: true %>
+    <%= f.submit 'Upload', class: 'btn btn-primary', id: 'loader' %>
+    <div class="spinner-border text-success invisible" role="status" id="spinner">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  <% end %>
+  <script type="text/javascript" charset="utf-8">
+      document.getElementById("loader").addEventListener("click",()=>{
+          document.getElementById("loader").classList.toggle("invisible")
+          document.getElementById("spinner").classList.toggle("invisible")
+      });
+  </script>
+</turbo-frame>

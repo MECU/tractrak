@@ -1,0 +1,66 @@
+<turbo-frame id="meet-<%= meet.id %>-readiness">
+  <div class="card mb-4 rounded-3 shadow-sm">
+    <div class="card-header py-3">Meet Readiness</div>
+    <div class="card-body">
+      <ol class="list-group list-group-flush">
+        <li class="list-group-item list-group-item-action">
+          <a href="https://github.com/MECU/lif-copier/raw/v2.0/tractrak.exe"
+             class='btn btn-primary btn-sm'>
+            Download the .LIF notifier
+          </a>
+          (You can reuse this file unless the version changes.) Current version: 2.0
+        </li>
+        <li class="list-group-item list-group-item-action">
+          <%= link_to 'Download Key file', meet_key_path(meet.id), class: 'btn btn-primary btn-sm' %>
+          <strong>This is different for each meet!</strong>
+        </li>
+        <li class="list-group-item">Place both files where your .LIF files are created.
+          Run the file.
+          Leaving it running the entire meet.
+          Hit CTRL-C to stop it when the meet is over.
+        </li>
+        <%# if meet.paid? %>
+        <!--                          <li class="list-group-item-success list-group-item">Paid! Thank you.</li>-->
+        <%# else %>
+        <!--                          <li class="list-group-item">During <em>Beta</em>, payment is not required. But you-->
+        <!--                              must {!! link_to_route('contact', 'contact us') !!} to get your meet activated.-->
+        <!--                          </li>-->
+        <%# end %>
+        <% if meet.ppl %>
+          <li class="list-group-item-success list-group-item">Athletes loaded</li>
+        <% else %>
+          <li class="list-group-item-danger list-group-item">Pre-load athletes: <strong>lynx.ppl</strong> in form below
+          </li>
+        <% end %>
+        <% if meet.evt %>
+          <li class="list-group-item-success list-group-item">Events loaded</li>
+        <% else %>
+          <li class="list-group-item-danger list-group-item">Pre-load events: <strong>lynx.evt</strong> in form below
+            (This takes a few seconds...)
+          </li>
+        <% end %>
+        <% if meet.sch %>
+          <li class="list-group-item-success list-group-item">Schedule loaded</li>
+        <% else %>
+          <li class="list-group-item-danger list-group-item">Pre-load schedule: <strong>lynx.sch</strong> in form below
+          </li>
+        <% end %>
+        <%# unless meet.points.nil? %>
+<!--          <li class="list-group-item-success list-group-item">Points setup</li>-->
+        <%# else %>
+<!--          <li class="list-group-item-warning list-group-item">Setup points (optional)</li>-->
+        <%# end %>
+        <li class="list-group-item">
+          Print QR codes! Unless you're going to tell people. Over, and over and over and over and
+          over. Which you should have the stadium announcer do, but also make it easy and print this,
+          and post it around the stadium and especially near your results board. Open this image in a
+          new tab for a larger version. Or use the PDF generator below.
+          <img src="<%= meet.qr(live_meet_path(meet.id)) %>" height="45"/>
+        </li>
+        <li class="list-group-item list-group-item-action">
+          <%= link_to 'Bang! Run!', live_meet_path(meet.id), class: 'btn btn-success btn-sm', 'data-turbo': 'false' %>
+        </li>
+      </ol>
+    </div>
+  </div>
+</turbo-frame>

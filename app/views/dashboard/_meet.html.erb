@@ -1,5 +1,5 @@
 <li class="list-group-item">
-  <%= link_to meet.name, live_meet_path(meet.id) %>,
+  <%= link_to meet.name, live_meet_path(meet.id), 'data-turbo': 'false' %>,
   <% if meet.stadium.present? %>
     at <%= meet.stadium %>
   <% end %>
