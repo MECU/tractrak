@@ -5,13 +5,13 @@
       <ol class="list-group list-group-flush">
         <li class="list-group-item list-group-item-action">
           <a href="https://github.com/MECU/lif-copier/raw/v2.0/tractrak.exe"
-             class='btn btn-primary btn-sm'>
+             class='btn btn-primary btn-sm' data-turbo="false">
             Download the .LIF notifier
           </a>
           (You can reuse this file unless the version changes.) Current version: 2.0
         </li>
         <li class="list-group-item list-group-item-action">
-          <%= link_to 'Download Key file', meet_key_path(meet.id), class: 'btn btn-primary btn-sm' %>
+          <%= link_to 'Download Key file', meet_key_path(meet.id), class: 'btn btn-primary btn-sm', 'data-turbo': 'false' %>
           <strong>This is different for each meet!</strong>
         </li>
         <li class="list-group-item">Place both files where your .LIF files are created.

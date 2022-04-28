@@ -44,7 +44,7 @@ class DashboardController < ApplicationController
       @meet.save!
     end
 
-    send_data(@meet.meet_key, filename: 'tractrak.key')
+    send_data(@meet.meet_key, filename: 'tractrak.key', type: 'text')
   end
 
   def preload
