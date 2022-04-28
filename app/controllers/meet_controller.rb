@@ -15,16 +15,15 @@ class MeetController < ApplicationController
     # Determine the meet
     @meet = Meet.find_by!(meet_key: key)
 
-    # Save the file
+    # Check file extension
     filename = params.require(:filename)
-    file = params.require(:file)
-
-    # Process the file
     file_extension = filename.split('.').last.downcase
     if file_extension != 'lif'
       return render text: 'Only .LIF files are allowed.', status: 422
     end
 
+    # Process the file
+    file = params.require(:file)
     Rails.logger.debug "[Process File Request] [file: #{file}]"
     @race = @meet.lif_file(file)
 
@@ -37,7 +36,7 @@ class MeetController < ApplicationController
                                target: "meet-#{@meet.id}-race-#{@race.id}",
                                locals: { race: @race }
 
-    @races = @meet.completed_races_by_event(params[:event])
+    @races = @meet.completed_races_by_event(@race.event)
     @race.broadcast_replace_to "meet-#{@meet.id}",
                                partial: 'meet/event',
                                target: "meet-#{@meet.id}-event-#{@race.event}-combined",
