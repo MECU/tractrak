@@ -14,6 +14,6 @@ class Competitor < ApplicationRecord
     min = result.to_i / 60
     sec = result.to_f % 60
 
-    sprintf('%02d:%06.3f', min, sec)
+    sprintf('%2d:%06.3f', min, sec)
   end
 end
