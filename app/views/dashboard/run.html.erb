@@ -50,7 +50,9 @@
       <li class="list-group-item">
         Print QR codes! Unless you're going to tell people. Over, and over and over and over and
         over. Which you should have the stadium announcer do, but also make it easy and print this,
-        and post it around the stadium and especially near your results board.
+        and post it around the stadium and especially near your results board. Open this image in a
+        new tab for a larger version. Or use the PDF generator below.
+        <img src="<%= @meet.qr(live_meet_path(@meet.id)) %>" height="45" />
       </li>
       <li class="list-group-item list-group-item-action">
         <%= link_to 'Bang! Run!', live_meet_path(@meet.id), class: 'btn btn-success btn-sm' %>
