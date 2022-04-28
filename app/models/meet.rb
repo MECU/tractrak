@@ -113,11 +113,11 @@ class Meet < ApplicationRecord
 
   def lif_file(file)
     ActiveRecord::Base.transaction do
-      CSV.foreach(file.path, headers: false).with_index(1) do |row, row_counter|
+      CSV.foreach(file.is_a?(String) ? file.path : file, headers: false).with_index(1) do |row, row_counter|
         if row_counter === 1
           # row will be an array containing the comma-separated elements of the line:
           # array(
-          #   0: @event_id,
+          #   0: event_id,
           #   1: round
           #   2: heat
           #   3: name
