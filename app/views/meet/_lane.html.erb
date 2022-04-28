@@ -11,6 +11,9 @@
   <tr>
 <% end %>
 <td><%= lane.lane %></td>
+<% if heats.present? && heats > 1 %>
+<td><%= lane.race.heat %></td>
+<% end %>
 <% if lane.race.team_race? %>
   <% if lane.team.abbr.present? %>
     <td>
@@ -21,8 +24,8 @@
     <td><%= lane.team.name %></td>
   <% end %>
   <td><%= lane.place %></td>
-  <% if lane.result != '999999999' %>
-    <td><%= lane.result %></td>
+  <% if lane.result.present? %>
+    <td><%= lane.result_display %></td>
   <% else %>
     <td>&nbsp;</td>
   <% end %>
@@ -37,10 +40,17 @@
   <%# end %>
   <td><%= lane.team.name %></td>
   <td><%= lane.place %></td>
-  <% if lane.result != '999999999' %>
-    <td><%= lane.result %></td>
+  <% if lane.result.present? %>
+    <td><%= lane.result_display %></td>
   <% else %>
     <td>&nbsp;</td>
+  <% end %>
+  <% if heats.present? && lane.race.wind.present? %>
+    <% if lane.race.wind >= 2.0 %>
+      <td class="bg-danger text-white"><%= sprintf('%+-2.1f', lane.race.wind) %></td>
+    <% else %>
+      <td><%= sprintf('%+-2.1f', lane.race.wind) %></td>
+    <% end %>
   <% end %>
   </tr>
 <% end %>

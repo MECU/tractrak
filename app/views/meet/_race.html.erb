@@ -2,14 +2,18 @@
   <h4>
     Heat <%= race.heat %>
     <% if race.start.present? %>
-      <span class="badge badge-secondary"><time><%= race.start.iso8601 %></time></span>
+      <span class="badge bg-secondary"><time><%= race.start.strftime('%I:%M %p') %></time></span>
     <% end %>
     <% if race.wind.present? %>
-      <span class="badge badge-info">Wind <%= race.wind %></span>
+      <% if race.wind >= 2.0 %>
+        <span class="badge bg-danger">Wind <%= sprintf('%+-2.1f', race.wind) %></span>
+      <% else %>
+        <span class="badge bg-info">Wind <%= sprintf('%+-2.1f', race.wind) %></span>
+      <% end %>
     <% end %>
   </h4>
   <div class="table-responsive">
-    <table class="table table-striped table-hover table-condensed">
+    <table class="table table-striped table-hover table-sm">
       <thead class="thead-light">
       <tr>
         <th>Lane</th>
@@ -23,10 +27,9 @@
       </thead>
       <tbody>
       <% race.competitors.sort_by(&:place).each do |lane| %>
-        <%= render partial: 'meet/lane', locals: { lane: lane } %>
+        <%= render partial: 'meet/lane', locals: { lane: lane, heats: nil } %>
       <% end %>
       </tbody>
     </table>
   </div>
 </turbo-frame>
-<!-- # TODO: Combined results -->

@@ -99,7 +99,7 @@ class Meet < ApplicationRecord
       # 2 = heat
 
       Race.where(
-        id: id,
+        meet_id: self.id,
         event: row[0],
         round: row[1],
         heat: row[2]
@@ -134,7 +134,7 @@ class Meet < ApplicationRecord
             event: @event_id,
             round: @round_id,
             heat: @heat_id,
-            ).first!
+          ).first!
 
           if row[10].present?
             @race.start = row[10]
@@ -185,7 +185,7 @@ class Meet < ApplicationRecord
               lane.place = row[0]
             end
             if row[6].present?
-              lane.result = row[6]
+              lane.result = normalize_time(row[6])
             end
 
             if lane.save!
@@ -235,7 +235,7 @@ class Meet < ApplicationRecord
               lane.place = row[0]
             end
             if row[6].present?
-              lane.result = row[6]
+              lane.result = normalize_time(row[6])
             end
 
             if lane.save!
@@ -260,6 +260,14 @@ class Meet < ApplicationRecord
     Rails.logger.debug("Successfully processed event|round|heat: #{@event_id}|#{@round_id}|#{@heat_id}")
 
     @race
+  end
+
+  def completed_races_by_event(event)
+    self.races.where(event: event)
+        .where(meet: self)
+        .includes(:competitors)
+        .where.not('competitors.result' => nil)
+        .where.not('competitors.place' => %w[DNS FS DNF DQ SCR])
   end
 
   private
@@ -291,5 +299,13 @@ class Meet < ApplicationRecord
     athlete.set_current_team(team)
 
     Competitor.create!(athlete: athlete, race: @race, team: team, lane: row[2].to_i)
+  end
+
+  def normalize_time(time)
+    results = /(?<minutes>\d+:)?(?<seconds>\d+.\d+)/.match(time).named_captures
+
+    return results['seconds'] if results['minutes'].nil?
+
+    results['minutes'].to_i * 60 + results['seconds'].to_f
   end
 end

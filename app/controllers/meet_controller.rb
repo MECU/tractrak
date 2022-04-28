@@ -35,10 +35,16 @@ class MeetController < ApplicationController
       )
     end
 
-    @race.broadcast_replace_later_to "meet-#{@meet.id}",
-                                     partial: 'meet/race',
-                                     target: "meet-#{@meet.id}-race-#{@race.id}",
-                                     locals: { race: @race }
+    @race.broadcast_replace_to "meet-#{@meet.id}",
+                               partial: 'meet/race',
+                               target: "meet-#{@meet.id}-race-#{@race.id}",
+                               locals: { race: @race }
+
+    @races = @meet.completed_races_by_event(params[:event])
+    @race.broadcast_replace_to "meet-#{@meet.id}",
+                               partial: 'meet/event',
+                               target: "meet-#{@meet.id}-event-#{@race.event}-combined",
+                               locals: { meet: @meet, races: @races, event: @race.event }
 
     render json: { status: 'success' }
   end
@@ -57,6 +63,13 @@ class MeetController < ApplicationController
     @race = Race.find(params[:race])
 
     render partial: 'meet/race', locals: { race: @race }
+  end
+
+  def event
+    @meet = Meet.find(params[:meet])
+    @races = @meet.completed_races_by_event(params[:event])
+
+    render partial: 'meet/event', locals: { meet: @meet, races: @races, event: params[:event] }
   end
 
   def team_standings

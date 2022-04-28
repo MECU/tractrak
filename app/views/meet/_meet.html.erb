@@ -4,25 +4,49 @@
       <% meet.races.group_by(&:race_type).each_with_index do |(key, races), index| %>
         <button class="nav-link<%= index.zero? ? ' active' : '' %>" id="pills-nav-<%= key.id %>" data-bs-toggle="pill" data-bs-target="#pills-event-<%= key.id %>" role="tab">
           <%= key.name %>
-          <!--  <span v-show="updated">HI!!!</span>-->
         </button>
       <% end %>
     </div>
     <div class="tab-content" id="events-tabContent">
       <% meet.races.group_by(&:race_type).each_with_index do |(key, races), index| %>
         <div class="tab-pane fade<%= index.zero? ? ' show active' : '' %>" id="pills-event-<%= key.id %>" role="tabpanel" aria-labelledby="pills-profile-tab">
-          <h3>Round <%= races.first.round %></h3>
-          <% races.sort_by(&:heat).each do |race| %>
-            <turbo-frame id="meet-<%= @meet&.id || meet&.id %>-race-<%= race.id %>" src="/meet/<%= @meet&.id || meet&.id %>/race/<%= race.id %>">
-              <div class="row">
-                <div class="col">
-                  <div class="text-center">
-                    <i class="fas fa-running fa-10x"></i> Loading ...
+          <nav>
+            <div class="nav nav-tabs" id="race-tab" role="tablist">
+              <button class="nav-link active" id="event-<%= races.first.event %>-round-1-tab" data-bs-toggle="tab" data-bs-target="#event-<%= races.first.event %>-round-1" type="button" role="tab" aria-controls="event-<%= races.first.event %>-round-1" aria-selected="true">
+                Round 1
+              </button>
+              <button class="nav-link" id="event-<%= races.first.event %>-combined-tab" data-bs-toggle="tab" data-bs-target="#event-<%= races.first.event %>-combined" type="button" role="tab" aria-controls="event-<%= races.first.event %>-combined" aria-selected="false">
+                Combined
+              </button>
+            </div>
+          </nav>
+          <div class="tab-content" id="race-tabContent">
+            <div class="tab-pane fade show active" id="event-<%= races.first.event %>-round-1" role="tabpanel" aria-labelledby="event-<%= races.first.event %>-round-1-tab">
+              <h3>Round <%= races.first.round %></h3>
+              <% races.sort_by(&:heat).each do |race| %>
+                <turbo-frame id="meet-<%= @meet&.id || meet&.id %>-race-<%= race.id %>" src="/meet/<%= @meet&.id || meet&.id %>/race/<%= race.id %>">
+                  <div class="row">
+                    <div class="col">
+                      <div class="text-center">
+                        <i class="fas fa-running fa-10x"></i> Loading ...
+                      </div>
+                    </div>
+                  </div>
+                </turbo-frame>
+              <% end %>
+            </div>
+            <div class="tab-pane fade" id="event-<%= races.first.event %>-combined" role="tabpanel" aria-labelledby="event-<%= races.first.event %>-combined-tab">
+              <turbo-frame id="meet-<%= @meet&.id || meet&.id %>-event-<%= races.first.event %>-combined" src="/meet/<%= @meet&.id || meet&.id %>/event/<%= races.first.event %>">
+                <div class="row">
+                  <div class="col">
+                    <div class="text-center">
+                      <i class="fas fa-running fa-10x"></i> Loading ...
+                    </div>
                   </div>
                 </div>
-              </div>
-            </turbo-frame>
-          <% end %>
+              </turbo-frame>
+            </div>
+          </div>
         </div>
       <% end %>
     </div>

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   get 'meet/:id/data', to: 'meet#data', as: :meet_data
   get 'meet/:meet/race/:race', to: 'meet#race'
+  get 'meet/:meet/event/:event', to: 'meet#event'
 
   get 'about', to: 'home#about', as: :about
   get 'requirements', to: 'home#requirements', as: :requirements
