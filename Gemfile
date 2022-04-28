@@ -20,6 +20,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'devise'
 gem 'discard'
 gem 'dotenv-rails'
+gem "activeadmin", "~> 2.12"
 
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
