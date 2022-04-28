@@ -27,7 +27,7 @@
         </tr>
         </thead>
         <tbody>
-        <% races.map {|r| r.competitors }.flatten.sort_by { |l| l.result.nil? ? 999999 : l.result }.each do |lane| %>
+        <% races.map {|r| r.competitors }.flatten.sort_by { |l| l.result.nil? ? '999999' : l.result }.each do |lane| %>
           <%= render partial: 'meet/lane', locals: { lane: lane, heats: races.count } %>
         <% end %>
         </tbody>
