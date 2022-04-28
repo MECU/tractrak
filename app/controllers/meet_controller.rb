@@ -37,10 +37,12 @@ class MeetController < ApplicationController
                                locals: { race: @race }
 
     @races = @meet.completed_races_by_event(@race.event)
-    @race.broadcast_replace_to "meet-#{@meet.id}",
-                               partial: 'meet/event',
-                               target: "meet-#{@meet.id}-event-#{@race.event}-combined",
-                               locals: { meet: @meet, races: @races, event: @race.event }
+    if @races > 1
+      @race.broadcast_replace_to "meet-#{@meet.id}",
+                                 partial: 'meet/event',
+                                 target: "meet-#{@meet.id}-event-#{@race.event}-combined",
+                                 locals: { meet: @meet, races: @races, event: @race.event }
+    end
 
     render json: { status: 'success' }, status: :ok
   end
@@ -50,7 +52,7 @@ class MeetController < ApplicationController
   end
 
   def data
-    @meet = Meet.find(params[:id])
+    @meet = Meet.includes(:races, :competitors).order('races.schedule').find(params[:id])
 
     render partial: 'meet/meet', locals: { meet: @meet }
   end

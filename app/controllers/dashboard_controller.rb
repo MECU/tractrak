@@ -61,12 +61,12 @@ class DashboardController < ApplicationController
     when 'ppl'
       @meet.ppl_process(file)
     when 'evt'
-      return render partial: 'upload', locals: { meet: @meet, error: 'Please load the .ppl file first.', status: 422} unless @meet.ppl
+      return render partial: 'upload', locals: { meet: @meet, error: 'Please load the .ppl file first.', status: 422 } unless @meet.ppl
 
       @meet.evt_process(file)
     when 'sch'
-      return render partial: 'upload', locals: { meet: @meet, error: 'Please load the .ppl file first.', status: 422} unless @meet.ppl
-      return render partial: 'upload', locals: { meet: @meet, error: 'Please load the .evt file first.', status: 422} unless @meet.evt
+      return render partial: 'upload', locals: { meet: @meet, error: 'Please load the .ppl file first.', status: 422 } unless @meet.ppl
+      return render partial: 'upload', locals: { meet: @meet, error: 'Please load the .evt file first.', status: 422 } unless @meet.evt
 
       @meet.sch_process(file)
     when 'lif'
@@ -78,10 +78,12 @@ class DashboardController < ApplicationController
                                  locals: { race: @race }
 
       @races = @meet.completed_races_by_event(@race.event)
-      @race.broadcast_replace_to "meet-#{@meet.id}",
-                                 partial: 'meet/event',
-                                 target: "meet-#{@meet.id}-event-#{@race.event}-combined",
-                                 locals: { meet: @meet, races: @races, event: @race.event }
+      if @races > 1
+        @race.broadcast_replace_to "meet-#{@meet.id}",
+                                   partial: 'meet/event',
+                                   target: "meet-#{@meet.id}-event-#{@race.event}-combined",
+                                   locals: { meet: @meet, races: @races, event: @race.event }
+      end
     end
 
     @meet.reload
