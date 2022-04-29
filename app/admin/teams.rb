@@ -16,7 +16,8 @@ ActiveAdmin.register Team do
   form do |f|
     f.input :name
     f.input :abbr
-    f.input :state
+    label :state
+    f.collection_select :state_id, State.all, :id, :name
     f.actions
   end
 
