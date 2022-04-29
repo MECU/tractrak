@@ -60,3 +60,5 @@ State.create([
                { id: 50, name: 'Wisconsin', abbr: 'WI', timezone: 'America/Chicago', country_id: 1, lat: '44.256300', lng: '-89.638500' },
                { id: 51, name: 'Wyoming', abbr: 'WY', timezone: 'America/Denver', country_id: 1, lat: '42.747500', lng: '-107.208500' }
              ])
+
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

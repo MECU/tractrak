@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.3'
 
 gem 'pg'
+gem 'sassc-rails'
 gem 'rails', '~> 7.0'
 gem 'puma', '~> 5.0'
 
@@ -20,6 +21,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'devise'
 gem 'discard'
 gem 'dotenv-rails'
+gem "activeadmin", "~> 2.12"
 
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
