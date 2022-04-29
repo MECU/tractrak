@@ -45,10 +45,10 @@ class Meet < ApplicationRecord
 
       gender = row[5] == 'M' ? 0 : 1
       athlete = Athlete::finder(first_name: row[2], last_name: row[1], gender: gender, create: true)
-      Rails.logger.debug('Athlete: ', athlete)
-      Rails.logger.debug('Team row[3]: ', row[3])
+      Rails.logger.debug("Athlete: #{athlete}")
+      Rails.logger.debug("Team row[3]: #{row[3]}")
       team = Team::finder(name: row[3], create: true)
-      Rails.logger.debug('Team: ', team)
+      Rails.logger.debug("Team: #{team}")
 
       athlete.careers.where(team: team).first_or_create!(current: true)
 
