@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_04_28_221236) do
+ActiveRecord::Schema[7.0].define(version: 2022_04_28_230123) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,10 +47,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_28_221236) do
     t.boolean "gender"
     t.integer "weight"
     t.integer "userid"
-    t.datetime "discard", precision: nil
+    t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["discard"], name: "index_athletes_on_discard"
+    t.index ["discarded_at"], name: "index_athletes_on_discarded_at"
     t.index ["first_name"], name: "index_athletes_on_first_name"
     t.index ["gender"], name: "index_athletes_on_gender"
     t.index ["last_name"], name: "index_athletes_on_last_name"
@@ -60,11 +60,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_28_221236) do
     t.integer "athlete_id"
     t.integer "team_id"
     t.boolean "current"
-    t.datetime "discard", precision: nil
+    t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["athlete_id"], name: "index_careers_on_athlete_id"
-    t.index ["discard"], name: "index_careers_on_discard"
+    t.index ["discarded_at"], name: "index_careers_on_discarded_at"
     t.index ["team_id"], name: "index_careers_on_team_id"
   end
 
@@ -93,10 +93,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_28_221236) do
   create_table "levels", force: :cascade do |t|
     t.string "name"
     t.string "abbr"
-    t.datetime "discard", precision: nil
+    t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["discard"], name: "index_levels_on_discard"
+    t.index ["discarded_at"], name: "index_levels_on_discarded_at"
   end
 
   create_table "meets", force: :cascade do |t|
@@ -113,10 +113,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_28_221236) do
     t.boolean "evt", default: false
     t.boolean "sch", default: false
     t.string "meet_key"
-    t.datetime "discard", precision: nil
+    t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["discard"], name: "index_meets_on_discard"
+    t.index ["discarded_at"], name: "index_meets_on_discarded_at"
     t.index ["meet_key"], name: "index_meets_on_meet_key", unique: true
     t.index ["owner_id"], name: "index_meets_on_owner_id"
   end
@@ -125,10 +125,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_28_221236) do
     t.string "name"
     t.boolean "gender", default: false
     t.boolean "athlete_team", default: false
-    t.datetime "discard", precision: nil
+    t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["discard"], name: "index_race_types_on_discard"
+    t.index ["discarded_at"], name: "index_race_types_on_discarded_at"
     t.index ["name"], name: "index_race_types_on_name", unique: true
   end
 
@@ -141,10 +141,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_28_221236) do
     t.integer "heat"
     t.time "start"
     t.decimal "wind", precision: 4, scale: 2
-    t.datetime "discard", precision: nil
+    t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["discard"], name: "index_races_on_discard"
+    t.index ["discarded_at"], name: "index_races_on_discarded_at"
     t.index ["meet_id", "event", "round", "heat"], name: "meet_event_round_heat", unique: true
     t.index ["meet_id"], name: "index_races_on_meet_id"
     t.index ["race_type_id"], name: "index_races_on_race_type_id"
@@ -156,10 +156,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_28_221236) do
     t.integer "country_id"
     t.integer "classification_id"
     t.integer "level_id"
-    t.datetime "discard", precision: nil
+    t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["discard"], name: "index_seasons_on_discard"
+    t.index ["discarded_at"], name: "index_seasons_on_discarded_at"
   end
 
   create_table "stadiums", force: :cascade do |t|
@@ -172,10 +172,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_28_221236) do
     t.integer "country_id"
     t.decimal "lat", precision: 11, scale: 7
     t.decimal "lng", precision: 11, scale: 7
-    t.datetime "discard", precision: nil
+    t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["discard"], name: "index_stadiums_on_discard"
+    t.index ["discarded_at"], name: "index_stadiums_on_discarded_at"
   end
 
   create_table "states", force: :cascade do |t|
@@ -185,10 +185,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_28_221236) do
     t.integer "country_id"
     t.decimal "lat", precision: 11, scale: 7
     t.decimal "lng", precision: 11, scale: 7
-    t.datetime "discard", precision: nil
+    t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["discard"], name: "index_states_on_discard"
+    t.index ["discarded_at"], name: "index_states_on_discarded_at"
   end
 
   create_table "teams", force: :cascade do |t|
@@ -196,10 +196,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_04_28_221236) do
     t.string "abbr"
     t.boolean "state_id"
     t.integer "country_id"
-    t.datetime "discard", precision: nil
+    t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["discard"], name: "index_teams_on_discard"
+    t.index ["discarded_at"], name: "index_teams_on_discarded_at"
     t.index ["name"], name: "index_teams_on_name"
   end
 
