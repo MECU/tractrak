@@ -87,24 +87,4 @@ class MeetController < ApplicationController
       show_as_html: true
     )
   end
-
-  private
-
-  def write_meet_file
-    # filename = storage_path('meets/' . strtolower(preg_replace('/\s+/', '', meet.name))) . "/file"
-    # dirname = dirname(filename)
-    #
-    # if !is_dir(dirname)
-    #   Rails.logger.debug("trying to create directory dirname")
-    #   mkdir(dirname, 0777, true)
-    # end
-    #
-    # Rails.logger.debug("trying to write file filename")
-    # if !file_put_contents(filename, data)
-    #   Rails.loggercritical('[Process File Request] Could not write to file', ['filename': filename])
-    # throw new \RuntimeException('File could not be written: ' . filename)
-    # end
-    #
-    # filename
-  end
 end

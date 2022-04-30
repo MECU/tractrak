@@ -11,7 +11,7 @@ class Athlete < ApplicationRecord
   end
 
   def url
-    name.sub(' ', '-')
+    full_name.sub(' ', '-').sub(/,'"`'/, '').downcase
   end
 
   def current_team
@@ -25,6 +25,10 @@ class Athlete < ApplicationRecord
 
     careers.update_all(current: false)
     careers.where(team: team).first_or_create!(current: true)
+  end
+
+  def full_name
+    "#{first_name} #{last_name}"
   end
 
   def self.finder(first_name:, last_name:, gender: nil, create: false)

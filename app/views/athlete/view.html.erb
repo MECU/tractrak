@@ -1,0 +1,64 @@
+<% content_for :title do %>
+  <%= @athlete.full_name %> | @athlete Profile | TracTrak
+<% end %>
+
+<link rel=canonical href="<%= athlete_view_url(@athlete.id, full_name: @athlete.url) %>">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 text-center">
+      <div class="center-block">
+        <h1><%= @athlete.full_name %></h1>
+        <h5><%= @athlete.gender === 0 ? 'Male' : 'Female' %>
+          <% if @athlete.height && @athlete.weight %><br>
+          <%= @athlete.height ? "#{@athlete.height}," : '' %><%= @athlete.weight %>
+          <% end %>
+        </h5>
+        <% @athlete.teams.each do |team| %>
+        <h3><%= team.name %> (<%= team.abbr %>)</h3>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-condensed">
+        <thead>
+        <tr>
+          <th>Race</th>
+          <th>Time</th>
+          <th>Finish</th>
+          <th>Wind</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Meet</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @athlete.competitors.each do |competitor| %>
+        <tr>
+          <td><%= competitor.race.race_type.name %></td>
+          <td><%= competitor.result %></td>
+          <td><%= competitor.place %></td>
+          <td><%= competitor.race.wind %></td>
+          <td><time><%= competitor.race.meet.meet_date.iso8601 %></time></td>
+          <td><%= competitor.race.start ? competitor.race.start.strftime('%I:%M %p') : '' %></td>
+          <td><%= link_to competitor.race.meet.name, live_meet_path(competitor.race.meet.id) %></td>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<!--  {{--<div class="row">--%>-->
+<!--  {{--<div class="col-xs-12">--%>-->
+<!--  {{--Meets participated by this @athlete:--%>-->
+<!--  {{--<ul>--%>-->
+<!--  {{--                    @foreach($meets as $meet)--%>-->
+<!--  {{--                        <li>{!! link_to_route('frontend.meet.live', $meet->name, $meet->id) !!} on <%#= $meet->meet_date->format('l, F d, Y, g:ia') %></li>--%>-->
+<!--  {{--@endforeach--%>-->
+<!--  {{--</ul>--%>-->
+<!--  {{--</div>--%>-->
+<!--  {{--</div>--%>-->
+</div>

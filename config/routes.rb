@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   get 'meet/pdf/:id', to: 'meet#pdf', as: :meet_pdf # , constraints: { id: /\d/ }
 
   get 'stadium/:id', to: 'stadium#view', as: :stadium_view # , constraints: { id: /\d/ }
-  get 'athlete/:id(/:name)', to: 'athlete#view', as: :athlete_view # , constraints: { id: /\d/ }
+  get 'athlete/:id(-:full_name)', to: 'athlete#view', as: :athlete_view # , constraints: { id: /\d/ }
 
   # Dashboard, requires login
   get 'dashboard', to: 'dashboard#index', as: :dashboard
