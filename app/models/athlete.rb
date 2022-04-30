@@ -11,7 +11,7 @@ class Athlete < ApplicationRecord
   end
 
   def url
-    full_name.sub(' ', '-').sub(/,'"`'/, '').downcase
+    full_name.gsub(' ', '-').gsub(/,'"`'/, '').downcase
   end
 
   def current_team

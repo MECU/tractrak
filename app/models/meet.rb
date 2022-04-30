@@ -10,7 +10,7 @@ class Meet < ApplicationRecord
   has_many :competitors, through: :races
 
   def url_name
-    name.sub(' ', '-').sub(/,'"`'/, '').downcase
+    name.gsub(' ', '-').gsub(/,'"`'/, '').downcase
   end
 
   def paid?
@@ -27,7 +27,7 @@ class Meet < ApplicationRecord
     require 'barby/barcode'
     require 'barby/barcode/qr_code'
     require 'barby/outputter/png_outputter'
-    barcode = Barby::QrCode.new("https://tractrak.com/#{text}", level: :q, size: 9)
+    barcode = Barby::QrCode.new("https://tractrak.com#{text}", level: :q, size: 9)
     base64_output = Base64.encode64(barcode.to_png({ xdim: size }))
     "data:image/png;base64,#{Rack::Utils.escape(base64_output)}"
   end
