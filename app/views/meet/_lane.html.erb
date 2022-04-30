@@ -30,7 +30,7 @@
   <% end %>
   </tr>
 <% else %>
-<td><%= link_to "#{lane.athlete.last_name}, #{lane.athlete.first_name}", athlete_view_path(lane.athlete, full_name: lane.athlete.url), 'data-turbo': false %></td>
+<td><%= link_to "#{lane.athlete.last_name}, #{lane.athlete.first_name}", athlete_view_path(lane.athlete, full_name: sanitize(lane.athlete.url)), 'data-turbo': false %></td>
   <td><%= lane.team.name %></td>
   <td><%= lane.place %></td>
   <% if lane.result.present? %>

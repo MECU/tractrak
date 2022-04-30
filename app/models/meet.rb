@@ -9,6 +9,10 @@ class Meet < ApplicationRecord
   has_many :races
   has_many :competitors, through: :races
 
+  def url_name
+    name.sub(' ', '-').sub(/,'"`'/, '').downcase
+  end
+
   def paid?
     true
     # paid === 1 # enable when paying is required

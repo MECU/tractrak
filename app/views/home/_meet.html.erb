@@ -1,5 +1,5 @@
 <li class="list-group-item" style="font-size: x-large">
-  <%= link_to meet.name, live_meet_path(meet) %>
+  <%= link_to meet.name, live_meet_path(meet, sanitize(meet.url_name)) %>
   <% if meet.stadium %>
     at <%= link_to meet.stadium.name, stadium_view_path(meet.stadium) %>
   <% end %>

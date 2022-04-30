@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get 'requirements', to: 'home#requirements', as: :requirements
   get 'contact', to: 'home#contact', as: :contact
 
-  get 'meet/:id', to: 'meet#live', as: :live_meet # , constraints: { id: /\d/ }
+  get 'meet/:id(-:name)', to: 'meet#live', as: :live_meet # , constraints: { id: /\d/ }
   get 'meet/team-standings/:id', to: 'meet#team_standings', as: :team_standings # , constraints: { id: /\d/ }
   get 'meet/pdf/:id', to: 'meet#pdf', as: :meet_pdf # , constraints: { id: /\d/ }
 

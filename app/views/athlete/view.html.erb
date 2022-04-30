@@ -2,7 +2,7 @@
   <%= @athlete.full_name %> | @athlete Profile | TracTrak
 <% end %>
 
-<link rel=canonical href="<%= athlete_view_url(@athlete.id, full_name: @athlete.url) %>">
+<link rel=canonical href="<%= athlete_view_url(@athlete.id, full_name: sanitize(@athlete.url)) %>">
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-12 text-center">
@@ -40,7 +40,15 @@
           <td><%= competitor.race.race_type.name %></td>
           <td><%= competitor.result %></td>
           <td><%= competitor.place %></td>
-          <td><%= competitor.race.wind %></td>
+          <% if competitor.race.wind %>
+              <% if competitor.race.wind >= 2.0 %>
+                <td class="bg-danger text-white"><%= sprintf('%+-2.1f', competitor.race.wind) %></td>
+              <% else %>
+                <td><%= sprintf('%+-2.1f', competitor.race.wind) %></td>
+              <% end %>
+          <% else %>
+            <td></td>
+          <% end %>
           <td><time><%= competitor.race.meet.meet_date.iso8601 %></time></td>
           <td><%= competitor.race.start ? competitor.race.start.strftime('%I:%M %p') : '' %></td>
           <td><%= link_to competitor.race.meet.name, live_meet_path(competitor.race.meet.id) %></td>
