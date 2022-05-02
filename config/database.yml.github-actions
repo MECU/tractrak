@@ -5,4 +5,4 @@ test:
   database: tractrak_test
   pool: 20
   username: tractrak
-  password:
+  password: tractrak
