@@ -21,7 +21,7 @@
           <th>Team</th>
           <th>Position</th>
           <th>Time</th>
-          <% if races.first.wind.present? %>
+          <% if races.first.race_type.wind? && races.first.wind.present? %>
             <th>Wind</th>
           <% end %>
         </tr>
