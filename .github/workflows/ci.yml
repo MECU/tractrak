@@ -33,11 +33,11 @@ jobs:
         env:
           RAILS_ENV: test
           POSTGRES_USER: tractrak
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: tractrak
 
       - name: Run RSpec
         run: COVERAGE=true bundle exec rspec --require rails_helper
         env:
           RAILS_ENV: test
           POSTGRES_USER: tractrak
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: tractrak
