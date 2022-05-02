@@ -32,12 +32,12 @@ jobs:
           bundle exec rake db:seed
         env:
           RAILS_ENV: test
-          POSTGRES_USER: tractrak
-          POSTGRES_PASSWORD: tractrak
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
 
       - name: Run RSpec
         run: COVERAGE=true bundle exec rspec --require rails_helper
         env:
           RAILS_ENV: test
-          POSTGRES_USER: tractrak
-          POSTGRES_PASSWORD: tractrak
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
