@@ -4,7 +4,7 @@
     <% if race.start.present? %>
       <span class="badge bg-secondary"><time><%= race.start.strftime('%I:%M %p') %></time></span>
     <% end %>
-    <% if race.wind.present? %>
+    <% if race.race_type.wind? && race.wind.present? %>
       <% if race.wind >= 2.0 %>
         <span class="badge bg-danger">Wind <%= sprintf('%+-2.1f', race.wind) %></span>
       <% else %>
