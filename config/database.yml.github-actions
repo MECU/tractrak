@@ -2,7 +2,7 @@ test:
   adapter: postgresql
   host: localhost
   encoding: unicode
-  database: tractrak_test
+  database: github_actions
   pool: 20
-  username: tractrak
-  password: tractrak
+  username: postgres
+  password: postgres
