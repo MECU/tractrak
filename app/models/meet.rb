@@ -22,7 +22,7 @@ class Meet < ApplicationRecord
     sch && evt && ppl && paid?
   end
 
-  def qr(text, size=10)
+  def qr(text, size = 10)
     require 'barby'
     require 'barby/barcode'
     require 'barby/barcode/qr_code'
@@ -60,6 +60,23 @@ class Meet < ApplicationRecord
   end
 
   def evt_process(file)
+    if evt
+      # We are handling a re-upload, so remove/reorder
+      races_to_delete = races.all
+      CSV.foreach(file.path, headers: false) do |row|
+        unless row[0].nil?
+          races_to_delete.delete(
+            event: row[0],
+            round: row[1],
+            heat: row[2]
+          )
+        end
+      end
+
+      races_to_delete.delete_all
+      reschedule
+    end
+
     CSV.foreach(file.path, headers: false) do |row|
       #   Two types of rows depending on first value
       # 0 = Race
@@ -78,9 +95,16 @@ class Meet < ApplicationRecord
       # 5 = TeamName
       if !row[0].nil?
         @race = create_race(row)
-      else
         raise StandardError, "The file is not formatted properly: #{@race}" unless @race.is_a?(Race)
 
+        # To avoid updating a race if it already has results
+        return if @race.has_results?
+
+        # Blank the heat if we are reprocessing
+        if self.evt
+          @race.competitors.delete_all
+        end
+      else
         if row[4].nil?
           # If 4 is empty, this is a team
           team_racer(row)
@@ -90,6 +114,8 @@ class Meet < ApplicationRecord
       end
     end
 
+    # Reschedule the order if new schedule since we may have added or deleted
+    reschedule if self.evt
     self.evt = true
     save!
   end
@@ -271,6 +297,16 @@ class Meet < ApplicationRecord
     @race
   end
 
+  def reschedule
+    races.order(:event)
+         .order(:round)
+         .order(:heat)
+         .each.with_index(1) do |race, index|
+      race.schedule = index
+      race.save!
+    end
+  end
+
   def completed_races_by_event(event)
     self.races.where(event: event)
         .where(meet: self)
@@ -319,7 +355,7 @@ class Meet < ApplicationRecord
     team = Team::finder(name: row[5], create: true)
     athlete.set_current_team(team)
 
-    Competitor.create!(athlete: athlete, race: @race, team: team, lane: row[2].to_i)
+    Competitor.where(race: @race).where(lane: row[2].to_i).first_or_create!(athlete: athlete, team: team)
   end
 
   def normalize_time(time)

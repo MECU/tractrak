@@ -1,5 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Athlete, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:athlete) { create(:athlete) }
+
+  it 'works' do
+    athlete
+  end
 end

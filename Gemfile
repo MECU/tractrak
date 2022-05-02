@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.3'
 
 gem 'pg'
-gem 'sassc-rails'
+gem 'sassc-rails' # needed for activeadmin
 gem 'rails', '~> 7.0'
 gem 'puma', '~> 5.0'
 

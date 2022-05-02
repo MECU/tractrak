@@ -1,7 +1,7 @@
 class Race < ApplicationRecord
   belongs_to :meet
   belongs_to :race_type, inverse_of: :races
-  has_many :competitors
+  has_many :competitors, :dependent => :delete_all
   has_many :athletes, through: :competitors
   has_many :teams, through: :competitors
 
@@ -16,5 +16,9 @@ class Race < ApplicationRecord
   def first_place
     # competitors = athlete_race? ? athletes : teams
     competitors.where(place: 1).first
+  end
+
+  def has_results?
+    competitors.where.not(result: nil).count > 0
   end
 end
