@@ -8,6 +8,7 @@ class Meet < ApplicationRecord
   belongs_to :stadium, optional: true
   has_many :races
   has_many :competitors, through: :races
+  has_many :race_types, through: :races
 
   def url_name
     name.gsub(' ', '-').gsub(/,'"`'/, '').downcase

@@ -52,7 +52,10 @@ class MeetController < ApplicationController
   end
 
   def data
-    @meet = Meet.includes(:races, :competitors).order('races.schedule').find(params[:id])
+    @meet = Meet.includes(:races, :race_types, :competitors)
+                .order('race_types.track_field')
+                .order('races.schedule')
+                .find(params[:id])
 
     render partial: 'meet/meet', locals: { meet: @meet }
   end
@@ -66,6 +69,7 @@ class MeetController < ApplicationController
   def event
     @meet = Meet.find(params[:meet])
     @races = @meet.completed_races_by_event(params[:event])
+                  .order(Arel.sql("string_to_array(competitors.result, '.')::bigint[]"))
 
     render partial: 'meet/event', locals: { meet: @meet, races: @races, event: params[:event] }
   end
