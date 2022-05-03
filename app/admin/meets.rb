@@ -8,6 +8,7 @@ ActiveAdmin.register Meet do
     column :name
     column :meet_date
     column :owner
+    column :milesplit_id
     actions
   end
 

@@ -220,7 +220,7 @@ class Meet < ApplicationRecord
               lane.place = row[0]
             end
             if row[6].present?
-              lane.result = normalize_time(row[6])
+              lane.result = ApplicationHelper.normalize_time(row[6])
             end
 
             if lane.save!
@@ -270,7 +270,7 @@ class Meet < ApplicationRecord
               lane.place = row[0]
             end
             if row[6].present?
-              lane.result = normalize_time(row[6])
+              lane.result = ApplicationHelper.normalize_time(row[6])
             end
 
             if lane.save!
@@ -356,13 +356,5 @@ class Meet < ApplicationRecord
     athlete.set_current_team(team)
 
     Competitor.where(race: @race).where(lane: row[2].to_i).first_or_create!(athlete: athlete, team: team)
-  end
-
-  def normalize_time(time)
-    results = /(?<minutes>\d+:)?(?<seconds>\d+.\d+)/.match(time).named_captures
-
-    return results['seconds'] if results['minutes'].nil?
-
-    results['minutes'].to_i * 60 + results['seconds'].to_f
   end
 end

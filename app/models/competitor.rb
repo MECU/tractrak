@@ -3,8 +3,6 @@ class Competitor < ApplicationRecord
   belongs_to :athlete, optional: true
   belongs_to :race
 
-  validates :lane, presence: true
-
   # Results are stored in seconds
   # This will convert to MM:SS.sss for display
   def result_display

@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   post 'meet/preload/:id', to: 'dashboard#preload', as: :meet_preload
 
   get '/admin', to: 'admin#index'
-  post '/admin/scrape', to: 'admin#scrape'
+  post '/admin/scrape', to: 'admin/scrape#scrape'
 
   get '/check', to: proc { [200, {}, ['ready']] }
 
