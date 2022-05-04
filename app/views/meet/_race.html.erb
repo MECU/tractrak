@@ -16,7 +16,9 @@
     <table class="table table-striped table-hover table-sm">
       <thead class="thead-light">
       <tr>
-        <th>Lane</th>
+        <% if race.race_type.track? && race.competitors.first.lane.present? %>
+          <th>Lane</th>
+        <% end %>
         <% if race.race_type.athlete_race? %>
           <th>Name</th>
         <% end %>
@@ -27,7 +29,7 @@
       </thead>
       <tbody>
       <% race.competitors_sorted.each do |lane| %>
-        <%= render partial: 'meet/lane', locals: { lane: lane, heats: nil } %>
+        <%= render partial: 'meet/lane', locals: { lane: lane, heats: nil, rounds: 0 } %>
       <% end %>
       </tbody>
     </table>

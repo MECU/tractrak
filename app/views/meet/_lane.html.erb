@@ -11,7 +11,13 @@
   <tr>
 <% end %>
 
-<td><%= lane.lane %></td>
+<% if lane.race.race_type.track? && lane.lane.present? %>
+    <td><%= lane.lane %></td>
+<% end %>
+
+<% if rounds > 1 %>
+  <td><%= lane.race.round %></td>
+<% end %>
 
 <% if heats.present? && heats > 1 %>
   <td><%= lane.race.heat %></td>

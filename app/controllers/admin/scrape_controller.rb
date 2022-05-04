@@ -9,10 +9,24 @@ class Admin::ScrapeController < ApplicationController
     doc = JSON.load(URI.open("https://co.milesplit.com/api/v1/meets/#{meet_id}/performances?resultsId=#{results_id}&fields=id,meetId,meetName,teamId,videoId,teamName,athleteId,firstName,lastName,gender,genderName,divisionId,divisionName,ageGroupName,gradYear,eventName,eventCode,eventDistance,eventGenreOrder,round,roundName,heat,units,mark,place,windReading,profileUrl,teamProfileUrl, performanceVideoId&m=GET"))
 
     meet_name = doc['data'].first['meetName']
-    meet = Meet.create_with(name: meet_name, owner_id: 1).find_or_create_by!(milesplit_id: meet_id.to_i)
+
+    if params['scrape']['meet_id'].nil?
+      meet = Meet.find(params['scrape']['meet_id'].to_i)
+    else
+      meet = Meet.create_with(name: meet_name, owner_id: 1).find_or_create_by!(milesplit_id: meet_id.to_i)
+    end
+
+    prelims = false
+    # search for prelims and finals
+    doc['data'].each do |result|
+      if result['roundName'] == 'Prelims'
+        prelims = true
+        break
+      end
+    end
 
     doc['data'].each do |result|
-      process_result(meet: meet, r: result)
+      process_result(meet: meet, r: result, state: state, prelims: prelims)
     end
 
     # assign place per heat
@@ -26,7 +40,7 @@ class Admin::ScrapeController < ApplicationController
     # assign event per race_type
     races = Race.where(meet: meet).group('race_type_id').count
     races.each.with_index(1) do |race, index|
-      Race.where(meet: meet).where(race_types: race[0]).update(event: index, round: 1)
+      Race.where(meet: meet).where(race_types: race[0]).update(event: index)
     end
 
     meet.reschedule
@@ -68,13 +82,13 @@ class Admin::ScrapeController < ApplicationController
   # teamProfileUrl	"https://co.milesplit.com…or-christian-high-school"
   # performanceVideoId	null
   # mark	"12.84"
-  def process_result(meet:, r:, state: State.find(6))
+  def process_result(meet:, r:, state: State.find(6), prelims: false)
     race_type = RaceType.find_or_create_by!(name: "#{r['genderName']} #{r['eventName']}")
     if race_type.new_record?
       flash[:info] << "*** NEW RACE TYPE ***: #{r['genderName']} #{r['eventName']}"
     else
       unless race_type.parent.nil?
-        race_type = RaceType.find!(race_type.parent)
+        race_type = RaceType.find(race_type.parent)
       end
     end
 
@@ -94,7 +108,13 @@ class Admin::ScrapeController < ApplicationController
       team.save!
     end
 
-    race = meet.races.find_or_create_by!(race_type: race_type, heat: r['heat'])
+    round = if prelims
+              r['roundName'] == 'Prelims' ? 1 : 2
+            else
+              1
+            end
+
+    race = meet.races.find_or_create_by!(race_type: race_type, round: round,heat: r['heat'])
     if race.event.nil?
       race.schedule = meet.number_of_events
       race.wind = r['windReading'] if race_type.wind?

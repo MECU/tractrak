@@ -12,7 +12,12 @@
       <table class="table table-striped table-hover table-sm">
         <thead class="thead-light">
         <tr>
-          <th>Lane</th>
+          <% if @races.first.race_type.track? && @races.first.competitors.first.lane.present? %>
+            <th>Lane</th>
+          <% end %>
+          <% if @races.group_by(&:round).uniq.count > 1 %>
+            <th>Round</th>
+          <% end %>
           <th>Heat</th>
           <% if @races.first.race_type.athlete_race? %>
             <th>Name</th>
@@ -27,7 +32,7 @@
         </thead>
         <tbody>
         <% @competitors.each do |lane| %>
-          <%= render partial: 'meet/lane', locals: { lane: lane, heats: @races.count } %>
+          <%= render partial: 'meet/lane', locals: { lane: lane, heats: @races.count, rounds: @races.group_by(&:round).uniq.count } %>
         <% end %>
         </tbody>
       </table>
