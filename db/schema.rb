@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_01_001234) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_03_111234) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,6 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_001234) do
     t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "milesplit_id"
     t.index ["discarded_at"], name: "index_athletes_on_discarded_at"
     t.index ["first_name"], name: "index_athletes_on_first_name"
     t.index ["gender"], name: "index_athletes_on_gender"
@@ -116,6 +117,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_001234) do
     t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "milesplit_id"
     t.index ["discarded_at"], name: "index_meets_on_discarded_at"
     t.index ["meet_key"], name: "index_meets_on_meet_key", unique: true
     t.index ["owner_id"], name: "index_meets_on_owner_id"
@@ -129,6 +131,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_001234) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "wind", default: false
+    t.boolean "track_field", default: false
+    t.integer "parent"
     t.index ["discarded_at"], name: "index_race_types_on_discarded_at"
     t.index ["name"], name: "index_race_types_on_name", unique: true
   end
@@ -200,6 +204,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_01_001234) do
     t.datetime "discarded_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "milesplit_id"
     t.index ["discarded_at"], name: "index_teams_on_discarded_at"
     t.index ["name"], name: "index_teams_on_name"
   end

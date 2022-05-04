@@ -8,6 +8,7 @@ class Meet < ApplicationRecord
   belongs_to :stadium, optional: true
   has_many :races
   has_many :competitors, through: :races
+  has_many :race_types, through: :races
 
   def url_name
     name.gsub(' ', '-').gsub(/,'"`'/, '').downcase
@@ -220,7 +221,7 @@ class Meet < ApplicationRecord
               lane.place = row[0]
             end
             if row[6].present?
-              lane.result = normalize_time(row[6])
+              lane.result = ApplicationHelper.normalize_time(row[6])
             end
 
             if lane.save!
@@ -270,7 +271,7 @@ class Meet < ApplicationRecord
               lane.place = row[0]
             end
             if row[6].present?
-              lane.result = normalize_time(row[6])
+              lane.result = ApplicationHelper.normalize_time(row[6])
             end
 
             if lane.save!
@@ -308,11 +309,11 @@ class Meet < ApplicationRecord
   end
 
   def completed_races_by_event(event)
-    self.races.where(event: event)
-        .where(meet: self)
-        .includes(:competitors)
-        .where.not('competitors.result' => nil)
-        .where.not('competitors.place' => %w[DNS FS DNF DQ SCR])
+    races
+      .where(event: event)
+      .includes(:competitors, :race_type)
+      .where.not('competitors.result' => nil)
+      .where.not('competitors.place' => %w[DNS FS DNF DQ SCR])
   end
 
   def number_of_athletes
@@ -356,13 +357,5 @@ class Meet < ApplicationRecord
     athlete.set_current_team(team)
 
     Competitor.where(race: @race).where(lane: row[2].to_i).first_or_create!(athlete: athlete, team: team)
-  end
-
-  def normalize_time(time)
-    results = /(?<minutes>\d+:)?(?<seconds>\d+.\d+)/.match(time).named_captures
-
-    return results['seconds'] if results['minutes'].nil?
-
-    results['minutes'].to_i * 60 + results['seconds'].to_f
   end
 end

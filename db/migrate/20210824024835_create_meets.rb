@@ -9,6 +9,7 @@ class CreateMeets < ActiveRecord::Migration[6.0]
       t.integer :stadium_id, null: true
       t.jsonb :points, null: true
       t.string :sponsor, null: true
+      t.integer :milesplit_id, :unsigned => true
       t.string :time_zone
       t.boolean :ppl, default: 0
       t.boolean :evt, default: 0

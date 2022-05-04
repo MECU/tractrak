@@ -52,7 +52,10 @@ class MeetController < ApplicationController
   end
 
   def data
-    @meet = Meet.includes(:races, :competitors).order('races.schedule').find(params[:id])
+    @meet = Meet.includes(:races, :race_types, :competitors)
+                .order('race_types.track_field')
+                .order('races.schedule')
+                .find(params[:id])
 
     render partial: 'meet/meet', locals: { meet: @meet }
   end
@@ -67,7 +70,13 @@ class MeetController < ApplicationController
     @meet = Meet.find(params[:meet])
     @races = @meet.completed_races_by_event(params[:event])
 
-    render partial: 'meet/event', locals: { meet: @meet, races: @races, event: params[:event] }
+    if @races.first.race_type.track?
+      @competitors = @races.map(&:competitors).flatten.sort
+    else
+      @competitors = @races.map(&:competitors).flatten.sort
+    end
+
+    render partial: 'meet/event', locals: { event: params[:event] }
   end
 
   def team_standings

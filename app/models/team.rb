@@ -10,8 +10,8 @@ class Team < ApplicationRecord
 
   belongs_to :state
 
-  def self.finder(name:, create: false)
+  def self.finder(name:, state_id: 6, create: false)
     # TODO: Need to find teams better, filtering by state at least
-    Team.where(name: name).first_or_create!(abbr: name[0, 4], state_id: 6)
+    Team.where(name: name).first_or_create!(abbr: name[0, 4], state_id: state_id)
   end
 end

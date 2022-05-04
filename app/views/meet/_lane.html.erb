@@ -11,7 +11,13 @@
   <tr>
 <% end %>
 
-<td><%= lane.lane %></td>
+<% if lane.race.race_type.track? && lane.lane.present? %>
+    <td><%= lane.lane %></td>
+<% end %>
+
+<% if rounds > 1 %>
+  <td><%= lane.race.round %></td>
+<% end %>
 
 <% if heats.present? && heats > 1 %>
   <td><%= lane.race.heat %></td>
@@ -34,15 +40,15 @@
 <% else %>
   <td><%= link_to "#{lane.athlete.last_name}, #{lane.athlete.first_name}", athlete_view_path(lane.athlete, full_name: sanitize(lane.athlete.url)), 'data-turbo': false %></td>
   <td><%= lane.team.name %></td>
-  <td><%= lane.place %></td>
+  <td class="text-center"><%= lane.place %></td>
   <% if lane.result.present? %>
-    <td><%= lane.result_display %></td>
+    <td class="text-end"><%= lane.result_display %></td>
   <% else %>
     <td>&nbsp;</td>
   <% end %>
   <% if heats.present? && lane.race.race_type.wind? && lane.race.wind.present? %>
     <% if lane.race.wind >= 2.0 %>
-      <td class="bg-danger text-white"><%= sprintf('%+-2.1f', lane.race.wind) %></td>
+      <td class="table-danger"><%= sprintf('%+-2.1f', lane.race.wind) %></td>
     <% else %>
       <td><%= sprintf('%+-2.1f', lane.race.wind) %></td>
     <% end %>

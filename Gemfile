@@ -29,6 +29,9 @@ gem 'barby'
 gem 'rqrcode'
 gem 'rollbar'
 
+gem 'nokogiri'
+gem 'open-uri'
+
 group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'

@@ -8,4 +8,12 @@ class RaceType < ApplicationRecord
   def team_race?
     athlete_team
   end
+
+  def track?
+    track_field == false
+  end
+
+  def field?
+    track_field
+  end
 end
