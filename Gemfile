@@ -29,8 +29,8 @@ gem 'barby'
 gem 'rqrcode'
 gem 'rollbar'
 
-require 'nokogiri'
-require 'open-uri'
+gem 'nokogiri'
+gem 'open-uri'
 
 group :development, :test do
   gem 'factory_bot_rails'
