@@ -309,11 +309,11 @@ class Meet < ApplicationRecord
   end
 
   def completed_races_by_event(event)
-    self.races.where(event: event)
-        .where(meet: self)
-        .includes(:competitors)
-        .where.not('competitors.result' => nil)
-        .where.not('competitors.place' => %w[DNS FS DNF DQ SCR])
+    races
+      .where(event: event)
+      .includes(:competitors, :race_type)
+      .where.not('competitors.result' => nil)
+      .where.not('competitors.place' => %w[DNS FS DNF DQ SCR])
   end
 
   def number_of_athletes

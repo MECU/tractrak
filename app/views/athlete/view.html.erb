@@ -42,7 +42,7 @@
           <td><%= competitor.place %></td>
           <% if competitor.race.wind %>
               <% if competitor.race.wind >= 2.0 %>
-                <td class="bg-danger text-white"><%= sprintf('%+-2.1f', competitor.race.wind) %></td>
+                <td class="table-danger"><%= sprintf('%+-2.1f', competitor.race.wind) %></td>
               <% else %>
                 <td><%= sprintf('%+-2.1f', competitor.race.wind) %></td>
               <% end %>

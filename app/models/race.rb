@@ -21,4 +21,12 @@ class Race < ApplicationRecord
   def has_results?
     competitors.where.not(result: nil).count > 0
   end
+
+  def competitors_sorted
+    if race_type.track?
+      competitors.order(Arel.sql("string_to_array(competitors.result, '.')::bigint[]"))
+    else
+      competitors.order(Arel.sql("string_to_array(competitors.result, '-')::int[] DESC"))
+    end
+  end
 end

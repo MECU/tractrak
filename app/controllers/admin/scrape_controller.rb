@@ -17,7 +17,7 @@ class Admin::ScrapeController < ApplicationController
 
     # assign place per heat
     meet.races.each do |race|
-      race.competitors.order(:result).each.with_index(1) do |c, index|
+      race.competitors_sorted.each.with_index(1) do |c, index|
         c.place = index
         c.save!
       end
@@ -72,6 +72,10 @@ class Admin::ScrapeController < ApplicationController
     race_type = RaceType.find_or_create_by!(name: "#{r['genderName']} #{r['eventName']}")
     if race_type.new_record?
       flash[:info] << "*** NEW RACE TYPE ***: #{r['genderName']} #{r['eventName']}"
+    else
+      unless race_type.parent.nil?
+        race_type = RaceType.find!(race_type.parent)
+      end
     end
 
     if race_type.athlete_race?

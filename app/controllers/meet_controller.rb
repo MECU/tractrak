@@ -69,9 +69,14 @@ class MeetController < ApplicationController
   def event
     @meet = Meet.find(params[:meet])
     @races = @meet.completed_races_by_event(params[:event])
-                  .order(Arel.sql("string_to_array(competitors.result, '.')::bigint[]"))
 
-    render partial: 'meet/event', locals: { meet: @meet, races: @races, event: params[:event] }
+    if @races.first.race_type.track?
+      @competitors = @races.map(&:competitors).flatten.sort
+    else
+      @competitors = @races.map(&:competitors).flatten.sort
+    end
+
+    render partial: 'meet/event', locals: { event: params[:event] }
   end
 
   def team_standings

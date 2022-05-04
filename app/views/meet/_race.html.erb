@@ -22,11 +22,11 @@
         <% end %>
         <th>Team</th>
         <th>Position</th>
-        <th>Time</th>
+        <th><%= race.race_type.track? ? 'Time' : 'Mark' %></th>
       </tr>
       </thead>
       <tbody>
-      <% race.competitors.sort_by { |l| l.result.nil? ? '999999' : l.result }.each do |lane| %>
+      <% race.competitors_sorted.each do |lane| %>
         <%= render partial: 'meet/lane', locals: { lane: lane, heats: nil } %>
       <% end %>
       </tbody>

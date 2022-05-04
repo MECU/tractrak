@@ -1,10 +1,11 @@
-<turbo-frame id="meet-<%= meet.id %>-event-<%= event %>-combined">
+<turbo-frame id="meet-<%= @meet.id %>-event-<%= event %>-combined">
   <h4>
     Combined Results
   </h4>
-  <% if races.count == 0 %>
+  <% if @races.count == 0 %>
     <div class="alert alert-info" role="alert"><i class="fas fa-hand-rock"></i>
       No results yet. We'll get them to you as fast as possible.
+      We only start displaying here when more than one heat has completed.
     </div>
   <% else %>
     <div class="table-responsive">
@@ -12,23 +13,21 @@
         <thead class="thead-light">
         <tr>
           <th>Lane</th>
-          <% if races.count > 1 %>
-            <th>Heat</th>
-          <% end %>
-          <% if races.first.race_type.athlete_race? %>
+          <th>Heat</th>
+          <% if @races.first.race_type.athlete_race? %>
             <th>Name</th>
           <% end %>
           <th>Team</th>
           <th>Position</th>
-          <th>Time</th>
-          <% if races.first.race_type.wind? && races.first.wind.present? %>
+          <th><%= @races.first.race_type.track? ? 'Time' : 'Mark' %></th>
+          <% if @races.first.race_type.wind? && @races.first.wind.present? %>
             <th>Wind</th>
           <% end %>
         </tr>
         </thead>
         <tbody>
-        <% races.map {|r| r.competitors }.flatten.sort_by { |l| l.result.nil? ? '999999' : l.result }.each do |lane| %>
-          <%= render partial: 'meet/lane', locals: { lane: lane, heats: races.count } %>
+        <% @competitors.each do |lane| %>
+          <%= render partial: 'meet/lane', locals: { lane: lane, heats: @races.count } %>
         <% end %>
         </tbody>
       </table>
