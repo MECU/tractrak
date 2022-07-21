@@ -142,10 +142,13 @@ class Meet < ApplicationRecord
 
   def lif_file(file)
     ActiveRecord::Base.transaction do
+      lanes_found = []
+
       if file.is_a?(String)
         path = 'temp.csv'
         File.write(path, file)
       end
+
       CSV.foreach(file.is_a?(String) ? path : file.path, headers: false).with_index(1) do |row, row_counter|
         if row_counter === 1
           # row will be an array containing the comma-separated elements of the line:
@@ -207,6 +210,7 @@ class Meet < ApplicationRecord
 
             team = Team::finder(name: row[3])
 
+            lanes_found << row[2]
             lane = @race.competitors.find_by(lane: row[2])
 
             if lane.nil?
@@ -259,6 +263,7 @@ class Meet < ApplicationRecord
             # } else {
             athlete = Athlete::finder(first_name: row[4], last_name: row[3])
 
+            lanes_found << row[2]
             lane = @race.competitors.find_by(lane: row[2])
 
             if lane.nil?
@@ -286,6 +291,9 @@ class Meet < ApplicationRecord
           end
         end
       end
+
+      # delete any lanes not found in the csv
+      @race.competitors.where.not(lane: lanes_found).delete_all
 
     rescue ActiveRecord::RecordNotFound => e
       Rails.logger.debug(e)

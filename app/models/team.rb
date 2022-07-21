@@ -9,6 +9,7 @@ class Team < ApplicationRecord
   has_many :races, through: :competitors
 
   belongs_to :state
+  belongs_to :country
 
   def self.finder(name:, state_id: 6, create: false)
     # TODO: Need to find teams better, filtering by state at least
