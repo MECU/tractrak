@@ -22,7 +22,7 @@ class MeetController < ApplicationController
     Rails.logger.debug "[Process File Request] [file: #{file}]"
 
     # Process the file
-    if file_extension != 'lif'
+    if file_extension == 'lif'
       @race = @meet.lif_file(file)
 
       if @race.nil?
