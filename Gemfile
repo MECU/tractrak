@@ -31,7 +31,6 @@ gem 'rollbar'
 
 gem 'nokogiri'
 gem 'open-uri'
-gem 'naturalsorter'
 
 group :development, :test do
   gem 'factory_bot_rails'
