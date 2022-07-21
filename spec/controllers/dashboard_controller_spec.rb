@@ -122,7 +122,7 @@ RSpec.describe DashboardController do
       expect(races.last['heat']).to eq(2)
       expect(races.last['schedule']).to eq(2)
       # It's okay to add, even to a race with results
-      expect(races.first.competitors.count).to eq(41)
+      expect(races.first.competitors.count).to eq(19)
       expect(races.last.competitors.count).to eq(22)
     end
 
