@@ -211,7 +211,7 @@ class Meet < ApplicationRecord
 
             lane = @race.competitors.find_by(team: team, lane: row[2])
 
-            if lane.id.nil?
+            if lane.nil?
               # Something has gone wrong, so abort
               @heat_id = null
               break
