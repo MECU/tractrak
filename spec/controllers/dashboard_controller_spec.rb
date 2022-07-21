@@ -17,8 +17,8 @@ RSpec.describe DashboardController do
     post :preload, params: { meet_files: file, id: meet.id }
   end
 
-  describe 'EVT file reupload' do
-    it 'handles spliting a heat into two' do
+  describe 'EVT file re-upload' do
+    it 'handles splitting a heat into two' do
       upload('lynx-800.evt')
       expect(response.successful?).to be_truthy
 
@@ -83,6 +83,31 @@ RSpec.describe DashboardController do
       expect(meet.races.first['round']).to eq(1)
       expect(meet.races.first['schedule']).to eq(1)
       expect(meet.races.first.competitors.count).to eq(41)
+    end
+
+    it 'handles adding a round' do
+      upload('lynx-800.evt')
+      expect(response.successful?).to be_truthy
+
+      upload('lynx-800.sch')
+      expect(response.successful?).to be_truthy
+
+      upload('lynx-800-round-2.evt')
+      expect(response.successful?).to be_truthy
+
+      meet.reload
+
+      expect(meet.races.count).to eq(3)
+      expect(meet.races.first['event']).to eq(18)
+      expect(meet.races.first['round']).to eq(1)
+      expect(meet.races.first['heat']).to eq(1)
+      expect(meet.races.first['schedule']).to eq(1)
+      expect(meet.races.last['event']).to eq(18)
+      expect(meet.races.last['round']).to eq(2)
+      expect(meet.races.last['heat']).to eq(1)
+      expect(meet.races.last['schedule']).to eq(3)
+      expect(meet.races.first.competitors.count).to eq(19)
+      expect(meet.races.last.competitors.count).to eq(9)
     end
   end
 end

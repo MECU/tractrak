@@ -31,18 +31,7 @@ class MeetController < ApplicationController
       return render text: 'The .LIF file was not processed correctly. Race not found', status: 422
     end
 
-    @race.broadcast_replace_to "meet-#{@meet.id}",
-                               partial: 'meet/race',
-                               target: "meet-#{@meet.id}-race-#{@race.id}",
-                               locals: { race: @race }
-
-    @races = @meet.completed_races_by_event(@race.event)
-    if @races.count > 1
-      @race.broadcast_replace_to "meet-#{@meet.id}",
-                                 partial: 'meet/event',
-                                 target: "meet-#{@meet.id}-event-#{@race.event}-combined",
-                                 locals: { meet: @meet, races: @races, event: @race.event }
-    end
+    @meet.broadcast_race(@race)
 
     render json: { status: 'success' }, status: :ok
   end

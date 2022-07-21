@@ -63,18 +63,16 @@ class Meet < ApplicationRecord
   def evt_process(file)
     if evt
       # We are handling a re-upload, so remove/reorder
-      races_to_delete = races.all
+      races_to_delete = races.all.to_a
       CSV.foreach(file.path, headers: false) do |row|
         unless row[0].nil?
-          races_to_delete.delete(
-            event: row[0],
-            round: row[1],
-            heat: row[2]
-          )
+          races_to_delete.delete_if do |r|
+            (r.event == row[0] && r.round == row[1] && r.heat == row[2]) || r.has_results?
+          end
         end
       end
 
-      races_to_delete.delete_all
+      races_to_delete.each {|r| r.delete }
       reschedule
     end
 
@@ -333,11 +331,34 @@ class Meet < ApplicationRecord
     self.races.group_by(&:event).count
   end
 
+  def broadcast_meet
+    # TODO
+  end
+
+  def broadcast_event(event)
+    event.races.each { |r| broadcast_race(r) }
+  end
+
+  def broadcast_race(race)
+    race.broadcast_replace_to "meet-#{self.id}",
+      partial: 'meet/race',
+      target: "meet-#{self.id}-race-#{race.id}",
+      locals: { race: race }
+
+    races = self.completed_races_by_event(race.event)
+    if races.count > 1
+      @race.broadcast_replace_to "meet-#{self.id}",
+        partial: 'meet/event',
+        target: "meet-#{self.id}-event-#{race.event}-combined",
+        locals: { meet: self, races: races, event: race.event }
+    end
+  end
+
   private
 
   def create_race(row)
-    gender = row[3].include?('Boys') ? 0 : 1
-    team_race = row[3].include?('Relay') || row[3].include?('Medley') ? 1 : 0
+    gender = (row[3].downcase.include?('boy') || row[3].downcase.include?('men')) ? 0 : 1
+    team_race = row[3].downcase.include?('relay') || row[3].downcase.include?('medley') ? 1 : 0
     race_type = RaceType.find_or_create_by!(name: row[3], gender: gender, athlete_team: team_race)
 
     Race.find_or_create_by!(
