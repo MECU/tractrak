@@ -209,17 +209,19 @@ class Meet < ApplicationRecord
 
             team = Team::finder(name: row[3])
 
-            lane = @race.competitors.find_by(team: team, lane: row[2])
+            lane = @race.competitors.find_by(lane: row[2])
 
             if lane.nil?
-              # Something has gone wrong, so abort
-              @heat_id = null
-              break
+              # Lane doesn't exist, so let's just add it, likely better data
+              lane = @race.competitors.new(team: team, lane: row[2])
             end
+
+            lane.team = team
 
             if row[0].present?
               lane.place = row[0]
             end
+
             if row[6].present?
               lane.result = ApplicationHelper.normalize_time(row[6])
             end
@@ -259,17 +261,20 @@ class Meet < ApplicationRecord
             # } else {
             athlete = Athlete::finder(first_name: row[4], last_name: row[3])
 
-            lane = @race.competitors.find_by(athlete: athlete, lane: row[2])
+            lane = @race.competitors.find_by(lane: row[2])
 
             if lane.nil?
-              # Something has gone wrong, so abort
-              @heat_id = nil
-              break
+              # Lane doesn't exist, so let's just add it, likely better data
+              team = Team::finder(name: row[5])
+              lane = @race.competitors.new(athlete: athlete, team: team, lane: row[2])
             end
+
+            lane.athlete = athlete
 
             if row[0].present?
               lane.place = row[0]
             end
+
             if row[6].present?
               lane.result = ApplicationHelper.normalize_time(row[6])
             end
