@@ -18,17 +18,23 @@ class MeetController < ApplicationController
     # Check file extension
     filename = params.require(:filename)
     file_extension = filename.split('.').last.downcase
-    if file_extension != 'lif'
-      return render text: 'Only .LIF files are allowed.', status: 422
-    end
-
-    # Process the file
     file = params.require(:file)
     Rails.logger.debug "[Process File Request] [file: #{file}]"
-    @race = @meet.lif_file(file)
 
-    if @race.nil?
-      return render text: 'The .LIF file was not processed correctly. Race not found', status: 422
+    # Process the file
+    if file_extension != 'lif'
+      @race = @meet.lif_file(file)
+
+      if @race.nil?
+        return render text: 'The .LIF file was not processed correctly. Race not found', status: 422
+      end
+    elsif file_extension == 'sch'
+      @race = @meet.sch_process(file)
+      @meet.broadcast_meet
+    elsif file_extension == 'ppl'
+      @race = @meet.ppl_process(file)
+    else
+      return render text: 'Only .LIF files are allowed.', status: 422
     end
 
     @meet.broadcast_race(@race)

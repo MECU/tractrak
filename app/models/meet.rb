@@ -34,7 +34,12 @@ class Meet < ApplicationRecord
   end
 
   def ppl_process(file)
-    CSV.foreach(file.path, headers: false) do |row|
+    if file.is_a?(String)
+      path = 'temp.csv'
+      File.write(path, file)
+    end
+
+    CSV.foreach(file.is_a?(String) ? path : file.path, headers: false) do |row|
       next if row[1].nil?
 
       # row will be an array containing the comma-separated elements of the line:
@@ -45,7 +50,7 @@ class Meet < ApplicationRecord
       #   3 => Team
       #   4 => ?
       #   5 => Gender
-      #   6 => Races (one is int, two is csv list in quotes ")
+      #   6 => Races (one is int, two+ is csv list in quotes ")
       #  )
 
       gender = row[5] == 'M' ? 0 : 1
@@ -62,7 +67,7 @@ class Meet < ApplicationRecord
 
   def evt_process(file)
     if evt
-      # We are handling a re-upload, so remove/reorder
+      # We are handling a re-upload, so remove then reorder
       races_to_delete = races.all.to_a
       CSV.foreach(file.path, headers: false) do |row|
         unless row[0].nil?
@@ -72,7 +77,7 @@ class Meet < ApplicationRecord
         end
       end
 
-      races_to_delete.each {|r| r.delete }
+      races_to_delete.each {|r| r.delete unless r.has_results? }
       reschedule
     end
 
@@ -120,7 +125,12 @@ class Meet < ApplicationRecord
   end
 
   def sch_process(file)
-    CSV.foreach(file.path, headers: false).with_index(0) do |row, order|
+    if file.is_a?(String)
+      path = 'temp.csv'
+      File.write(path, file)
+    end
+
+    CSV.foreach(file.is_a?(String) ? path : file.path, headers: false).with_index(0) do |row, order|
       # Handles comment lines, like the very first line
       next if row[1].nil?
 

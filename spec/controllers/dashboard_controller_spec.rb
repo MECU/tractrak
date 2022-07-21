@@ -86,6 +86,46 @@ RSpec.describe DashboardController do
       expect(meet.races.first.competitors.count).to eq(41)
     end
 
+    it 'does not delete an event with results but can add' do
+      upload('lynx-800-2.evt')
+      expect(response.successful?).to be_truthy
+
+      upload('lynx-800-2.sch')
+      expect(response.successful?).to be_truthy
+
+      # in order to test a race can have additions with results
+      race = Race.first
+      competitor = race.competitors.first
+      competitor.result = '9.99'
+      competitor.place = '1'
+      competitor.save!
+
+      race = Race.last
+      competitor = race.competitors.first
+      competitor.result = '9.99'
+      competitor.place = '1'
+      competitor.save!
+      expect(race.has_results?).to be(true)
+
+      # Now event is attempted to be merged into one
+      upload('lynx-800.evt')
+      expect(response.successful?).to be_truthy
+
+      races = meet.races.order(:schedule)
+      expect(races.count).to eq(2)
+      expect(races.first['event']).to eq(18)
+      expect(races.first['round']).to eq(1)
+      expect(races.first['heat']).to eq(1)
+      expect(races.first['schedule']).to eq(1)
+      expect(races.last['event']).to eq(18)
+      expect(races.last['round']).to eq(1)
+      expect(races.last['heat']).to eq(2)
+      expect(races.last['schedule']).to eq(2)
+      # It's okay to add, even to a race with results
+      expect(races.first.competitors.count).to eq(41)
+      expect(races.last.competitors.count).to eq(22)
+    end
+
     it 'handles adding a round' do
       upload('lynx-800.evt')
       expect(response.successful?).to be_truthy
