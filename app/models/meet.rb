@@ -228,7 +228,7 @@ class Meet < ApplicationRecord
               lane = @race.competitors.new(team: team, lane: row[2])
             end
 
-            lane.team = team
+            # lane.team = team
 
             if row[0].present?
               lane.place = row[0]
@@ -282,7 +282,7 @@ class Meet < ApplicationRecord
               lane = @race.competitors.new(athlete: athlete, team: team, lane: row[2])
             end
 
-            lane.athlete = athlete
+            # lane.athlete = athlete
 
             if row[0].present?
               lane.place = row[0]
