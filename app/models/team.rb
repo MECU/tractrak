@@ -12,7 +12,21 @@ class Team < ApplicationRecord
   belongs_to :country
 
   def self.finder(name:, state_id: 6, create: false)
-    # TODO: Need to find teams better, filtering by state at least
-    Team.where(name: name).first_or_create!(abbr: name[0, 4], state_id: state_id)
+    team = Team.where(name: name).where(state_id: state_id)
+
+    return team.first! if team.exists?
+
+    state = State.find(state_id)
+
+    team = team.build
+    team.name = name
+    team.abbr = name[0, 4]
+    team.state = state
+    team.country = state.country
+
+    raise ActiveRecord::RecordNotFound unless create
+
+    team.save!
+    team
   end
 end

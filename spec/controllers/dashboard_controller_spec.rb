@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe DashboardController do
   let(:meet) { create(:meet, ppl: true) }
-  let!(:state) { create(:state, id: 6) }
+  let(:country) { create(:country, id: 1) }
+  let!(:state) { create(:state, id: 6, country: country) }
   let(:user) { create(:user) }
 
   before do
