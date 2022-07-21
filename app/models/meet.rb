@@ -209,7 +209,7 @@ class Meet < ApplicationRecord
 
             team = Team::finder(name: row[3])
 
-            lane = @race.competitors.find_by(team: team)
+            lane = @race.competitors.find_by(team: team, lane: row[2])
 
             if lane.id.nil?
               # Something has gone wrong, so abort
@@ -259,7 +259,7 @@ class Meet < ApplicationRecord
             # } else {
             athlete = Athlete::finder(first_name: row[4], last_name: row[3])
 
-            lane = @race.competitors.find_by(athlete: athlete)
+            lane = @race.competitors.find_by(athlete: athlete, lane: row[2])
 
             if lane.nil?
               # Something has gone wrong, so abort
