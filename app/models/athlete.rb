@@ -34,7 +34,11 @@ class Athlete < ApplicationRecord
   # gender 0=men, 1=women
   def self.finder(first_name:, last_name:, gender: nil, create: false)
     # TODO: Add more search capability
-    athlete = Athlete.where(first_name: first_name, last_name: last_name)
+    # Case insensitive search, because McCown won't match Mccown
+    athlete = Athlete.where(
+      Athlete.arel_table[:first_name].matches(first_name),
+      Athlete.arel_table[:last_name].matches(last_name)
+    )
     athlete.where(gender: gender) unless gender.nil?
     return athlete.first! if athlete.exists?
 
