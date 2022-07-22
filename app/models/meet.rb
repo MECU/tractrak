@@ -371,7 +371,7 @@ class Meet < ApplicationRecord
   private
 
   def create_race(row)
-    gender = (row[3].downcase.include?('boy') || row[3].downcase.include?('men')) ? 0 : 1
+    gender = (row[3].downcase.include?('girl') || row[3].downcase.include?('women')) ? 1 : 0
     # Rails.logger.debug("row: #{row}")
     # Rails.logger.debug("gender #{gender}")
 
