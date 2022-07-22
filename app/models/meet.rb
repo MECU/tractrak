@@ -102,7 +102,7 @@ class Meet < ApplicationRecord
         raise StandardError, "The file is not formatted properly: #{@race}" unless @race.is_a?(Race)
 
         # To avoid updating a race if it already has results
-        return if @race.has_results?
+        next if @race.has_results?
 
         # Blank the heat if we are reprocessing
         if self.evt
@@ -372,11 +372,11 @@ class Meet < ApplicationRecord
 
   def create_race(row)
     gender = (row[3].downcase.include?('boy') || row[3].downcase.include?('men')) ? 0 : 1
-    Rails.logger.debug("row: #{row}")
-    Rails.logger.debug("gender #{gender}")
+    # Rails.logger.debug("row: #{row}")
+    # Rails.logger.debug("gender #{gender}")
 
     team_race = row[3].downcase.include?('relay') || row[3].downcase.include?('medley') ? 1 : 0
-    Rails.logger.debug("team_race: #{team_race}")
+    # Rails.logger.debug("team_race: #{team_race}")
 
     race_type = RaceType.where(gender: gender)
                         .where(athlete_team: team_race)
