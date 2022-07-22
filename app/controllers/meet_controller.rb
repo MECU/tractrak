@@ -65,13 +65,14 @@ class MeetController < ApplicationController
     @meet = Meet.find(params[:meet])
     @races = @meet.completed_races_by_event(params[:event])
 
-    if @races.first.race_type.track?
-      @competitors = @races.map(&:competitors).flatten.sort
-    else
-      @competitors = @races.map(&:competitors).flatten.sort
-    end
+    # if @races.first.race_type.track?
+    #   @competitors = @races.map(&:competitors).flatten.sort
+    # else
+    # # TODO
+    # end
 
-    @competitors = ::Naturalsorter::Sorter.sort_by_method(@competitors, "result", true)
+    competitors = @races.map(&:competitors).flatten.sort
+    @competitors = ::Naturalsorter::Sorter.sort_by_method(competitors, 'result', true)
 
     render partial: 'meet/event', locals: { event: params[:event] }
   end
