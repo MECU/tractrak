@@ -8,7 +8,6 @@
     <div class="col-xs-12 text-center">
       <div class="center-block">
         <h1><%= @athlete.full_name %></h1>
-        <h5><%= @athlete.gender === 0 ? 'Male' : 'Female' %>
           <% if @athlete.height && @athlete.weight %><br>
           <%= @athlete.height ? "#{@athlete.height}," : '' %><%= @athlete.weight %>
           <% end %>
@@ -38,7 +37,7 @@
         <% @athlete.competitors.each do |competitor| %>
         <tr>
           <td><%= competitor.race.race_type.name %></td>
-          <td><%= competitor.result %></td>
+          <td><%= competitor.result_display %></td>
           <td><%= competitor.place %></td>
           <% if competitor.race.wind %>
               <% if competitor.race.wind >= 2.0 %>
