@@ -28,6 +28,7 @@ gem 'wicked_pdf'
 gem 'barby'
 gem 'rqrcode'
 gem 'rollbar'
+gem "logtail-rails"
 gem 'naturalsorter'
 
 group :development, :test do
