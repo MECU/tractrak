@@ -228,7 +228,7 @@ class Meet < ApplicationRecord
               lane = @race.competitors.new(team: team, lane: row[2])
             end
 
-            # lane.team = team
+            lane.team = team
 
             if row[0].present?
               lane.place = row[0]
@@ -267,10 +267,6 @@ class Meet < ApplicationRecord
             #   16: delta time from previous position?
             # )
 
-            # if (!empty(row[12])) {
-            #     gender = row[12] === 'M' ? 0 : 1
-            #     athlete = Athlete.where(['firstname': row[4], 'lastname': row[3], 'gender': gender]).firstOrFail()
-            # } else {
             athlete = Athlete::finder(first_name: row[4], last_name: row[3])
 
             lanes_found << row[2]
@@ -282,7 +278,7 @@ class Meet < ApplicationRecord
               lane = @race.competitors.new(athlete: athlete, team: team, lane: row[2])
             end
 
-            # lane.athlete = athlete
+            lane.athlete = athlete
 
             if row[0].present?
               lane.place = row[0]
