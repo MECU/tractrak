@@ -399,13 +399,13 @@ class Meet < ApplicationRecord
                .first
 
     if race.nil?
-      race = Race.create!(
-        meet: self,
-        race_type: race_type,
-        event: row[0],
-        round: row[1],
-        heat: row[2]
-      )
+      race = Race.new
+      race.event = row[0]
+      race.round = row[1]
+      race.heat = row[2]
+      race.race_type = race_type
+      race.meet = self
+      race.save!
     end
 
     race
