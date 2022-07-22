@@ -28,7 +28,7 @@ gem 'wicked_pdf'
 gem 'barby'
 gem 'rqrcode'
 gem 'rollbar'
-gem 'naturalsort'
+gem 'naturalsorter'
 
 group :development, :test do
   gem 'factory_bot_rails'

@@ -71,7 +71,7 @@ class MeetController < ApplicationController
       @competitors = @races.map(&:competitors).flatten.sort
     end
 
-    @competitors = Naturalsorter::Sorter.sort_by_method(@competitors, "result", true)
+    @competitors = ::Naturalsorter::Sorter.sort_by_method(@competitors, "result", true)
 
     render partial: 'meet/event', locals: { event: params[:event] }
   end

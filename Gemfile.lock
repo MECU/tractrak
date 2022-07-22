@@ -156,7 +156,7 @@ GEM
     mini_mime (1.1.2)
     mini_portile2 (2.8.0)
     minitest (5.15.0)
-    naturalsort (1.2.0)
+    naturalsorter (3.0.28)
     net-imap (0.2.3)
       digest
       net-protocol
@@ -316,7 +316,7 @@ DEPENDENCIES
   factory_bot_rails
   faker
   jsbundling-rails
-  naturalsort
+  naturalsorter
   pg
   pry-byebug
   puma (~> 5.0)
