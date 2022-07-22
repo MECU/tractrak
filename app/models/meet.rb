@@ -354,6 +354,7 @@ class Meet < ApplicationRecord
   end
 
   def broadcast_race(race)
+    @meet = self
     race.broadcast_replace_to "meet-#{self.id}",
       partial: 'meet/race',
       target: "meet-#{self.id}-race-#{race.id}",
