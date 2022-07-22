@@ -371,34 +371,33 @@ class Meet < ApplicationRecord
   private
 
   def create_race(row)
-    gender = (row[3].downcase.include?('girl') || row[3].downcase.include?('women')) ? 1 : 0
-    # Rails.logger.debug("row: #{row}")
-    # Rails.logger.debug("gender #{gender}")
-
-    team_race = row[3].downcase.include?('relay') || row[3].downcase.include?('medley') ? 1 : 0
-    # Rails.logger.debug("team_race: #{team_race}")
-
-    race_type = RaceType.where(gender: gender)
-                        .where(athlete_team: team_race)
-                        .where(name: row[3])
-                        .first
-
-    if race_type.nil?
-      race_type = RaceType.create!(
-        gender: gender,
-        athlete_team: team_race,
-        name: row[3]
-      )
-    end
-
     race = Race.where(meet: self)
-               .where(race_type: race_type)
                .where(event: row[0])
                .where(round: row[1])
                .where(heat: row[2])
                .first
 
     if race.nil?
+      gender = (row[3].downcase.include?('girl') || row[3].downcase.include?('women')) ? 1 : 0
+      # Rails.logger.debug("row: #{row}")
+      # Rails.logger.debug("gender #{gender}")
+
+      team_race = row[3].downcase.include?('relay') || row[3].downcase.include?('medley') ? 1 : 0
+      # Rails.logger.debug("team_race: #{team_race}")
+
+      race_type = RaceType.where(gender: gender)
+                          .where(athlete_team: team_race)
+                          .where(name: row[3])
+                          .first
+
+      if race_type.nil?
+        race_type = RaceType.create!(
+          gender: gender,
+          athlete_team: team_race,
+          name: row[3]
+        )
+      end
+
       race = Race.new
       race.event = row[0]
       race.round = row[1]
