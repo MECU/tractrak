@@ -391,13 +391,24 @@ class Meet < ApplicationRecord
       )
     end
 
-    Race.find_or_create_by!(
-      meet: self,
-      race_type: race_type,
-      event: row[0],
-      round: row[1],
-      heat: row[2]
-    )
+    race = Race.where(meet: self)
+               .where(race_type: race_type)
+               .where(event: row[0])
+               .where(round: row[1])
+               .where(heat: row[2])
+               .first
+
+    if race.nil?
+      race = Race.create!(
+        meet: self,
+        race_type: race_type,
+        event: row[0],
+        round: row[1],
+        heat: row[2]
+      )
+    end
+
+    race
   end
 
   def team_racer(row)
