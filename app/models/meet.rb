@@ -373,7 +373,18 @@ class Meet < ApplicationRecord
   def create_race(row)
     gender = (row[3].downcase.include?('boy') || row[3].downcase.include?('men')) ? 0 : 1
     team_race = row[3].downcase.include?('relay') || row[3].downcase.include?('medley') ? 1 : 0
-    race_type = RaceType.find_or_create_by!(name: row[3], gender: gender, athlete_team: team_race)
+    race_type = RaceType.where(gender: gender)
+                        .where(athlete_team: team_race)
+                        .where(name: row[3])
+                        .first
+
+    if race_type.nil?
+      race_type = RaceType.create!(
+        gender: gender,
+        athlete_team: team_race,
+        name: row[3]
+      )
+    end
 
     Race.find_or_create_by!(
       meet: self,
