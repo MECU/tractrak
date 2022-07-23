@@ -37,5 +37,11 @@ RSpec.configure do |config|
     Rails.application.load_seed
   end
 
+  config.after(:suite) do
+    Country.delete_all
+    State.delete_all
+    User.delete_all
+  end
+
   config.include Devise::Test::ControllerHelpers, type: :controller
 end
