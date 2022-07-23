@@ -1,4 +1,4 @@
-Country.create([{ name: 'United State of America', abbr: 'USA' }])
+Country.create([{ id: 1, name: 'United State of America', abbr: 'USA' }])
 
 State.create([
                { id: 1, name: 'Alabama', abbr: 'AL', timezone: 'America/Chicago', country_id: 1, lat: '32.799000', lng: '-86.807300' },
