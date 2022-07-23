@@ -95,3 +95,4 @@ yarn-debug.log*
 
 .idea
 coverage
+temp.csv
