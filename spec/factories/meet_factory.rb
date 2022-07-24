@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :meet do
-    name { Faker::Internet.name }
+    name { Faker::Company.name }
     meet_date { DateTime.now + 1.day }
     owner { create(:user) }
     season
@@ -25,6 +25,15 @@ FactoryBot.define do
 
     trait :in_the_past do
       meet_date { 2.months.ago }
+    end
+
+    trait :today do
+      meet_date { Date.today }
+    end
+
+    trait :multi_day do
+      meet_date { Date.today - 2.day }
+      meet_end_date { Date.today + 2.day }
     end
   end
 end
