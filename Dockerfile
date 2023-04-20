@@ -16,7 +16,7 @@ COPY package.json /tmp/
 COPY yarn.lock /tmp/
 WORKDIR /tmp
 
-RUN gem install bundler -v 2.2.32
+RUN gem install bundler -v 2.3.26
 RUN bundle config set --local without 'development test'
 RUN bundle install --jobs 5 --retry 5
 RUN yarn install
