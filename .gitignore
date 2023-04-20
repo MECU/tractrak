@@ -65,6 +65,8 @@ node_modules/
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+package-lock.json
+/node_modules
 
 # Ignore uploaded files in development
 /storage/*
@@ -72,23 +74,8 @@ yarn-debug.log*
 
 .idea/
 
-# Ignore uploaded files in development.
-/storage/*
-!/storage/.keep
-
-/public/assets
-.byebug_history
-
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-
-/public/packs
-/public/packs-test
-/node_modules
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
-
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
