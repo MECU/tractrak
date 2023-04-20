@@ -1,4 +1,5 @@
 FROM ruby:3.0.3-bullseye
+EXPOSE 3000
 
 # Install NodeJS and Yarn
 RUN apt-get update
