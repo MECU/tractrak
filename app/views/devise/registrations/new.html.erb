@@ -7,7 +7,26 @@
       <p class="card-text">You only need an account if you want to use TracTrak running your meet.</p>
     </div>
   </div>
-  <div class="alert-info"></div>
+  
+  <% if flash.present? %>
+    <% flash.each do |f| %>
+      <% next if f.first == :recaptcha_error %>
+      <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+        <div class="card-header">Error</div>
+        <div class="card-body">
+          <p class="card-text"><%= f.last %></p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  <% if flash[:recaptcha_error].present? %>
+  <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+    <div class="card-header">reCaptcha Failed</div>
+    <div class="card-body">
+      <p class="card-text">You have failed the Cloudflare reCaptcha challenge. Please try again.</p>
+    </div>
+  </div>
+  <% end %>
   <h2>Sign up</h2>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -36,8 +55,11 @@
       <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
     </div>
 
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <div class="cf-turnstile" data-sitekey="0x4AAAAAAAEJDCcCzy0jHBa_" data-callback="javascriptCallback"></div>
+
     <div class="actions">
-      <%= f.submit "Sign up" %>
+      <%= f.submit "Sign up", data: { turbo: false } %>
     </div>
   <% end %>
 

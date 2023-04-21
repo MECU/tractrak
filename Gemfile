@@ -18,18 +18,19 @@ gem 'redis', '~> 5.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+gem "activeadmin", "~> 2.12"
 gem 'devise'
 gem 'discard'
 gem 'dotenv-rails'
-gem "activeadmin", "~> 2.12"
 
-gem 'wkhtmltopdf-binary'
-gem 'wicked_pdf'
 gem 'barby'
-gem 'rqrcode'
-gem 'rollbar'
-gem "logtail-rails"
+gem 'httparty'
+gem 'logtail-rails'
 gem 'naturalsorter'
+gem 'rollbar'
+gem 'rqrcode'
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 group :development, :test do
   gem 'factory_bot_rails'
