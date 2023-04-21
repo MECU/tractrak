@@ -47,3 +47,5 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'sqlite3'
 end
+
+gem "newrelic_rpm", "~> 9.2"
