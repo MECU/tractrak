@@ -6,27 +6,26 @@ class Admin::ScrapeController < ApplicationController
     meet_id = url_split[4].split('-')[0]
     results_id = url_split[6]
 
-    doc = JSON.load(URI.open("https://co.milesplit.com/api/v1/meets/#{meet_id}/performances?resultsId=#{results_id}&fields=id,meetId,meetName,teamId,videoId,teamName,athleteId,firstName,lastName,gender,genderName,divisionId,divisionName,ageGroupName,gradYear,eventName,eventCode,eventDistance,eventGenreOrder,round,roundName,heat,units,mark,place,windReading,profileUrl,teamProfileUrl, performanceVideoId&m=GET"))
+    uri = "https://co.milesplit.com/api/v1/meets/#{meet_id}/performances?resultsId=#{results_id}&fields=id,meetId,meetName,teamId,videoId,teamName,athleteId,firstName,lastName,gender,genderName,divisionId,divisionName,ageGroupName,gradYear,eventName,eventCode,eventDistance,eventGenreOrder,round,roundName,heat,units,mark,place,windReading,profileUrl,teamProfileUrl,performanceVideoId&m=GET"
+    doc = JSON.load(Net::HTTP.get(URI.parse(uri)))
 
     meet_name = doc['data'].first['meetName']
 
-    if params['scrape']['meet_id'].nil?
+    if params['scrape']['meet_id'].present?
       meet = Meet.find(params['scrape']['meet_id'].to_i)
     else
       meet = Meet.create_with(name: meet_name, owner_id: 1).find_or_create_by!(milesplit_id: meet_id.to_i)
     end
 
-    prelims = false
-    # search for prelims and finals
-    doc['data'].each do |result|
-      if result['roundName'] == 'Prelims'
-        prelims = true
-        break
-      end
-    end
+    doc['data'].group_by { |d| [d['eventCode'], d['gender']] }.each do |_, event|
+      rounds = event.group_by { |d| d['round'] }
+      prelims = rounds.count > 1
 
-    doc['data'].each do |result|
-      process_result(meet: meet, r: result, state: state, prelims: prelims)
+      rounds.each do |_, results|
+        results.each do |result|
+          process_result(meet: meet, r: result, state: state, prelims: prelims)
+        end
+      end
     end
 
     # assign place per heat
@@ -50,7 +49,8 @@ class Admin::ScrapeController < ApplicationController
     meet.sch = true
     meet.save!
 
-    flash[:info] << 'Meet successfully scraped!'
+    msg = 'Meet successfully scraped!'
+    flash[:info].is_a?(Array) ? flash[:info] << msg : flash[:info] = [msg]
   end
 
   private
@@ -85,7 +85,8 @@ class Admin::ScrapeController < ApplicationController
   def process_result(meet:, r:, state: State.find(6), prelims: false)
     race_type = RaceType.find_or_create_by!(name: "#{r['genderName']} #{r['eventName']}")
     if race_type.new_record?
-      flash[:info] << "*** NEW RACE TYPE ***: #{r['genderName']} #{r['eventName']}"
+      msg = "*** NEW RACE TYPE ***: #{r['genderName']} #{r['eventName']}"
+      flash[:info].is_a?(Array) ? flash[:info] << msg : flash[:info] = [msg]
     else
       unless race_type.parent.nil?
         race_type = RaceType.find(race_type.parent)
@@ -108,13 +109,10 @@ class Admin::ScrapeController < ApplicationController
       team.save!
     end
 
-    round = if prelims
-              r['roundName'] == 'Prelims' ? 1 : 2
-            else
-              1
-            end
+    round = 1
+    round = 2 if prelims && r['roundName'] == 'Finals'
 
-    race = meet.races.find_or_create_by!(race_type: race_type, round: round,heat: r['heat'])
+    race = meet.races.find_or_create_by!(race_type:, round:, heat: r['heat'])
     if race.event.nil?
       race.schedule = meet.number_of_events
       race.wind = r['windReading'] if race_type.wind?
@@ -123,11 +121,9 @@ class Admin::ScrapeController < ApplicationController
 
     time = ApplicationHelper.normalize_time(r['mark'])
     if race_type.athlete_race?
-      race.competitors.create!(athlete: athlete, team: team, result: time)
+      race.competitors.create!(athlete:, team:, result: time)
     else
-      race.competitors.create!(team: team, result: time)
+      race.competitors.create!(team:, result: time)
     end
   end
-
-  def create_athlete(result) end
 end

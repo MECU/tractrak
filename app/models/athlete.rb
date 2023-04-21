@@ -42,6 +42,11 @@ class Athlete < ApplicationRecord
 
     raise ActiveRecord::RecordNotFound unless create
 
-    athlete.create!
+    athlete = Athlete.new
+    athlete.first_name = first_name
+    athlete.last_name = last_name
+    athlete.gender = gender unless gender.nil?
+    athlete.save!
+    athlete
   end
 end

@@ -16,16 +16,14 @@ class Team < ApplicationRecord
 
     return team.first! if team.exists?
 
-    state = State.find(state_id)
+    raise ActiveRecord::RecordNotFound unless create
 
+    state = State.find(state_id)
     team = team.build
     team.name = name
     team.abbr = name[0, 4]
     team.state = state
     team.country = state.country
-
-    raise ActiveRecord::RecordNotFound unless create
-
     team.save!
     team
   end
