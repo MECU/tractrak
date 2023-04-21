@@ -20,5 +20,8 @@ module Tractrak
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.assets.css_compressor = nil
+
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
   end
 end
