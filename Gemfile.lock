@@ -81,6 +81,7 @@ GEM
     barby (0.6.8)
     bcrypt (3.1.18)
     bindex (0.8.1)
+    brotli (0.4.0)
     builder (3.2.4)
     bundler-audit (0.9.1)
       bundler (>= 1.2.0, < 3)
@@ -208,6 +209,9 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.2)
     rack (2.2.6.4)
+    rack-brotli (1.2.0)
+      brotli (>= 0.1.7)
+      rack (>= 1.4)
     rack-test (2.1.0)
       rack (>= 1.3)
     rails (7.0.4.3)
@@ -343,10 +347,11 @@ DEPENDENCIES
   jsbundling-rails
   logtail-rails
   naturalsorter
-  newrelic_rpm (~> 9.2)
+  newrelic_rpm
   pg
   pry-byebug
   puma (~> 6.0)
+  rack-brotli
   rails (~> 7.0)
   rails-controller-testing
   redis (~> 5.0)
