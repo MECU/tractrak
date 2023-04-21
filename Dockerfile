@@ -26,8 +26,8 @@ WORKDIR /app
 RUN mkdir -p tmp/pids
 COPY . /app
 
-ENV RAILS_ENV development
-ENV RACK_ENV development
+ENV RAILS_ENV production
+ENV RACK_ENV production
 
 # Execute the Procfile
 CMD ["bin/run-dev.sh"]
