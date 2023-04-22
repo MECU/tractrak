@@ -2,14 +2,7 @@
   <h1 class="display-5 fw-bold text-white">Welcome to <span class="tt tt-green">TracTrak</span></h1>
   <p class="fs-5 mb-4 text-white">Live, fast, FREE results from track meets. Tell your coaches and meet directors you want to see results faster using <span class="tt tt-green">TracTrak</span>.</p>
 </div>
-<%#--<div class="col-md-10 col-md-offset-1">--%>
-<%#--<div class="panel panel-default">--%>
-<%#--<div class="panel-header"><i class="fa fa-search"></i> Find a meet</div>--%>
-<%#--<div class="panel-body">--%>
-<%#--<input type="text" id="findEvent" autofocus style="width:100%" title="Find a Meet">--%>
-<%#--</div>--%>
-<%#--</div>--%>
-<%#--</div>--%>
+
 <div class="card mb-4 rounded-3 shadow-sm mt-2" id="current">
   <div class="card-header py-3">
     <h4 class="my-0 fw-normal">
@@ -28,6 +21,7 @@
     <% end %>
   </div>
 </div>
+
 <div class="card mb-4 rounded-3 shadow-sm" id="upcoming">
   <div class="card-header py-3">
     <h4 class="my-0 fw-normal">
@@ -65,6 +59,17 @@
         <em>We haven't done anything ... yet.</em>
       <% end %>
     </ul>
+  </div>
+</div>
+
+<div class="card mb-4 rounded-3 shadow-sm mt-2" id="current">
+  <div class="card-header py-3">
+    <h4 class="my-0 fw-normal">
+      <img src="https://icongr.am/fontawesome/search.svg" alt="clock"/> Search meets
+    </h4>
+  </div>
+  <div class="card-body">
+    <%= link_to 'Search', search_path %>
   </div>
 </div>
 <div>
