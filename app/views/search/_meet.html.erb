@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "meet-search" do %>
+  <% if @meets.empty? %>
+      Nothing found ...
+  <% else %>
+    <% @meets.each do |meet| %>
+      <li class="list-group-item" style="font-size: x-large">
+        <%= link_to meet.name, live_meet_path(meet, sanitize(meet.url_name)) %>
+        <% if meet.stadium %>
+          at <%= link_to meet.stadium.name, stadium_view_path(meet.stadium) %>
+        <% end %>
+        on
+        <time><%= meet.meet_date.iso8601 %></time>
+      </li>
+    <% end %>
+    <small><em>Limited to 10 results</em></small>
+  <% end %>
+<% end %>
