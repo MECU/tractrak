@@ -4,5 +4,5 @@
 
 import { application } from "./application"
 
-import SearchFormController from "./search_form_controller"
-application.register("search-form", SearchFormController)
+import SearchController from "./search_controller"
+application.register("search", SearchController)

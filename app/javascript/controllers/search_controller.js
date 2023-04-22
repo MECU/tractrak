@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="search-form"
+// Connects to data-controller="search"
 export default class extends Controller {
   search() {
     clearTimeout(this.timeout)
@@ -11,11 +11,11 @@ export default class extends Controller {
 
   static targets = ['loading'];
 
-  displayLoading(event) {
-    this.loadingTarget.classList.remove('hidden');
+  displayLoading(targets) {
+    this.loadingTarget.classList.remove('visually-hidden');
   }
 
-  displayContent() {
-    this.loadingTarget.classList.add('hidden');
+  displayContent(event) {
+    this.loadingTarget.classList.add('visually-hidden');
   }
 }

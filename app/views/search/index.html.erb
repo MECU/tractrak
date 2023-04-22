@@ -9,26 +9,21 @@
 <div class="card mt-2">
   <%= form_with(url: meet_search_url,
     method: :post,
-    data: {controller: "search-form", turbo_frame: "meet-search", turbo_action: "replace" }
+    data: {controller: "search", turbo_frame: "meet-search", turbo_action: "replace" }
       ) do |form| %>
-    <div class="flex space-x-3">
       <%= form.text_field :query,
-        class: "py-3 px-4 rounded border ring-0 focus:ring-4 focus:ring-orange-100 focus:shadow-none focus:border-orange-500 focus:outline-none",
+        class: "py-3 px-4 rounded border ring-0",
         data: {action: "
-        input->search-form#search
-        turbo:before-fetch-request@document->search-form#displayLoading
-        turbo:before-fetch-response@document->search-form#displayContent
+        input->search#search
+        turbo:before-fetch-request@document->search#displayLoading
+        turbo:before-fetch-response@document->search#displayContent
 "},
         placeholder: "Search Meet Names"
       %>
-    </div>
-    <div class="flex space-x-3">
-      <div class="loading-indicator hidden"
-           data-navigation-target="loading">
+      <span class="loading-indicator visually-hidden" data-search-target="loading">
         <img src="https://cdn-icons-png.flaticon.com/512/1950/1950591.png" class="runner" height="64px" width="64px" alt="Spinning animated Runner" />
-        Loading ...
-      </div>
-    </div>
+        Searching ...
+      </span>
   <% end %>
 </div>
 <%= turbo_frame_tag "meet-search" do %>
