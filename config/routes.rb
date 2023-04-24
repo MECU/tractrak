@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   get 'meet/:meet/race/:race', to: 'meet#race'
   get 'meet/:meet/event/:event', to: 'meet#event'
 
+  get 'search', to: 'search#index', as: :search
+  post 'search', to: 'search#search', as: :meet_search
+
   get 'about', to: 'home#about', as: :about
   get 'requirements', to: 'home#requirements', as: :requirements
   get 'contact', to: 'home#contact', as: :contact

@@ -1,0 +1,30 @@
+<% content_for :title do %>
+  Search | TracTrak
+<% end %>
+<div class="bg-dark text-secondary px-4 py-5 text-center">
+  <h1 class="display-5 fw-bold text-white">Search <span class="tt tt-green">TracTrak</span></h1>
+  <p class="fs-5 mb-4">Find a meet</p>
+</div>
+
+<div class="card mt-2">
+  <%= form_with(url: meet_search_url,
+    method: :post,
+    data: {controller: "search", turbo_frame: "meet-search", turbo_action: "replace" }
+      ) do |form| %>
+      <%= form.text_field :query,
+        class: "py-3 px-4 rounded border ring-0",
+        data: {action: "
+        input->search#search
+        turbo:before-fetch-request@document->search#displayLoading
+        turbo:before-fetch-response@document->search#displayContent
+"},
+        placeholder: "Search Meet Names"
+      %>
+      <span class="loading-indicator visually-hidden" data-search-target="loading">
+        <img src="https://cdn-icons-png.flaticon.com/512/1950/1950591.png" class="runner" height="64px" width="64px" alt="Spinning animated Runner" />
+        Searching ...
+      </span>
+  <% end %>
+</div>
+<%= turbo_frame_tag "meet-search" do %>
+<% end %>
