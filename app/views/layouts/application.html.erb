@@ -13,7 +13,7 @@
 
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
-  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true, async: true %>
 </head>
 <body>
 <%= render partial: 'navigation' %>
@@ -21,7 +21,6 @@
 <div class="container-fluid">
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
-  <%#= render 'messages', local_variables { errors: errors } %>
   <%= yield %>
 </div>
 <%= render partial: 'cloudflare' %>
