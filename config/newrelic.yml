@@ -25,7 +25,7 @@ common: &default_settings
   # agent_enabled: false
 
   # Logging level for log/newrelic_agent.log
-  log_level: info
+  log_level: debug
 
   application_logging:
     # If `true`, all logging-related features for the agent can be enabled or disabled
