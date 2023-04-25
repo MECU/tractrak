@@ -3,7 +3,7 @@
 
   <%= form_for 'meet_files', url: meet_preload_path(@meet.id), html: { class: 'form-inline' } do |f| %>
     <%= f.file_field :file, required: true %>
-    <%= f.submit 'Upload', class: 'btn btn-primary', id: 'loader' %>
+    <%= f.submit 'Upload', class: 'btn btn-primary', id: 'loader', data: { turbo: false } %>
     <div class="spinner-border text-success invisible" role="status" id="spinner">
       <span class="visually-hidden">Loading...</span>
     </div>
