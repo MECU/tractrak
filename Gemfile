@@ -48,3 +48,5 @@ group :development do
   gem 'web-console', '>= 3.3.0'
   gem 'sqlite3'
 end
+
+gem "action-cable-redis-backport", "~> 1.0"
