@@ -1,6 +1,7 @@
-Country.create([{ id: 1, name: 'United State of America', abbr: 'USA' }])
+Country.create([{ id: 1, name: 'United State of America', abbr: 'USA' }]) if Country.count == 0
 Country.connection.execute('ALTER SEQUENCE countries_id_seq RESTART WITH 1')
 
+if State.count == 0
 State.create([
                { id: 1, name: 'Alabama', abbr: 'AL', timezone: 'America/Chicago', country_id: 1, lat: '32.799000', lng: '-86.807300' },
                { id: 2, name: 'Alaska', abbr: 'AK', timezone: 'America/Anchorage', country_id: 1, lat: '61.385000', lng: '-152.268300' },
@@ -55,5 +56,6 @@ State.create([
                { id: 51, name: 'Wyoming', abbr: 'WY', timezone: 'America/Denver', country_id: 1, lat: '42.747500', lng: '-107.208500' }
              ])
 State.connection.execute('ALTER SEQUENCE states_id_seq RESTART WITH 1')
+end
 
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
