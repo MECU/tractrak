@@ -6,7 +6,7 @@
   <div class="card-header py-3">Preload or Reload Data</div>
   <div class="card-body">
     <%= turbo_frame_tag "post" do %>
-      <% render partial: 'upload', locals: { meet: @meet } %>
+      <% render partial: 'upload', locals: { meet: @meet }, data: { turbo: false } %>
     <% end %>
   </div>
   <div class="card-footer">
