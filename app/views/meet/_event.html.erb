@@ -1,8 +1,8 @@
-<turbo-frame id="meet-<%= @meet.id %>-event-<%= event %>-combined">
+<turbo-frame id="meet-<%= meet.id %>-event-<%= event %>-combined">
   <h4>
     Combined Results
   </h4>
-  <% if @races.count == 0 %>
+  <% if races.count == 0 %>
     <div class="alert alert-info" role="alert">
       <img src="https://icongr.am/fontawesome/hand-rock-o.svg" alt="Ready to Rock Fist" />
       No results yet. We'll get them to you as fast as possible.
@@ -13,27 +13,27 @@
       <table class="table table-striped table-hover table-sm">
         <thead class="thead-light">
         <tr>
-          <% if @races.first.race_type.track? && @races.first.competitors.first.lane.present? %>
+          <% if races.first.race_type.track? && races.first.competitors.first.lane.present? %>
             <th>Lane</th>
           <% end %>
-          <% if @races.group_by(&:round).uniq.count > 1 %>
+          <% if races.group_by(&:round).uniq.count > 1 %>
             <th>Round</th>
           <% end %>
           <th>Heat</th>
-          <% if @races.first.race_type.athlete_race? %>
+          <% if races.first.race_type.athlete_race? %>
             <th>Name</th>
           <% end %>
           <th>Team</th>
           <th>Position</th>
-          <th><%= @races.first.race_type.track? ? 'Time' : 'Mark' %></th>
-          <% if @races.first.race_type.wind? && @races.first.wind.present? %>
+          <th><%= races.first.race_type.track? ? 'Time' : 'Mark' %></th>
+          <% if races.first.race_type.wind? && races.first.wind.present? %>
             <th>Wind</th>
           <% end %>
         </tr>
         </thead>
         <tbody>
-        <% @competitors.each do |lane| %>
-          <%= render partial: 'meet/lane', locals: { lane: lane, heats: @races.count, rounds: @races.group_by(&:round).uniq.count } %>
+        <% meet.competitors_sorted(event).each do |lane| %>
+          <%= render partial: 'meet/lane', locals: { lane: lane, heats: races.count, rounds: races.group_by(&:round).uniq.count } %>
         <% end %>
         </tbody>
       </table>

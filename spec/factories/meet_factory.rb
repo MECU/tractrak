@@ -12,7 +12,7 @@ FactoryBot.define do
     end
 
     trait :meet_key do
-      SecureRandom.hex(16)
+      meet_key { SecureRandom.hex(16) }
     end
 
     trait :points do

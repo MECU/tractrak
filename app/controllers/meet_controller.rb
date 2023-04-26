@@ -1,4 +1,6 @@
 class MeetController < ApplicationController
+  include Broadcast
+
   skip_before_action :verify_authenticity_token, only: :api
 
   def meet
@@ -38,10 +40,10 @@ class MeetController < ApplicationController
       Rails.logger.debug '[Process PPL File Request]'
       @race = @meet.ppl_process(file)
     else
-      return render text: 'Only .LIF files are allowed.', status: 422
+      return render text: 'Only .LIF, .PPL, .SCH, or .EVT files are allowed.', status: 422
     end
 
-    @meet.broadcast_race(@race)
+    broadcast_race(meet: @meet, race: @race)
 
     render json: { status: 'success' }, status: :ok
   end
@@ -66,19 +68,10 @@ class MeetController < ApplicationController
   end
 
   def event
-    @meet = Meet.find(params[:meet])
-    @races = @meet.completed_races_by_event(params[:event])
-
-    # if @races.first.race_type.track?
-    #   @competitors = @races.map(&:competitors).flatten.sort
-    # else
-    # # TODO
-    # end
-
-    competitors = @races.map(&:competitors).flatten.sort
-    @competitors = ::Naturalsorter::Sorter.sort_by_method(competitors, 'result', true)
-
-    render partial: 'meet/event', locals: { event: params[:event] }
+    meet = Meet.find(params[:meet])
+    races = meet.completed_races_by_event(params[:event])
+    
+    render partial: 'meet/event', locals: { meet:, races:, event: params[:event] }
   end
 
   def team_standings

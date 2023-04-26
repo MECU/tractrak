@@ -1,4 +1,6 @@
 class DashboardController < ApplicationController
+  include Broadcast
+
   before_action :authenticate_user!
 
   def create_meet
@@ -72,7 +74,7 @@ class DashboardController < ApplicationController
     when 'lif'
       @race = @meet.lif_file(file)
 
-      @meet.broadcast_race(@race)
+      broadcast_race(meet: @meet, race: @race)
     end
 
     @meet.reload

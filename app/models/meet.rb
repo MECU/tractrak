@@ -310,7 +310,7 @@ class Meet < ApplicationRecord
       return []
     end
 
-    Rails.logger.debug("Successfully processed event|round|heat: #{@event_id}|#{@round_id}|#{@heat_id}")
+    Rails.logger.info("Successfully processed event|round|heat: #{@event_id}|#{@round_id}|#{@heat_id}")
 
     @race
   end
@@ -333,6 +333,11 @@ class Meet < ApplicationRecord
       .where.not('competitors.place' => %w[DNS FS DNF DQ SCR])
   end
 
+  def competitors_sorted(event)
+    competitors = completed_races_by_event(event).map(&:competitors).flatten.sort
+    ::Naturalsorter::Sorter.sort_by_method(competitors, 'result', true)
+  end
+
   def number_of_athletes
     self.competitors.group_by(&:athlete_id).count
   end
@@ -343,30 +348,6 @@ class Meet < ApplicationRecord
 
   def number_of_events
     self.races.group_by(&:event).count
-  end
-
-  def broadcast_meet
-    # TODO
-  end
-
-  def broadcast_event(event)
-    event.races.each { |r| broadcast_race(r) }
-  end
-
-  def broadcast_race(race)
-    @meet = self
-    race.broadcast_replace_to "meet-#{self.id}",
-      partial: 'meet/race',
-      target: "meet-#{self.id}-race-#{race.id}",
-      locals: { race: race }
-
-    races = self.completed_races_by_event(race.event)
-    if races.count > 1
-      @race.broadcast_replace_to "meet-#{self.id}",
-        partial: 'meet/event',
-        target: "meet-#{self.id}-event-#{race.event}-combined",
-        locals: { meet: self, races: races, event: race.event }
-    end
   end
 
   private
